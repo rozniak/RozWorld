@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F9976145-D8F6-484E-B259-FA254FC6F97C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RozWorld</RootNamespace>
+    <AssemblyName>RozWorld</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>D:\project\test build\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>game large icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>EBB62CACDA64314B5B482E54964414228800EDB5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>RozWorld_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenGL">
+      <HintPath>Libs\OpenGL.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tao.FreeGlut, Version=2.4.0.2, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Tao.FreeGlut.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="COMFY\ComfyContent.cs" />
+    <Compile Include="COMFY\ComfyInterpreter.cs" />
+    <Compile Include="COMFY\Definition\InformationDefinition.cs" />
+    <Compile Include="COMFY\Definition\ItemDefinition.cs" />
+    <Compile Include="COMFY\Definition\LanguageDefinition.cs" />
+    <Compile Include="COMFY\Definition\PetDefinition.cs" />
+    <Compile Include="COMFY\Definition\PlayerPawnDefinition.cs" />
+    <Compile Include="COMFY\Definition\SoundDefinition.cs" />
+    <Compile Include="COMFY\Definition\ThingDefinition.cs" />
+    <Compile Include="COMFY\Definition\TileFloorDefinition.cs" />
+    <Compile Include="COMFY\Definition\TileWallDefinition.cs" />
+    <Compile Include="COMFY\ParsedLineData.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="Entity\Player\ServerPlayerHandler.cs" />
+    <Compile Include="Entity\Thing.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="FloatPoint.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Graphics\GameWindow.cs" />
+    <Compile Include="Graphics\Shaders.cs" />
+    <Compile Include="Graphics\TextureManager.cs" />
+    <Compile Include="Graphics\UI\ControlSystem.cs" />
+    <Compile Include="Graphics\UI\Control\Button.cs" />
+    <Compile Include="Graphics\UI\Control\CheckBox.cs" />
+    <Compile Include="Graphics\UI\Control\ControlSkeleton.cs" />
+    <Compile Include="Graphics\UI\Control\Image.cs" />
+    <Compile Include="Graphics\UI\Control\Label.cs" />
+    <Compile Include="Graphics\UI\Control\TextBox.cs" />
+    <Compile Include="Graphics\UI\DrawInstruction.cs" />
+    <Compile Include="Graphics\UI\InGame\MainMenu.cs" />
+    <Compile Include="Graphics\UI\InGame\MultiplayerMenu.cs" />
+    <Compile Include="Graphics\UI\InGame\NewWorldMenu.cs" />
+    <Compile Include="Graphics\UI\InGame\SinglePlayerMenu.cs" />
+    <Compile Include="Graphics\UI\InGame\Splash.cs" />
+    <Compile Include="Graphics\UI\KeyboardState.cs" />
+    <Compile Include="Graphics\UI\MouseState.cs" />
+    <Compile Include="Graphics\UI\UIHandler.cs" />
+    <Compile Include="Graphics\VectorColour.cs" />
+    <Compile Include="IO\Files.cs" />
+    <Compile Include="IO\RozEncoding.cs" />
+    <Compile Include="Item\Inventory.cs" />
+    <Compile Include="Item\Item.cs" />
+    <Compile Include="Item\ItemStack.cs" />
+    <Compile Include="Network\Chat\ChatColour.cs" />
+    <Compile Include="Network\Chat\ChatFormatting.cs" />
+    <Compile Include="Network\Chat\PermissionGroup.cs" />
+    <Compile Include="Network\JoiningClient.cs" />
+    <Compile Include="Network\NetCon.cs" />
+    <Compile Include="Network\Packets.cs" />
+    <Compile Include="Network\RozClient.cs" />
+    <Compile Include="Network\RozServer.cs" />
+    <Compile Include="Network\ServerOptions.cs" />
+    <Compile Include="Network\ServerPacketHandler.cs" />
+    <Compile Include="Network\Web.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RozWorld.cs" />
+    <Compile Include="StringIntPair.cs" />
+    <Compile Include="World\Chunk.cs" />
+    <Compile Include="World\Position.cs" />
+    <Compile Include="World\Tile.cs" />
+    <Compile Include="World\World.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="game large icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
