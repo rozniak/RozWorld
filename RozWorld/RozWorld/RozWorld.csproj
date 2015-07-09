@@ -102,7 +102,6 @@
     <Compile Include="Entity\Player\ServerPlayerHandler.cs" />
     <Compile Include="Entity\Thing.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="FloatPoint.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Graphics\GameWindow.cs" />
     <Compile Include="Graphics\Shaders.cs" />

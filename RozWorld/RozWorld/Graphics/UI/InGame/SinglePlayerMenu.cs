@@ -11,6 +11,8 @@
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
 
+using OpenGL;
+
 namespace RozWorld.Graphics.UI.InGame
 {
     public class SinglePlayerMenu : ControlSystem
@@ -39,7 +41,7 @@ namespace RozWorld.Graphics.UI.InGame
             screenTitle.Text = "Play Game";
             screenTitle.ForeColour = VectorColour.OpaqueWhite;
             screenTitle.ZIndex = 1;
-            screenTitle.Position = new FloatPoint(218, 148);
+            screenTitle.Position = new Vector2(218, 148);
             screenTitle.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("ScreenTitle", screenTitle);
@@ -49,7 +51,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             newWorld.Text = "New World...";
             newWorld.Width = 200;
-            newWorld.Position = new FloatPoint(218, 288);
+            newWorld.Position = new Vector2(218, 288);
             newWorld.DialogKey = this.DialogKey;
             newWorld.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             newWorld.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -63,7 +65,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             returnMenu.Text = "Return...";
             returnMenu.Width = 200;
-            returnMenu.Position = new FloatPoint(218, 328);
+            returnMenu.Position = new Vector2(218, 328);
             returnMenu.DialogKey = this.DialogKey;
             returnMenu.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             returnMenu.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);

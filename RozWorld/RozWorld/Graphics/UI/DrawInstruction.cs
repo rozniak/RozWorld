@@ -17,8 +17,8 @@ namespace RozWorld.Graphics.UI
 {
     public class DrawInstruction
     {
-        public FloatPoint[] DrawPoints = new FloatPoint[4];
-        public FloatPoint[] BlitPoints = new FloatPoint[4];
+        public Vector2[] DrawPoints = new Vector2[4];
+        public Vector2[] BlitPoints = new Vector2[4];
         
         public readonly Texture TextureReference;
         public readonly string InstructionKey;
@@ -27,7 +27,7 @@ namespace RozWorld.Graphics.UI
         private readonly GameWindow ParentWindow;
 
 
-        public DrawInstruction(Texture texture, FloatPoint position, GameWindow parentWindow, string instructionKey = "")
+        public DrawInstruction(Texture texture, Vector2 position, GameWindow parentWindow, string instructionKey = "")
         {
             ParentWindow = parentWindow;
 
@@ -43,14 +43,14 @@ namespace RozWorld.Graphics.UI
             Size textureSize = texture.Size;
 
             SetupGLDrawCoordinates(position, textureSize);
-            SetupGLBlitCoordinates(new FloatPoint(0, 0), new FloatPoint(textureSize.Width, textureSize.Height));
+            SetupGLBlitCoordinates(new Vector2(0, 0), new Vector2(textureSize.Width, textureSize.Height));
 
             InstructionKey = instructionKey;
 
             TintColour = VectorColour.NoTint;
         }
-        
-        public DrawInstruction(Texture texture, Size dimensions, FloatPoint position, GameWindow parentWindow, string instructionKey = "")
+
+        public DrawInstruction(Texture texture, Size dimensions, Vector2 position, GameWindow parentWindow, string instructionKey = "")
         {
             Size finalDrawSize = dimensions;
 
@@ -73,18 +73,18 @@ namespace RozWorld.Graphics.UI
             }
 
             SetupGLDrawCoordinates(position, finalDrawSize);
-            SetupGLBlitCoordinates(new FloatPoint(0, 0), new FloatPoint(finalDrawSize.Width, finalDrawSize.Height));
+            SetupGLBlitCoordinates(new Vector2(0, 0), new Vector2(finalDrawSize.Width, finalDrawSize.Height));
 
             InstructionKey = instructionKey;
 
             TintColour = VectorColour.NoTint;
         }
-        
-        public DrawInstruction(Texture texture, FloatPoint blitFrom, FloatPoint blitTo, Size dimensions, FloatPoint position, GameWindow parentWindow, Vector4 tintColour, string instructionKey = "")
+
+        public DrawInstruction(Texture texture, Vector2 blitFrom, Vector2 blitTo, Size dimensions, Vector2 position, GameWindow parentWindow, Vector4 tintColour, string instructionKey = "")
         {
             Size finalDrawSize = dimensions;
-            FloatPoint finalBlitFrom = blitFrom;
-            FloatPoint finalBlitTo = blitTo;
+            Vector2 finalBlitFrom = blitFrom;
+            Vector2 finalBlitTo = blitTo;
 
             ParentWindow = parentWindow;
 
@@ -104,14 +104,14 @@ namespace RozWorld.Graphics.UI
                 finalDrawSize = textureSize;
             }
 
-            if (finalBlitFrom.X < 0 || finalBlitFrom.X > textureSize.Width || finalBlitFrom.Y < 0 || finalBlitFrom.Y > textureSize.Height)
+            if (finalBlitFrom.x < 0 || finalBlitFrom.x > textureSize.Width || finalBlitFrom.y < 0 || finalBlitFrom.y > textureSize.Height)
             {
-                finalBlitFrom = new FloatPoint(0, 0);
+                finalBlitFrom = new Vector2(0, 0);
             }
 
-            if (finalBlitTo.X <= 0 || finalBlitTo.X > textureSize.Width || finalBlitTo.Y <= 0 || finalBlitTo.Y > textureSize.Height)
+            if (finalBlitTo.x <= 0 || finalBlitTo.x > textureSize.Width || finalBlitTo.y <= 0 || finalBlitTo.y > textureSize.Height)
             {
-                finalBlitTo = new FloatPoint(0, 0);
+                finalBlitTo = new Vector2(0, 0);
             }
 
             SetupGLDrawCoordinates(position, finalDrawSize);
@@ -128,7 +128,7 @@ namespace RozWorld.Graphics.UI
         /// </summary>
         /// <param name="origin">The top left point of where the texture should be drawn.</param>
         /// <param name="drawDimensions">The size of the drawn texture.</param>
-        private void SetupGLDrawCoordinates(FloatPoint origin, Size drawDimensions)
+        private void SetupGLDrawCoordinates(Vector2 origin, Size drawDimensions)
         {
             // Set up drawing scale, the drawing vectors work as below:
             // 
@@ -139,21 +139,21 @@ namespace RozWorld.Graphics.UI
 
             for (int i = 0; i <= 3; i++)
             {
-                DrawPoints[i] = new FloatPoint(origin.X, origin.Y);
+                DrawPoints[i] = new Vector2(origin.x, origin.y);
             }
 
-            DrawPoints[0].X += drawDimensions.Width;
-            DrawPoints[2].Y += drawDimensions.Height;
-            DrawPoints[3].X += drawDimensions.Width;
-            DrawPoints[3].Y += drawDimensions.Height;
+            DrawPoints[0].x += drawDimensions.Width;
+            DrawPoints[2].y += drawDimensions.Height;
+            DrawPoints[3].x += drawDimensions.Width;
+            DrawPoints[3].y += drawDimensions.Height;
 
 
             // Set up final floats for GL to use as vector points:
 
             for (int i = 0; i <= 3; i++)
             {
-                DrawPoints[i].X = ((DrawPoints[i].X / ParentWindow.ResolutionScale[0]) * 2) - 1.0f;
-                DrawPoints[i].Y = (((DrawPoints[i].Y / ParentWindow.ResolutionScale[1]) * 2) - 1.0f) * -1.0f;
+                DrawPoints[i].x = ((DrawPoints[i].x / ParentWindow.WindowScale[0]) * 2) - 1.0f;
+                DrawPoints[i].y = (((DrawPoints[i].y / ParentWindow.WindowScale[1]) * 2) - 1.0f) * -1.0f;
             }
         }
 
@@ -163,7 +163,7 @@ namespace RozWorld.Graphics.UI
         /// </summary>
         /// <param name="blitOrigin">The top left point of where to start blitting the texture.</param>
         /// <param name="blitEnd">The bottom right point of where to end blitting the texture.</param>
-        private void SetupGLBlitCoordinates(FloatPoint blitOrigin, FloatPoint blitEnd)
+        private void SetupGLBlitCoordinates(Vector2 blitOrigin, Vector2 blitEnd)
         {
             // Set up blitting rectangle, the blitting vectors work as below:
             //
@@ -176,18 +176,18 @@ namespace RozWorld.Graphics.UI
 
             for (int i = 0; i <= 3; i++)
             {
-                BlitPoints[i] = new FloatPoint(blitEnd.X, blitEnd.Y);
+                BlitPoints[i] = new Vector2(blitEnd.x, blitEnd.y);
             }
 
-            BlitPoints[1].X = blitOrigin.X;
-            BlitPoints[2].X = blitOrigin.X;
-            BlitPoints[2].Y = blitOrigin.Y;
-            BlitPoints[3].Y = blitOrigin.Y;
+            BlitPoints[1].x = blitOrigin.x;
+            BlitPoints[2].x = blitOrigin.x;
+            BlitPoints[2].y = blitOrigin.y;
+            BlitPoints[3].y = blitOrigin.y;
 
             for (int i = 0; i <= 3; i++)
             {
-                BlitPoints[i].X = BlitPoints[i].X / (float)textureSize.Width;
-                BlitPoints[i].Y = BlitPoints[i].Y / (float)textureSize.Height;
+                BlitPoints[i].x = BlitPoints[i].x / (float)textureSize.Width;
+                BlitPoints[i].y = BlitPoints[i].y / (float)textureSize.Height;
             }
         }
 
@@ -198,7 +198,7 @@ namespace RozWorld.Graphics.UI
         /// <param name="font">The font that will be blitted.</param>
         /// <param name="character">The character to blit from the font.</param>
         /// <returns>The blitting coordinates if they were created successfully, null otherwise.</returns>
-        public static FloatPoint[] CreateBlitCoordsForFont(FontType font, char character)
+        public static Vector2[] CreateBlitCoordsForFont(FontType font, char character)
         {
             switch (font)
             {
@@ -207,39 +207,39 @@ namespace RozWorld.Graphics.UI
 
                     if (charCode == 0)
                     {
-                        return new FloatPoint[] { new FloatPoint(0, 0), new FloatPoint(0, 0) };
+                        return new Vector2[] { new Vector2(0, 0), new Vector2(0, 0) };
                     }
                     else if (charCode >= 1 && charCode <= 6) // 0 - 5
                     {
                         float offsetAmount = (charCode - 1) * 11;   // Get the offset by taking the character code and multiplying by 11 (width of characters)
-                        return new FloatPoint[] { new FloatPoint(572 + offsetAmount, 11), new FloatPoint(583 + offsetAmount, 22) };
+                        return new Vector2[] { new Vector2(572 + offsetAmount, 11), new Vector2(583 + offsetAmount, 22) };
                     }
                     else if (charCode >= 7 && charCode <= 10) // 6 - 9
                     {
                         float offsetAmount = (charCode - 7) * 11;
-                        return new FloatPoint[] { new FloatPoint(offsetAmount, 0), new FloatPoint(11 + offsetAmount, 11) };
+                        return new Vector2[] { new Vector2(offsetAmount, 0), new Vector2(11 + offsetAmount, 11) };
                     }
                     else if (charCode >= 11 && charCode <= 62) // A - z
                     {
                         float offsetAmount = (charCode - 11) * 11;
-                        return new FloatPoint[] { new FloatPoint(offsetAmount, 11), new FloatPoint(11 + offsetAmount, 22) };
+                        return new Vector2[] { new Vector2(offsetAmount, 11), new Vector2(11 + offsetAmount, 22) };
                     }
                     else if (charCode >= 63 && charCode <= 92) // ! - |
                     {
                         float offsetAmount = (charCode - 63) * 11;
-                        return new FloatPoint[] { new FloatPoint(44 + offsetAmount, 0), new FloatPoint(55 + offsetAmount, 11) };
+                        return new Vector2[] { new Vector2(44 + offsetAmount, 0), new Vector2(55 + offsetAmount, 11) };
                     }
                     else if (charCode == 253) // *
                     {
-                        return new FloatPoint[] { new FloatPoint(373, 0), new FloatPoint(385, 11) };
+                        return new Vector2[] { new Vector2(373, 0), new Vector2(385, 11) };
                     }
                     else if (charCode == 254) // €
                     {
-                        return new FloatPoint[] { new FloatPoint(395, 0), new FloatPoint(407, 11) };
+                        return new Vector2[] { new Vector2(395, 0), new Vector2(407, 11) };
                     }
                     else if (charCode == 255) // ^
                     {
-                        return new FloatPoint[] { new FloatPoint(384, 0), new FloatPoint(396, 11) };
+                        return new Vector2[] { new Vector2(384, 0), new Vector2(396, 11) };
                     }
                     
                     return null;

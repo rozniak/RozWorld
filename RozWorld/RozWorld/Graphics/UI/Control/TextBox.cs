@@ -95,7 +95,7 @@ namespace RozWorld.Graphics.UI.Control
             this._ForeColour = VectorColour.OpaqueWhite;
             this._TintColour = VectorColour.NoTint;
             this._Text = "";
-            this.Position = new FloatPoint(0, 0);
+            this.Position = new Vector2(0, 0);
             this.ZIndex = 1;
         }
 
@@ -124,10 +124,10 @@ namespace RozWorld.Graphics.UI.Control
             {
                 case "position":
                 case "control":
-                    int yString = (int)Position.Y + 8;
-                    int xString = (int)Position.X + 6;
-                    int xTextBox = (int)Position.X;
-                    int yTextBox = (int)Position.Y;
+                    int yString = (int)Position.y + 8;
+                    int xString = (int)Position.x + 6;
+                    int xTextBox = (int)Position.x;
+                    int yTextBox = (int)Position.y;
                     int textOffset = 0;
 
                     DrawInstructions.Clear();
@@ -137,10 +137,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Left Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderCornerRight,
-                        new FloatPoint(3, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 3),
+                        new Vector2(0, 0),
                         new Size(3, 3),
-                        new FloatPoint(xTextBox, yTextBox),
+                        new Vector2(xTextBox, yTextBox),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -148,10 +148,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Bar //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderTop,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(1, 3),
+                        new Vector2(0, 0),
+                        new Vector2(1, 3),
                         new Size(Width, 3),
-                        new FloatPoint(xTextBox + 3, yTextBox),
+                        new Vector2(xTextBox + 3, yTextBox),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -159,10 +159,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Right Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderCornerLeft,
-                        new FloatPoint(3, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 3),
+                        new Vector2(0, 0),
                         new Size(3, 3),
-                        new FloatPoint(xTextBox + Width + 3, yTextBox),
+                        new Vector2(xTextBox + Width + 3, yTextBox),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -170,10 +170,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Left Side //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderSide,
-                        new FloatPoint(3, 1),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 1),
+                        new Vector2(0, 0),
                         new Size(3, 22),
-                        new FloatPoint(xTextBox, yTextBox + 3),
+                        new Vector2(xTextBox, yTextBox + 3),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -181,10 +181,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Left Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderCornerLeft,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 3),
+                        new Vector2(0, 0),
+                        new Vector2(3, 3),
                         new Size(3, 3),
-                        new FloatPoint(xTextBox, yTextBox + 25),
+                        new Vector2(xTextBox, yTextBox + 25),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -192,10 +192,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Bar //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderTop,
-                        new FloatPoint(1, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(1, 3),
+                        new Vector2(0, 0),
                         new Size(Width, 3),
-                        new FloatPoint(xTextBox + 3, yTextBox + 25),
+                        new Vector2(xTextBox + 3, yTextBox + 25),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -203,10 +203,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Right Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderCornerRight,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 3),
+                        new Vector2(0, 0),
+                        new Vector2(3, 3),
                         new Size(3, 3),
-                        new FloatPoint(xTextBox + Width + 3, yTextBox + 25),
+                        new Vector2(xTextBox + Width + 3, yTextBox + 25),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -214,10 +214,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Right Side //
                     DrawInstructions.Add(new DrawInstruction(
                         TextBoxBorderSide,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 1),
+                        new Vector2(0, 0),
+                        new Vector2(3, 1),
                         new Size(3, 22),
-                        new FloatPoint(xTextBox + Width + 3, yTextBox + 3),
+                        new Vector2(xTextBox + Width + 3, yTextBox + 3),
                         ParentWindow,
                         TintColour,
                         "textbox"));
@@ -227,10 +227,10 @@ namespace RozWorld.Graphics.UI.Control
                     {
                         DrawInstructions.Add(new DrawInstruction(
                             TextBoxBody,
-                            new FloatPoint(0, 0),
-                            new FloatPoint(11, 22),
+                            new Vector2(0, 0),
+                            new Vector2(11, 22),
                             new Size(11, 22),
-                            new FloatPoint(xTextBox + offset + 3, yTextBox + 3),
+                            new Vector2(xTextBox + offset + 3, yTextBox + 3),
                             ParentWindow,
                             TintColour,
                             "textbox"));
@@ -242,7 +242,7 @@ namespace RozWorld.Graphics.UI.Control
                     {
                         foreach (char c in Text)
                         {
-                            FloatPoint[] position = DrawInstruction.CreateBlitCoordsForFont(FontType.SmallText, c);
+                            Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(FontType.SmallText, c);
 
                             if (position != null)
                             {
@@ -253,7 +253,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0], 
                                         position[1], 
                                         new Size(11, 11),
-                                        new FloatPoint(xString + textOffset, yString + 3),
+                                        new Vector2(xString + textOffset, yString + 3),
                                         ParentWindow,
                                         ForeColour, 
                                         "text"));
@@ -265,7 +265,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0],
                                         position[1],
                                         new Size(11, 11),
-                                        new FloatPoint(xString + textOffset, yString + 2),
+                                        new Vector2(xString + textOffset, yString + 2),
                                         ParentWindow,
                                         ForeColour,
                                         "text"));
@@ -277,7 +277,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0],
                                         position[1],
                                         new Size(11, 11),
-                                        new FloatPoint(xString + textOffset, yString),
+                                        new Vector2(xString + textOffset, yString),
                                         ParentWindow,
                                         ForeColour,
                                         "text"));

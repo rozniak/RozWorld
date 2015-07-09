@@ -31,8 +31,8 @@ namespace RozWorld.Graphics.UI
             }
         }
 
-        protected FloatPoint _Position;
-        public FloatPoint Position
+        protected Vector2 _Position;
+        public Vector2 Position
         {
             get
             {
@@ -42,6 +42,21 @@ namespace RozWorld.Graphics.UI
             set
             {
                 this._Position = value;
+                UpdateDrawInstruction("position");
+            }
+        }
+
+        protected AnchorType _Anchor;
+        public AnchorType Anchor
+        {
+            get
+            {
+                return this._Anchor;
+            }
+
+            set
+            {
+                this._Anchor = value;
                 UpdateDrawInstruction("position");
             }
         }
@@ -80,9 +95,19 @@ namespace RozWorld.Graphics.UI
             set
             {
                 this._Visible = value;
+
+                if (!value) // If this isn't visible, the control shouldn't accept input (unless told to).
+                {
+                    this.AcceptInputKeyboard = false;
+                    this.AcceptInputMouse = false;
+                }
+
                 UpdateDrawInstruction("visible");
             }
         }
+
+        public bool AcceptInputMouse;
+        public bool AcceptInputKeyboard;
 
         protected GameWindow ParentWindow;
 

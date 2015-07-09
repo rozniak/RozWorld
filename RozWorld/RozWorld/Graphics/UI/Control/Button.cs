@@ -123,7 +123,7 @@ namespace RozWorld.Graphics.UI.Control
             this._ForeColour = VectorColour.OpaqueWhite;
             this._TintColour = VectorColour.NoTint;
             this._Text = "";
-            this.Position = new FloatPoint(0, 0);            
+            this.Position = new Vector2(0, 0);            
             this.ZIndex = 1;
         }
 
@@ -135,10 +135,10 @@ namespace RozWorld.Graphics.UI.Control
         {
             if (this.Visible)
             {
-                if (ParentWindow.MouseX >= this.Position.X &&
-                ParentWindow.MouseX < this.Position.X + this.Width + 6 &&
-                ParentWindow.MouseY >= this.Position.Y &&
-                ParentWindow.MouseY < this.Position.Y + 28 &&
+                if (ParentWindow.MouseX >= this.Position.x &&
+                ParentWindow.MouseX < this.Position.x + this.Width + 6 &&
+                ParentWindow.MouseY >= this.Position.y &&
+                ParentWindow.MouseY < this.Position.y + 28 &&
                 !this.MouseEntered)
                 {
                     this.MouseEntered = true;
@@ -148,10 +148,10 @@ namespace RozWorld.Graphics.UI.Control
                         OnMouseEnter(this);
                     }
                 }
-                else if (!(ParentWindow.MouseX >= this.Position.X &&
-                    ParentWindow.MouseX < this.Position.X + this.Width + 6 &&
-                    ParentWindow.MouseY >= this.Position.Y &&
-                    ParentWindow.MouseY < this.Position.Y + 28) &&
+                else if (!(ParentWindow.MouseX >= this.Position.x &&
+                    ParentWindow.MouseX < this.Position.x + this.Width + 6 &&
+                    ParentWindow.MouseY >= this.Position.y &&
+                    ParentWindow.MouseY < this.Position.y + 28) &&
                     this.MouseEntered)
                 {
                     this.MouseEntered = false;
@@ -232,10 +232,10 @@ namespace RozWorld.Graphics.UI.Control
                 case "position":
                 case "control":
                     int stringWidth = 10 * Text.Length;
-                    int xString = ((int)Position.X + (Width / 2)) - (stringWidth / 2);
-                    int yString = (int)Position.Y + 8;
-                    int xButton = (int)Position.X;
-                    int yButton = (int)Position.Y;
+                    int xString = ((int)Position.x + (Width / 2)) - (stringWidth / 2);
+                    int yString = (int)Position.y + 8;
+                    int xButton = (int)Position.x;
+                    int yButton = (int)Position.y;
                     int textOffset = 0;
 
                     DrawInstructions.Clear();
@@ -245,10 +245,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Left Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderCornerRight,
-                        new FloatPoint(3, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 3),
+                        new Vector2(0, 0),
                         new Size(3, 3),
-                        new FloatPoint(xButton, yButton),
+                        new Vector2(xButton, yButton),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -256,10 +256,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Bar //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderTop,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(1, 3),
+                        new Vector2(0, 0),
+                        new Vector2(1, 3),
                         new Size(Width, 3),
-                        new FloatPoint(xButton + 3, yButton),
+                        new Vector2(xButton + 3, yButton),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -267,10 +267,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Right Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderCornerLeft,
-                        new FloatPoint(3, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 3),
+                        new Vector2(0, 0),
                         new Size(3, 3),
-                        new FloatPoint(xButton + Width + 3, yButton),
+                        new Vector2(xButton + Width + 3, yButton),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -278,10 +278,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Left Side //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderSide,
-                        new FloatPoint(3, 1),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 1),
+                        new Vector2(0, 0),
                         new Size(3, 22),
-                        new FloatPoint(xButton, yButton + 3),
+                        new Vector2(xButton, yButton + 3),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -289,10 +289,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Left Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderCornerLeft,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 3),
+                        new Vector2(0, 0),
+                        new Vector2(3, 3),
                         new Size(3, 3),
-                        new FloatPoint(xButton, yButton + 25),
+                        new Vector2(xButton, yButton + 25),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -300,10 +300,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Bar //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderTop,
-                        new FloatPoint(1, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(1, 3),
+                        new Vector2(0, 0),
                         new Size(Width, 3),
-                        new FloatPoint(xButton + 3, yButton + 25),
+                        new Vector2(xButton + 3, yButton + 25),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -311,10 +311,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Button Right Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderCornerRight,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 3),
+                        new Vector2(0, 0),
+                        new Vector2(3, 3),
                         new Size(3, 3),
-                        new FloatPoint(xButton + Width + 3, yButton + 25),
+                        new Vector2(xButton + Width + 3, yButton + 25),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -322,10 +322,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Right Side //
                     DrawInstructions.Add(new DrawInstruction(
                         ButtonBorderSide,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 1),
+                        new Vector2(0, 0),
+                        new Vector2(3, 1),
                         new Size(3, 22),
-                        new FloatPoint(xButton + Width + 3, yButton + 3),
+                        new Vector2(xButton + Width + 3, yButton + 3),
                         ParentWindow,
                         TintColour,
                         "button"));
@@ -335,10 +335,10 @@ namespace RozWorld.Graphics.UI.Control
                     {
                         DrawInstructions.Add(new DrawInstruction(
                             ButtonBody,
-                            new FloatPoint(0,0),
-                            new FloatPoint(11, 22),
+                            new Vector2(0, 0),
+                            new Vector2(11, 22),
                             new Size(11, 22),
-                            new FloatPoint(xButton + offset + 3, yButton + 3),
+                            new Vector2(xButton + offset + 3, yButton + 3),
                             ParentWindow,
                             TintColour,
                             "button"));
@@ -350,7 +350,7 @@ namespace RozWorld.Graphics.UI.Control
                     {
                         foreach (char c in Text)
                         {
-                            FloatPoint[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
+                            Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
 
                             if (position != null)
                             {
@@ -361,7 +361,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0],
                                         position[1],
                                         new Size(11, 11),
-                                        new FloatPoint(xString + textOffset, yString + 3),
+                                        new Vector2(xString + textOffset, yString + 3),
                                         ParentWindow,
                                         ForeColour,
                                         "text"));
@@ -373,7 +373,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0],
                                         position[1],
                                         new Size(11, 11),
-                                        new FloatPoint(xString + textOffset, yString + 2),
+                                        new Vector2(xString + textOffset, yString + 2),
                                         ParentWindow,
                                         ForeColour,
                                         "text"));
@@ -385,7 +385,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0],
                                         position[1],
                                         new Size(11, 11),
-                                        new FloatPoint(xString + textOffset, yString),
+                                        new Vector2(xString + textOffset, yString),
                                         ParentWindow,
                                         ForeColour,
                                         "text"));

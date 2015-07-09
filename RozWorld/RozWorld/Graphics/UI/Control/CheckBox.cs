@@ -106,7 +106,7 @@ namespace RozWorld.Graphics.UI.Control
 
             this._ForeColour = VectorColour.OpaqueBlack;
             this._TintColour = VectorColour.NoTint;
-            this.Position = new FloatPoint(0, 0);
+            this.Position = new Vector2(0, 0);
             this.Checked = false;
         }
 
@@ -135,8 +135,8 @@ namespace RozWorld.Graphics.UI.Control
             {
                 case "position":
                 case "control":
-                    int xCheckBox = (int)Position.X;
-                    int yCheckBox = (int)Position.Y;
+                    int xCheckBox = (int)Position.x;
+                    int yCheckBox = (int)Position.y;
 
                     DrawInstructions.Clear();
 
@@ -145,10 +145,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Left Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderCornerRight,
-                        new FloatPoint(3, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 3),
+                        new Vector2(0, 0),
                         new Size(3, 3),
-                        new FloatPoint(xCheckBox, yCheckBox),
+                        new Vector2(xCheckBox, yCheckBox),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -156,10 +156,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Bar //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderTop,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(1, 3),
+                        new Vector2(0, 0),
+                        new Vector2(1, 3),
                         new Size(22, 3),
-                        new FloatPoint(xCheckBox + 3, yCheckBox),
+                        new Vector2(xCheckBox + 3, yCheckBox),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -167,10 +167,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Top Right Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderCornerLeft,
-                        new FloatPoint(3, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 3),
+                        new Vector2(0, 0),
                         new Size(3, 3),
-                        new FloatPoint(xCheckBox + 25, yCheckBox),
+                        new Vector2(xCheckBox + 25, yCheckBox),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -178,10 +178,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Left Side //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderSide,
-                        new FloatPoint(3, 1),
-                        new FloatPoint(0, 0),
+                        new Vector2(3, 1),
+                        new Vector2(0, 0),
                         new Size(3, 22),
-                        new FloatPoint(xCheckBox, yCheckBox + 3),
+                        new Vector2(xCheckBox, yCheckBox + 3),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -189,10 +189,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Left Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderCornerLeft,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 3),
+                        new Vector2(0, 0),
+                        new Vector2(3, 3),
                         new Size(3, 3),
-                        new FloatPoint(xCheckBox, yCheckBox + 25),
+                        new Vector2(xCheckBox, yCheckBox + 25),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -200,10 +200,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Bar //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderTop,
-                        new FloatPoint(1, 3),
-                        new FloatPoint(0, 0),
+                        new Vector2(1, 3),
+                        new Vector2(0, 0),
                         new Size(22, 3),
-                        new FloatPoint(xCheckBox + 3, yCheckBox + 25),
+                        new Vector2(xCheckBox + 3, yCheckBox + 25),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -211,10 +211,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Bottom Right Corner //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderCornerRight,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 3),
+                        new Vector2(0, 0),
+                        new Vector2(3, 3),
                         new Size(3, 3),
-                        new FloatPoint(xCheckBox + 25, yCheckBox + 25),
+                        new Vector2(xCheckBox + 25, yCheckBox + 25),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -222,10 +222,10 @@ namespace RozWorld.Graphics.UI.Control
                     // Right Side //
                     DrawInstructions.Add(new DrawInstruction(
                         CheckBoxBorderSide,
-                        new FloatPoint(0, 0),
-                        new FloatPoint(3, 1),
+                        new Vector2(0, 0),
+                        new Vector2(3, 1),
                         new Size(3, 22),
-                        new FloatPoint(xCheckBox + 25, yCheckBox + 3),
+                        new Vector2(xCheckBox + 25, yCheckBox + 3),
                         ParentWindow,
                         TintColour,
                         "checkbox"));
@@ -294,10 +294,10 @@ namespace RozWorld.Graphics.UI.Control
         {
             DrawInstructions.Add(new DrawInstruction(
                     CheckBoxBody,
-                    new FloatPoint(0, 0),
-                    new FloatPoint(22, 22),
+                    new Vector2(0, 0),
+                    new Vector2(22, 22),
                     new Size(22, 22),
-                    new FloatPoint((int)Position.X + 3, (int)Position.Y + 3),
+                    new Vector2((int)Position.x + 3, (int)Position.y + 3),
                     ParentWindow,
                     TintColour,
                     "body"));
@@ -311,10 +311,10 @@ namespace RozWorld.Graphics.UI.Control
         {
             DrawInstructions.Add(new DrawInstruction(
                     CheckBoxTick,
-                    new FloatPoint(0, 0),
-                    new FloatPoint(22, 22),
+                    new Vector2(0, 0),
+                    new Vector2(22, 22),
                     new Size(22, 22),
-                    new FloatPoint((int)Position.X + 3, (int)Position.Y + 3),
+                    new Vector2((int)Position.x + 3, (int)Position.y + 3),
                     ParentWindow,
                     ForeColour,
                     "tick"));

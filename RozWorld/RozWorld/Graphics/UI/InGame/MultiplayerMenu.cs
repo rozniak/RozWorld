@@ -1,6 +1,8 @@
 ﻿using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
 
+using OpenGL;
+
 namespace RozWorld.Graphics.UI.InGame
 {
     public class MultiplayerMenu : ControlSystem
@@ -29,7 +31,7 @@ namespace RozWorld.Graphics.UI.InGame
             screenTitle.Text = "Multiplayer";
             screenTitle.ForeColour = VectorColour.OpaqueWhite;
             screenTitle.ZIndex = 1;
-            screenTitle.Position = new FloatPoint(218, 148);
+            screenTitle.Position = new Vector2(218, 148);
             screenTitle.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("ScreenTitle", screenTitle);
@@ -39,7 +41,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             connectButton.Text = "Connect";
             connectButton.Width = 200;
-            connectButton.Position = new FloatPoint(218, 288);
+            connectButton.Position = new Vector2(218, 288);
             connectButton.DialogKey = this.DialogKey;
             connectButton.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             connectButton.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -51,7 +53,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             specifyButton.Text = "Specify";
             specifyButton.Width = 200;
-            specifyButton.Position = new FloatPoint(218, 328);
+            specifyButton.Position = new Vector2(218, 328);
             specifyButton.DialogKey = this.DialogKey;
             specifyButton.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             specifyButton.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);

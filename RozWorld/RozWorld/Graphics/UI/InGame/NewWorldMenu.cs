@@ -1,5 +1,6 @@
 ﻿using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
+using OpenGL;
 
 namespace RozWorld.Graphics.UI.InGame
 {
@@ -30,7 +31,7 @@ namespace RozWorld.Graphics.UI.InGame
             tagWorldName.Text = "World Name:";
             tagWorldName.ForeColour = VectorColour.OpaqueWhite;
             tagWorldName.ZIndex = 1;
-            tagWorldName.Position = new FloatPoint(218, 180);
+            tagWorldName.Position = new Vector2(218, 180);
             tagWorldName.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("TagWorldName", tagWorldName);
@@ -41,7 +42,7 @@ namespace RozWorld.Graphics.UI.InGame
             worldName.Width = 200;
             worldName.ForeColour = VectorColour.OpaqueBlack;
             worldName.ZIndex = 1;
-            worldName.Position = new FloatPoint(218, 200);
+            worldName.Position = new Vector2(218, 200);
             worldName.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("WorldNameBox", worldName);
@@ -51,7 +52,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             playWorld.Text = "Play!";
             playWorld.Width = 200;
-            playWorld.Position = new FloatPoint(218, 288);
+            playWorld.Position = new Vector2(218, 288);
             playWorld.DialogKey = this.DialogKey;
             playWorld.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             playWorld.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -65,7 +66,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             returnMenu.Text = "Return...";
             returnMenu.Width = 200;
-            returnMenu.Position = new FloatPoint(218, 328);
+            returnMenu.Position = new Vector2(218, 328);
             returnMenu.DialogKey = this.DialogKey;
             returnMenu.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             returnMenu.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);

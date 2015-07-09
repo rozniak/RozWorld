@@ -52,8 +52,8 @@ namespace RozWorld.Graphics.UI.Control
 
                 this.ImageTexture = ParentWindow.TextureManagement.GetTexture(this._TextureName);
 
-                this.BlitFrom = new FloatPoint(0, 0);
-                this.BlitTo = new FloatPoint(ImageTexture.Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
+                this.BlitFrom = new Vector2(0, 0);
+                this.BlitTo = new Vector2(ImageTexture.Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
                 this.Dimensions = new Size(ImageTexture.Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
                 UpdateDrawInstruction("texture");
             }
@@ -77,8 +77,8 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
-        private FloatPoint _BlitFrom;
-        public FloatPoint BlitFrom
+        private Vector2 _BlitFrom;
+        public Vector2 BlitFrom
         {
             get
             {
@@ -87,7 +87,7 @@ namespace RozWorld.Graphics.UI.Control
 
             set
             {
-                if (value.X >= 0 && value.Y >= 0 && value.X <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width && value.Y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
+                if (value.x >= 0 && value.y >= 0 && value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width && value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
                 {
                     this._BlitFrom = value;
                     UpdateDrawInstruction("texture");
@@ -95,8 +95,8 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
-        private FloatPoint _BlitTo;
-        public FloatPoint BlitTo
+        private Vector2 _BlitTo;
+        public Vector2 BlitTo
         {
             get
             {
@@ -105,7 +105,7 @@ namespace RozWorld.Graphics.UI.Control
 
             set
             {
-                if (value.X >= 0 && value.Y >= 0 && value.X <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width && value.Y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
+                if (value.x >= 0 && value.y >= 0 && value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width && value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
                 {
                     this._BlitTo = value;
                     UpdateDrawInstruction("texture");
@@ -131,11 +131,11 @@ namespace RozWorld.Graphics.UI.Control
             LoadReferences();
 
             this.TextureName = "Missing";
-            this._TintColour = VectorColour.NoTint;            
-            this.Position = new FloatPoint(0, 0);            
+            this._TintColour = VectorColour.NoTint;
+            this.Position = new Vector2(0, 0);            
             this.Dimensions = ParentWindow.TextureManagement.GetTexture(TextureName).Size;
-            this.BlitFrom = new FloatPoint(0, 0);
-            this.BlitTo = new FloatPoint(ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
+            this.BlitFrom = new Vector2(0, 0);
+            this.BlitTo = new Vector2(ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
             this.ZIndex = 1;
         }
 
@@ -145,51 +145,54 @@ namespace RozWorld.Graphics.UI.Control
         /// </summary>
         public override void CheckMouse()
         {
-            if (ParentWindow.MouseX >= this.Position.X &&
-                ParentWindow.MouseX < this.Position.X + Dimensions.Width &&
-                ParentWindow.MouseY >= this.Position.Y &&
-                ParentWindow.MouseY < this.Position.Y + Dimensions.Height &&
+            if (AcceptInputMouse)
+            {
+                if (ParentWindow.MouseX >= this.Position.x &&
+                ParentWindow.MouseX < this.Position.x + Dimensions.Width &&
+                ParentWindow.MouseY >= this.Position.y &&
+                ParentWindow.MouseY < this.Position.y + Dimensions.Height &&
                 !MouseEntered)
-            {
-                MouseEntered = true;
-
-                if (OnMouseEnter != null)
                 {
-                    OnMouseEnter(this);
+                    MouseEntered = true;
+
+                    if (OnMouseEnter != null)
+                    {
+                        OnMouseEnter(this);
+                    }
                 }
-            }
-            else if (!(ParentWindow.MouseX >= this.Position.X &&
-                ParentWindow.MouseX < this.Position.X + Dimensions.Width &&
-                ParentWindow.MouseY >= this.Position.Y &&
-                ParentWindow.MouseY < this.Position.Y + Dimensions.Height) &&
-                MouseEntered)
-            {
-                MouseEntered = false;
-
-                if (OnMouseLeave != null)
+                else if (!(ParentWindow.MouseX >= this.Position.x &&
+                    ParentWindow.MouseX < this.Position.x + Dimensions.Width &&
+                    ParentWindow.MouseY >= this.Position.y &&
+                    ParentWindow.MouseY < this.Position.y + Dimensions.Height) &&
+                    MouseEntered)
                 {
-                    OnMouseLeave(this);
+                    MouseEntered = false;
+
+                    if (OnMouseLeave != null)
+                    {
+                        OnMouseLeave(this);
+                    }
                 }
-            }
 
-            if (((ParentWindow.CurrentMouseStates.Left && !ParentWindow.LastMouseStates.Left) ||
-                (ParentWindow.CurrentMouseStates.Middle && !ParentWindow.LastMouseStates.Middle) ||
-                (ParentWindow.CurrentMouseStates.Right && !ParentWindow.LastMouseStates.Right)) && MouseEntered)
-            {
-                if (OnMouseDown != null)
+                if (((ParentWindow.CurrentMouseStates.Left && !ParentWindow.LastMouseStates.Left) ||
+                    (ParentWindow.CurrentMouseStates.Middle && !ParentWindow.LastMouseStates.Middle) ||
+                    (ParentWindow.CurrentMouseStates.Right && !ParentWindow.LastMouseStates.Right)) && MouseEntered)
                 {
-                    OnMouseDown(this);
+                    if (OnMouseDown != null)
+                    {
+                        OnMouseDown(this);
+                    }
                 }
-            }
 
 
-            if (((!ParentWindow.CurrentMouseStates.Left && ParentWindow.LastMouseStates.Left) ||
-                (!ParentWindow.CurrentMouseStates.Middle && ParentWindow.LastMouseStates.Middle) ||
-                (!ParentWindow.CurrentMouseStates.Right && ParentWindow.LastMouseStates.Right)) && MouseEntered)
-            {
-                if (OnMouseUp != null)
+                if (((!ParentWindow.CurrentMouseStates.Left && ParentWindow.LastMouseStates.Left) ||
+                    (!ParentWindow.CurrentMouseStates.Middle && ParentWindow.LastMouseStates.Middle) ||
+                    (!ParentWindow.CurrentMouseStates.Right && ParentWindow.LastMouseStates.Right)) && MouseEntered)
                 {
-                    OnMouseUp(this);
+                    if (OnMouseUp != null)
+                    {
+                        OnMouseUp(this);
+                    }
                 }
             }
         }

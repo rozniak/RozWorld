@@ -78,7 +78,7 @@ namespace RozWorld.Graphics.UI.Control
             this.ParentWindow = parentWindow;
             LoadReferences();
             this._ForeColour = VectorColour.OpaqueWhite;
-            this.Position = new FloatPoint(0, 0);
+            this.Position = new Vector2(0, 0);
             this._Font = FontType.SmallText;
             this._Text = "";
             this.ZIndex = 1;
@@ -90,12 +90,12 @@ namespace RozWorld.Graphics.UI.Control
         /// </summary>
         public override void CheckMouse()
         {
-            if (Visible)
+            if (AcceptInputMouse)
             {
-                if (ParentWindow.MouseX >= this.Position.X &&
-                ParentWindow.MouseX < this.Position.X + (Text.Length * 10) &&
-                ParentWindow.MouseY >= this.Position.Y &&
-                ParentWindow.MouseY < this.Position.Y + 11 &&
+                if (ParentWindow.MouseX >= this.Position.x &&
+                ParentWindow.MouseX < this.Position.x + (Text.Length * 10) &&
+                ParentWindow.MouseY >= this.Position.y &&
+                ParentWindow.MouseY < this.Position.y + 11 &&
                 !MouseEntered)
                 {
                     MouseEntered = true;
@@ -105,10 +105,10 @@ namespace RozWorld.Graphics.UI.Control
                         OnMouseEnter(this);
                     }
                 }
-                else if (!(ParentWindow.MouseX >= this.Position.X &&
-                    ParentWindow.MouseX < this.Position.X + (Text.Length * 10) &&
-                    ParentWindow.MouseY >= this.Position.Y &&
-                    ParentWindow.MouseY < this.Position.Y + 11) &&
+                else if (!(ParentWindow.MouseX >= this.Position.x &&
+                    ParentWindow.MouseX < this.Position.x + (Text.Length * 10) &&
+                    ParentWindow.MouseY >= this.Position.y &&
+                    ParentWindow.MouseY < this.Position.y + 11) &&
                     MouseEntered)
                 {
                     MouseEntered = false;
@@ -191,7 +191,7 @@ namespace RozWorld.Graphics.UI.Control
 
                         foreach (char c in Text)
                         {
-                            FloatPoint[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
+                            Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
 
                             if (position != null)
                             {
@@ -201,8 +201,8 @@ namespace RozWorld.Graphics.UI.Control
                                         SmallFont,
                                         position[0], 
                                         position[1], 
-                                        new Size(11, 11), 
-                                        new FloatPoint(Position.X + textOffset, Position.Y + 3),
+                                        new Size(11, 11),
+                                        new Vector2(Position.x + textOffset, Position.y + 3),
                                         ParentWindow,
                                         ForeColour, 
                                         "text"));
@@ -214,7 +214,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0],
                                         position[1],
                                         new Size(11, 11),
-                                        new FloatPoint(Position.X + textOffset, Position.Y + 2),
+                                        new Vector2(Position.x + textOffset, Position.y + 2),
                                         ParentWindow,
                                         ForeColour,
                                         "text"));
@@ -226,7 +226,7 @@ namespace RozWorld.Graphics.UI.Control
                                         position[0],
                                         position[1],
                                         new Size(11, 11),
-                                        new FloatPoint(Position.X + textOffset, Position.Y),
+                                        new Vector2(Position.x + textOffset, Position.y),
                                         ParentWindow,
                                         ForeColour,
                                         "text"));

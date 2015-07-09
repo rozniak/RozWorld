@@ -26,17 +26,25 @@ namespace RozWorld.Graphics
     {
         public const string WINDOW_TITLE = "RozWorld ' OR '1'='1";
 
+        // Resolution relevant stuff //
+
         public int[] WindowScale
         {
             get;
             private set;
         }
 
-        public int[] ResolutionScale
+        /* For setting the client window bounds, for example when the Windows Aero theme is active as
+         * the point (0, 0) is no longer the top left pixel of the game screen, it is outside the
+         * scene. This offset is to tell how far to shift the display and mouse detection.
+         */
+        public Vector2 WindowOffset
         {
             get;
             private set;
         }
+
+        // GL relevant stuff //
 
         private ShaderProgram GLProgram;
         public TextureManager TextureManagement
@@ -51,7 +59,7 @@ namespace RozWorld.Graphics
             private set;
         }
 
-        // Mouse relevent stuff //
+        // Mouse relevant stuff //
         public MouseState LastMouseStates
         {
             get;
@@ -119,11 +127,9 @@ namespace RozWorld.Graphics
 
         public GameWindow()
         {
-            WindowScale = new int[] { 656, 496 };
-            ResolutionScale = new int[] { 656, 496 };
+            WindowScale = new int[] { 640, 480 };
 
             Glut.glutInit();
-            Glut.glutInitDisplayMode(Glut.GLUT_WINDOW_DOUBLEBUFFER);
 
             // Create GL window...
             Glut.glutInitWindowSize(WindowScale[0], WindowScale[1]);
@@ -140,8 +146,6 @@ namespace RozWorld.Graphics
             Glut.glutMotionFunc(OnMouseMove);
             Glut.glutDisplayFunc(OnDisplay);
             Glut.glutReshapeFunc(OnReshape);
-
-            
 
             // Set up (shadow) blending...
             Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
@@ -217,7 +221,7 @@ namespace RozWorld.Graphics
 
             // Actual OpenGL drawing stuff starts here:
 
-            Gl.Viewport(0, 0, ResolutionScale[0], ResolutionScale[1]);
+            Gl.Viewport(0, 0, WindowScale[0], WindowScale[1]);
             Gl.Clear(ClearBufferMask.ColorBufferBit);
             Gl.UseProgram(GLProgram);
 
@@ -227,12 +231,12 @@ namespace RozWorld.Graphics
                 {
                     foreach (DrawInstruction instruction in GameInterface.Controls[key.StringValue].DrawInstructions)
                     {
-                        VBO<Vector3> TextureDrawVectors = new VBO<Vector3>(new Vector3[] { new Vector3(instruction.DrawPoints[0].X, instruction.DrawPoints[0].Y, 0), new Vector3(instruction.DrawPoints[1].X, instruction.DrawPoints[1].Y, 0), new Vector3(instruction.DrawPoints[2].X, instruction.DrawPoints[2].Y, 0), new Vector3(instruction.DrawPoints[3].X, instruction.DrawPoints[3].Y, 0) });
+                        VBO<Vector3> TextureDrawVectors = new VBO<Vector3>(new Vector3[] { new Vector3(instruction.DrawPoints[0].x, instruction.DrawPoints[0].y, 0), new Vector3(instruction.DrawPoints[1].x, instruction.DrawPoints[1].y, 0), new Vector3(instruction.DrawPoints[2].x, instruction.DrawPoints[2].y, 0), new Vector3(instruction.DrawPoints[3].x, instruction.DrawPoints[3].y, 0) });
                         VBO<int> TextureQuads = new VBO<int>(new int[] { 0, 1, 2, 3 }, BufferTarget.ElementArrayBuffer);
 
                         Gl.BindTexture(instruction.TextureReference);
 
-                        VBO<Vector2> TextureBlitVectors = new VBO<Vector2>(new Vector2[] { new Vector2(instruction.BlitPoints[0].X, instruction.BlitPoints[0].Y), new Vector2(instruction.BlitPoints[1].X, instruction.BlitPoints[1].Y), new Vector2(instruction.BlitPoints[2].X, instruction.BlitPoints[2].Y), new Vector2(instruction.BlitPoints[3].X, instruction.BlitPoints[3].Y) });
+                        VBO<Vector2> TextureBlitVectors = new VBO<Vector2>(new Vector2[] { new Vector2(instruction.BlitPoints[0].x, instruction.BlitPoints[0].y), new Vector2(instruction.BlitPoints[1].x, instruction.BlitPoints[1].y), new Vector2(instruction.BlitPoints[2].x, instruction.BlitPoints[2].y), new Vector2(instruction.BlitPoints[3].x, instruction.BlitPoints[3].y) });
 
                         Gl.Uniform4f(Gl.GetUniformLocation(GLProgram.ProgramID, "tint"), instruction.TintColour.x, instruction.TintColour.y, instruction.TintColour.z, instruction.TintColour.w);
 
@@ -255,7 +259,7 @@ namespace RozWorld.Graphics
             }
             
             // Swap the graphics buffers.
-            Glut.glutSwapBuffers();
+            Gl.Flush();
         }
 
 
@@ -276,8 +280,8 @@ namespace RozWorld.Graphics
         /// <param name="height">New height of the window.</param>
         private void OnReshape(int width, int height)
         {
-            ResolutionScale[0] = width;
-            ResolutionScale[1] = height;
+            WindowScale[0] = width;
+            WindowScale[1] = height;
             GLProgram.Use();
         }
 

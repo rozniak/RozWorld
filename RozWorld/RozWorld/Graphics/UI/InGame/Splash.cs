@@ -13,6 +13,8 @@ using RozWorld.Graphics.UI.Control;
 
 using System.Timers;
 
+using OpenGL;
+
 namespace RozWorld.Graphics.UI.InGame
 {
     public class Splash : ControlSystem
@@ -38,7 +40,7 @@ namespace RozWorld.Graphics.UI.InGame
                 Label versionString = new Label(this.ParentWindow);
 
                 versionString.Text = RozWorld.VERSION_STRING;
-                versionString.Position = new FloatPoint(10, 10);
+                versionString.Position = new Vector2(10, 10);
                 versionString.ForeColour = VectorColour.OpaqueGrey;
                 versionString.ZIndex = 9000;
 
@@ -48,7 +50,7 @@ namespace RozWorld.Graphics.UI.InGame
                 Label fpsCounter = new Label(this.ParentWindow);
 
                 fpsCounter.Text = "FPS: 0";
-                fpsCounter.Position = new FloatPoint(10, 26);
+                fpsCounter.Position = new Vector2(10, 26);
                 fpsCounter.ForeColour = VectorColour.OpaqueGrey;
                 fpsCounter.ZIndex = 9000;
 
