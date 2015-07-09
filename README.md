@@ -25,19 +25,6 @@ I thank you for taking the time to check this game out, I also have a website fo
 
 The game also has its own site at: http://roz.world
 
- *       *           *            *           *            *     
-               *           *          *               *          
-    *       ████   ████   ████                       *           
-*          █    █  █   █  █   █     *                           *
-           █    █  █   █  █   █               *            *     
-   *        ████   ████   ████        *                          
-      *        *              *                      *           
-*          *     ███████  █████  █████  █  ████  █████           
-                 █  █  █  █   █    █    █  █     █▄▄           * 
-      *          █  █  █  █████    █    █  █       ▀▀█           
-  *         *    █  █  █  █   █    █    █  ████  █████  *       *
-        *                            *                    *      
-   *             *            *               *              *   
 Cheerio,
 
 rozza/rozniak
