@@ -238,6 +238,8 @@ namespace RozWorld.Graphics.UI.Control
                     int yButton = (int)Position.y;
                     int textOffset = 0;
 
+                    
+
                     DrawInstructions.Clear();
 
                     // Draw the Button Border

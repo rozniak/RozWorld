@@ -146,5 +146,6 @@ public enum AnchorType
     Right,
     Bottom,
     BottomRight,
-    Centre
+    TopCentre,
+    BottomCentre
 }

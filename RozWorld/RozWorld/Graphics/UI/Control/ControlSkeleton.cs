@@ -31,6 +31,8 @@ namespace RozWorld.Graphics.UI
             }
         }
 
+        // Position relevant stuff //
+
         protected Vector2 _Position;
         public Vector2 Position
         {
@@ -60,6 +62,140 @@ namespace RozWorld.Graphics.UI
                 UpdateDrawInstruction("position");
             }
         }
+
+        protected float _OffsetTop;
+        public float OffsetTop
+        {
+            get
+            {
+                return this._OffsetTop;
+            }
+
+            set
+            {
+                this._OffsetTop = value;
+
+                switch (this.Anchor)
+                {
+                    case AnchorType.None:
+                        this.Position = new Vector2(this.OffsetLeft, this.OffsetTop);
+                        break;
+
+                    case AnchorType.Bottom:
+                    case AnchorType.BottomRight:
+                    case AnchorType.BottomCentre:
+                        this._OffsetTop = 0f;
+                        break;
+                }
+            }
+        }
+
+        protected float _OffsetRight;
+        public float OffsetRight
+        {
+            get
+            {
+                return this._OffsetRight;
+            }
+
+            set
+            {
+                this._OffsetRight = value;
+
+                switch (this.Anchor)
+                {
+                    case AnchorType.Right:
+                        this.Position = new Vector2(this.OffsetRight, this.OffsetTop);
+                        break;
+
+                    case AnchorType.BottomRight:
+                        this.Position = new Vector2(this.OffsetRight, this.OffsetBottom);
+                        break;
+
+                    case AnchorType.None:
+                    case AnchorType.Bottom:
+                    case AnchorType.TopCentre:
+                    case AnchorType.BottomCentre:
+                        this._OffsetRight = 0f;
+                        break;
+                }
+            }
+        }
+
+        protected float _OffsetBottom;
+        public float OffsetBottom
+        {
+            get
+            {
+                return this._OffsetBottom;
+            }
+
+            set
+            {
+                this._OffsetBottom = value;
+
+                switch (this.Anchor)
+                {
+                    case AnchorType.Bottom:
+                        this.Position = new Vector2(this.OffsetLeft, this.OffsetBottom);
+                        break;
+
+                    case AnchorType.BottomRight:
+                        this.Position = new Vector2(this.OffsetRight, this.OffsetBottom);
+                        break;
+
+                    case AnchorType.BottomCentre:
+                        // TODO: Code this
+                        break;
+
+                    case AnchorType.None:
+                    case AnchorType.Right:
+                    case AnchorType.TopCentre:
+                        this._OffsetBottom = 0f;
+                        break;
+                }
+            }
+        }
+
+        protected float _OffsetLeft;
+        public float OffsetLeft
+        {
+            get
+            {
+                return this._OffsetLeft;
+            }
+
+            set
+            {
+                this._OffsetLeft = value;
+
+                switch (this.Anchor)
+                {
+                    case AnchorType.None:
+                        this.Position = new Vector2(this.OffsetLeft, this.OffsetTop);
+                        break;
+
+                    case AnchorType.Bottom:
+                        this.Position = new Vector2(this.OffsetLeft, this.OffsetBottom);
+                        break;
+
+                    case AnchorType.TopCentre:
+                        // TODO: Code this
+                        break;
+
+                    case AnchorType.BottomCentre:
+                        // TODO: Code this
+                        break;
+
+                    case AnchorType.Right:
+                    case AnchorType.BottomRight:
+                        this._OffsetLeft = 0f;
+                        break;
+                }
+            }
+        }
+
+        // Other details //
 
         public List<DrawInstruction> DrawInstructions
         {
@@ -106,6 +242,7 @@ namespace RozWorld.Graphics.UI
             }
         }
 
+        // Keep track of whether mouse/keyboard input should be accepted by this control.
         public bool AcceptInputMouse;
         public bool AcceptInputKeyboard;
 

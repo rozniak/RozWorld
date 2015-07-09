@@ -258,7 +258,7 @@ namespace RozWorld.Graphics
                 }
             }
             
-            // Swap the graphics buffers.
+            // Remember to flush!
             Gl.Flush();
         }
 
