@@ -1,12 +1,13 @@
-﻿//
-// RozWorld.Graphics.UI.ControlSystem -- RozWorld UI Objects and Dialog Control System
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Graphics.UI.ControlSystem -- RozWorld UI Objects and Dialog Control System
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
 
 namespace RozWorld.Graphics.UI
 {
@@ -35,7 +36,9 @@ namespace RozWorld.Graphics.UI
         protected ControlSkeleton[] KeyboardSubscribers = new ControlSkeleton[] { };
 
 
-        // Methods for starting and closing the control system.
+        /**
+         * Methods for starting and closing the control system.
+         */
         public abstract void Start();
         public abstract void Close();
 

@@ -1,12 +1,13 @@
-﻿//
-// RozWorld.Graphics.UI.Control.Image -- RozWorld UI Image Control
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Graphics.UI.Control.Image -- RozWorld UI Image Control
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
 
 using System.Drawing;
 
@@ -77,6 +78,9 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
+        /**
+         * Blitting information, more information on blitting in DrawInstruction.cs.
+         */
         private Vector2 _BlitFrom;
         public Vector2 BlitFrom
         {
@@ -87,7 +91,9 @@ namespace RozWorld.Graphics.UI.Control
 
             set
             {
-                if (value.x >= 0 && value.y >= 0 && value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width && value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
+                if (value.x >= 0 && value.y >= 0 &&
+                    value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width &&
+                    value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
                 {
                     this._BlitFrom = value;
                     UpdateDrawInstruction("texture");
@@ -105,7 +111,9 @@ namespace RozWorld.Graphics.UI.Control
 
             set
             {
-                if (value.x >= 0 && value.y >= 0 && value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width && value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
+                if (value.x >= 0 && value.y >= 0 &&
+                    value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width &&
+                    value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
                 {
                     this._BlitTo = value;
                     UpdateDrawInstruction("texture");
@@ -113,10 +121,14 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
-        // Texture reference for Image control
+        /**
+         * Texture reference for this control.
+         */
         private Texture ImageTexture;
 
-        // Events for the control
+        /**
+         * Events for this control.
+         */
         public event KeyEventHandler OnKeyDown;
         public event KeyEventHandler OnKeyUp;
         public event SenderEventHandler OnMouseDown;

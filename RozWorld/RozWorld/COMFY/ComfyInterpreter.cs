@@ -1,12 +1,13 @@
-﻿//
-// RozWorld.COMFY.ComfyInterpreter -- RozWorld COMFY Definition Script Interpreter
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.COMFY.ComfyInterpreter -- RozWorld COMFY Definition Script Interpreter
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
 
 using System;
 using System.IO;
@@ -40,7 +41,6 @@ namespace RozWorld.COMFY
                 bool currentlyDefining = false;
                 bool expectingOpeningBrace = false;
                 string objectName = "";
-
 
                 foreach (string line in fileContent)
                 {
@@ -153,11 +153,11 @@ namespace RozWorld.COMFY
                     {
                         switch (currentDefType)
                         {
-                            ////
-                            //
-                            // INFORMATION DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * INFORMATION DEFINITION
+                             *
+                             */
                             case DefinitionType.InformationDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -232,11 +232,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // ITEM DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * ITEM DEFINITION
+                             *
+                             */
                             case DefinitionType.ItemDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -361,11 +361,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // LANGUAGE DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * LANGUAGE DEFINITION
+                             *
+                             */
                             case DefinitionType.LanguageDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -403,11 +403,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // PET DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * PET DEFINITION
+                             *
+                             */
                             case DefinitionType.PetDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -478,11 +478,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // PLAYER PAWN DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * PLAYER PAWN DEFINITION
+                             *
+                             */
                             case DefinitionType.PlayerPawnDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -580,11 +580,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // SOUND DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * SOUND DEFINITION
+                             *
+                             */
                             case DefinitionType.SoundDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -623,11 +623,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // TEXTURE DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * TEXTURE DEFINITION
+                             *
+                             */
                             case DefinitionType.TextureDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -665,11 +665,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // THING DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * THING DEFINITION
+                             *
+                             */
                             case DefinitionType.ThingDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -775,11 +775,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // TILE FLOOR DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * TILE FLOOR DEFINITION
+                             *
+                             */
                             case DefinitionType.TileFloorDefinition:
                                 switch (parsedContent.Length)
                                 {
@@ -821,11 +821,11 @@ namespace RozWorld.COMFY
                                 break;
 
 
-                            ////
-                            //
-                            // TILE WALL DEFINITION
-                            //
-                            ////
+                            /*
+                             *
+                             * TILE WALL DEFINITION
+                             *
+                             */
                             case DefinitionType.TileWallDefinition:
                                 switch (parsedContent.Length)
                                 {

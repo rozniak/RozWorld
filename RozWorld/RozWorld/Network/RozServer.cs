@@ -1,12 +1,19 @@
-﻿//
-// RozWorld.Network.RozServer -- RozWorld Server
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Network.RozServer -- RozWorld Server
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
+
+/**
+ * [ NOTICE! ]
+ * 
+ * This code is subject to massive changes, do not expect a lot of the established code in here to remain as is!
+ */
 
 using System;
 using System.Collections.Generic;
@@ -82,7 +89,8 @@ namespace RozWorld.Network
 
             do
             {
-                NetPort = Globals.Rand.Next(49152, 65536);
+                // Obsolete code
+                //NetPort = Globals.Rand.Next(49152, 65536);
 
                 try
                 {

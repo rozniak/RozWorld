@@ -1,12 +1,13 @@
-﻿//
-// RozWorld.Graphics.UI.Control.TextBox -- RozWorld UI Textbox Control
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Graphics.UI.Control.TextBox -- RozWorld UI Textbox Control
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
 
 using System.Drawing;
 using OpenGL;
@@ -77,8 +78,9 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
-        // Texture references for the TextBox control
-
+        /**
+         * Texture references for this control.
+         */
         private Texture TextBoxBorderCornerRight;
         private Texture TextBoxBorderCornerLeft;
         private Texture TextBoxBorderSide;

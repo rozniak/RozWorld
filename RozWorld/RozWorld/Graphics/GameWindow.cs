@@ -1,12 +1,13 @@
-﻿//
-// RozWorld.Graphics.GameWindow -- RozWorld Game Window
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Graphics.GameWindow -- RozWorld Game Window
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
 
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ using Tao.FreeGlut;
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.InGame;
 
-
 namespace RozWorld.Graphics
 {
     public class GameWindow
@@ -27,14 +27,14 @@ namespace RozWorld.Graphics
         public const string WINDOW_TITLE = "RozWorld ' OR '1'='1";
 
         // Resolution relevant stuff //
-
         public int[] WindowScale
         {
             get;
             private set;
         }
 
-        /* For setting the client window bounds, for example when the Windows Aero theme is active as
+        /**
+         * For setting the client window bounds, for example when the Windows Aero theme is active as
          * the point (0, 0) is no longer the top left pixel of the game screen, it is outside the
          * scene. This offset is to tell how far to shift the display and mouse detection.
          */
@@ -44,8 +44,9 @@ namespace RozWorld.Graphics
             private set;
         }
 
-        // GL relevant stuff //
-
+        /**
+         * GL relevant stuff.
+         */
         private ShaderProgram GLProgram;
         public TextureManager TextureManagement
         {
@@ -53,13 +54,18 @@ namespace RozWorld.Graphics
             private set;
         }
 
+        /**
+         * RozWorld engine's GUI handler.
+         */
         public UIHandler GameInterface
         {
             get;
             private set;
         }
 
-        // Mouse relevant stuff //
+        /**
+         * Mouse relevant stuff.
+         */
         public MouseState LastMouseStates
         {
             get;
@@ -84,7 +90,9 @@ namespace RozWorld.Graphics
             private set;
         }
 
-        // Keyboard relevent stuff //
+        /**
+         * Keyboard relevant stuff.
+         */
         public KeyboardState LastKeyStates
         {
             get;
@@ -97,7 +105,9 @@ namespace RozWorld.Graphics
             private set;
         }
 
-        // FPS relevent stuff //
+        /**
+         * FPS relevant stuff.
+         */
         private Stopwatch Timer;
 
         public double FPS
@@ -118,10 +128,14 @@ namespace RozWorld.Graphics
             private set;
         }
 
-        // Control ZIndex watching (when this changes between draws, SortControlZIndexes() must be called)
+        /**
+         * Control ZIndex watching (when this changes between draws, SortControlZIndexes() must be called)
+         */
         private int LastControlAmount;
 
-        // ControlSystems watching (when this changes between mouse/keyboard triggers, skip the rest of the trigger calls)
+        /**
+         * ControlSystems watching (when this changes between mouse/keyboard triggers, skip the rest of the trigger calls)
+         */
         private int LastSystemAmount;
 
 

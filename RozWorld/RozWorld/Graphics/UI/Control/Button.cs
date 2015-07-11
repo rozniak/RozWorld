@@ -1,12 +1,13 @@
-﻿//
-// RozWorld.Graphics.UI.Control.Button -- RozWorld UI Button Control
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Graphics.UI.Control.Button -- RozWorld UI Button Control
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
 
 using System;
 using System.Drawing;
@@ -83,14 +84,12 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
-        private int _Width;
-        public int Width
+        public override float Width
         {
             get
             {
                 return this._Width;
             }
-
             set
             {
                 this._Width = (int)Math.Round((double)value / 11) * 11;
@@ -98,7 +97,9 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
-        // Texture references for Button control
+        /**
+         * Texture references for this control.
+         */
         private Texture ButtonBorderCornerRight;
         private Texture ButtonBorderCornerLeft;
         private Texture ButtonBorderTop;
@@ -106,7 +107,9 @@ namespace RozWorld.Graphics.UI.Control
         private Texture ButtonBody;
         private Texture SpriteFont;
 
-        // Events for the control
+        /**
+         * Events for this control.
+         */
         public event KeyEventHandler OnKeyDown;
         public event KeyEventHandler OnKeyUp;
         public event SenderEventHandler OnMouseDown;
@@ -232,7 +235,7 @@ namespace RozWorld.Graphics.UI.Control
                 case "position":
                 case "control":
                     int stringWidth = 10 * Text.Length;
-                    int xString = ((int)Position.x + (Width / 2)) - (stringWidth / 2);
+                    int xString = ((int)Position.x + ((int)Width / 2)) - (stringWidth / 2);
                     int yString = (int)Position.y + 8;
                     int xButton = (int)Position.x;
                     int yButton = (int)Position.y;
@@ -260,7 +263,7 @@ namespace RozWorld.Graphics.UI.Control
                         ButtonBorderTop,
                         new Vector2(0, 0),
                         new Vector2(1, 3),
-                        new Size(Width, 3),
+                        new Size((int)Width, 3),
                         new Vector2(xButton + 3, yButton),
                         ParentWindow,
                         TintColour,
@@ -304,7 +307,7 @@ namespace RozWorld.Graphics.UI.Control
                         ButtonBorderTop,
                         new Vector2(1, 3),
                         new Vector2(0, 0),
-                        new Size(Width, 3),
+                        new Size((int)Width, 3),
                         new Vector2(xButton + 3, yButton + 25),
                         ParentWindow,
                         TintColour,

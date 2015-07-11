@@ -1,15 +1,15 @@
-﻿//
-// RozWorld.Enums -- RozWorld Enumerations File
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Enums -- RozWorld Enumerations File
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.co.uk/projects/rozworld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
+ */
 
 
-/* [TO BE UPDATED]
+/** [TO BE UPDATED]
  * The type of item something is, useful for handling certain events.
  */
 public enum ItemType
@@ -29,7 +29,7 @@ public enum SoundType
 }
 
 
-/* 
+/**
  * The status of wild entities that may be hostile or passive.
  */
 public enum NatureType
@@ -39,7 +39,7 @@ public enum NatureType
 }
 
 
-/* [TO BE UPDATED]
+/** [TO BE UPDATED]
  * The results of a connection attempt, to be reported to the connecting client.
  */
 public enum ConnectResult
@@ -57,7 +57,7 @@ public enum ConnectResult
 }
 
 
-/*
+/**
  * The methods of damage performed on entities, useful for death messages/handling.
  */
 public enum DamageMethod
@@ -70,7 +70,7 @@ public enum DamageMethod
 }
 
 
-/* [TO BE CHANGED (?)]
+/** [TO BE CHANGED (?)]
  * The types of strips to perform on strings to make them safe for saving or other situations.
  */
 public enum StripType
@@ -82,7 +82,7 @@ public enum StripType
 }
 
 
-/*
+/**
  * The parsed object types, this mainly for the interpreter.
  */
 public enum ParsedObjectType
@@ -94,7 +94,7 @@ public enum ParsedObjectType
 }
 
 
-/*
+/**
  * The types of definitions used in COMFY files, this mainly for the interpreter. 
  */
 public enum DefinitionType
@@ -113,7 +113,7 @@ public enum DefinitionType
 }
 
 
-/* [TO BE CHANGED (?)]
+/** [TO BE CHANGED (?)]
  * The status of the game, may be useful for mods.
  */
 public enum Status
@@ -127,7 +127,7 @@ public enum Status
 }
 
 
-/* [TO BE CHANGED (?)]
+/** [TO BE CHANGED (?)]
  * Representation of the available fonts to the game.
  */
 public enum FontType
@@ -136,7 +136,7 @@ public enum FontType
 }
 
 
-/*
+/**
  * The different types of anchoring for controls, top and left are defaults as the controls will
  * stick to those sides normally.
  */

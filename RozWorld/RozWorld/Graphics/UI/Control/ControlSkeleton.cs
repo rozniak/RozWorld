@@ -1,12 +1,13 @@
-﻿//
-// RozWorld.Graphics.UI.Control.ControlSkeleton -- RozWorld UI Control Skeleton
-//
-// This source-code is part of the RozWorld project by rozza of Oddmatics:
-// <<http://www.oddmatics.co.uk>>
-// <<http://www.oddmatics.co.uk/projects/rozworld>>
-//
-// Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
-//
+﻿/**
+ * RozWorld.Graphics.UI.Control.ControlSkeleton -- RozWorld UI Control Skeleton
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.co.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
 
 using System.Drawing;
 using System.Collections.Generic;
@@ -31,8 +32,40 @@ namespace RozWorld.Graphics.UI
             }
         }
 
-        // Position relevant stuff //
+        /**
+         * Control dimension stuff.
+         */
+        protected float _Width;
+        public virtual float Width
+        {
+            get
+            {
+                return this._Width;
+            }
 
+            set
+            {
+                this._Width = value;
+            }
+        }
+
+        protected float _Height;
+        public virtual float Height
+        {
+            get
+            {
+                return this._Height;
+            }
+
+            set
+            {
+                this._Height = value;
+            }
+        }
+
+        /**
+         * Positioning/anchor relevant stuff.
+         */
         protected Vector2 _Position;
         public Vector2 Position
         {
@@ -43,7 +76,7 @@ namespace RozWorld.Graphics.UI
 
             set
             {
-                this._Position = value;
+                UpdatePosition(value);
                 UpdateDrawInstruction("position");
             }
         }
@@ -63,140 +96,39 @@ namespace RozWorld.Graphics.UI
             }
         }
 
-        protected float _OffsetTop;
-        public float OffsetTop
+        protected float _OffsetX;
+        public float OffsetX
         {
             get
             {
-                return this._OffsetTop;
+                return this._OffsetX;
             }
 
             set
             {
-                this._OffsetTop = value;
-
-                switch (this.Anchor)
-                {
-                    case AnchorType.None:
-                        this.Position = new Vector2(this.OffsetLeft, this.OffsetTop);
-                        break;
-
-                    case AnchorType.Bottom:
-                    case AnchorType.BottomRight:
-                    case AnchorType.BottomCentre:
-                        this._OffsetTop = 0f;
-                        break;
-                }
+                this._OffsetX = value;
+                UpdatePosition(new Vector2(this.OffsetX, this.OffsetY));
             }
         }
 
-        protected float _OffsetRight;
-        public float OffsetRight
+        protected float _OffsetY;
+        public float OffsetY
         {
             get
             {
-                return this._OffsetRight;
+                return this._OffsetY;
             }
 
             set
             {
-                this._OffsetRight = value;
-
-                switch (this.Anchor)
-                {
-                    case AnchorType.Right:
-                        this.Position = new Vector2(this.OffsetRight, this.OffsetTop);
-                        break;
-
-                    case AnchorType.BottomRight:
-                        this.Position = new Vector2(this.OffsetRight, this.OffsetBottom);
-                        break;
-
-                    case AnchorType.None:
-                    case AnchorType.Bottom:
-                    case AnchorType.TopCentre:
-                    case AnchorType.BottomCentre:
-                        this._OffsetRight = 0f;
-                        break;
-                }
+                this._OffsetY = value;
+                UpdatePosition(new Vector2(this.OffsetX, this.OffsetY));
             }
         }
 
-        protected float _OffsetBottom;
-        public float OffsetBottom
-        {
-            get
-            {
-                return this._OffsetBottom;
-            }
-
-            set
-            {
-                this._OffsetBottom = value;
-
-                switch (this.Anchor)
-                {
-                    case AnchorType.Bottom:
-                        this.Position = new Vector2(this.OffsetLeft, this.OffsetBottom);
-                        break;
-
-                    case AnchorType.BottomRight:
-                        this.Position = new Vector2(this.OffsetRight, this.OffsetBottom);
-                        break;
-
-                    case AnchorType.BottomCentre:
-                        // TODO: Code this
-                        break;
-
-                    case AnchorType.None:
-                    case AnchorType.Right:
-                    case AnchorType.TopCentre:
-                        this._OffsetBottom = 0f;
-                        break;
-                }
-            }
-        }
-
-        protected float _OffsetLeft;
-        public float OffsetLeft
-        {
-            get
-            {
-                return this._OffsetLeft;
-            }
-
-            set
-            {
-                this._OffsetLeft = value;
-
-                switch (this.Anchor)
-                {
-                    case AnchorType.None:
-                        this.Position = new Vector2(this.OffsetLeft, this.OffsetTop);
-                        break;
-
-                    case AnchorType.Bottom:
-                        this.Position = new Vector2(this.OffsetLeft, this.OffsetBottom);
-                        break;
-
-                    case AnchorType.TopCentre:
-                        // TODO: Code this
-                        break;
-
-                    case AnchorType.BottomCentre:
-                        // TODO: Code this
-                        break;
-
-                    case AnchorType.Right:
-                    case AnchorType.BottomRight:
-                        this._OffsetLeft = 0f;
-                        break;
-                }
-            }
-        }
-
-        // Other details //
-
+        /**
+         * Other details...
+         */
         public List<DrawInstruction> DrawInstructions
         {
             get;
@@ -242,16 +174,22 @@ namespace RozWorld.Graphics.UI
             }
         }
 
-        // Keep track of whether mouse/keyboard input should be accepted by this control.
+        /**
+         * Keep track of whether mouse/keyboard input should be accepted by this control.
+         */
         public bool AcceptInputMouse;
         public bool AcceptInputKeyboard;
 
         protected GameWindow ParentWindow;
 
-        // Keep track of whether the mouse was pressed inside the control, or whether it was already pressed and simply moved inside the control.
+        /**
+         * Keep track of whether the mouse was pressed inside the control, or whether it was already pressed and simply moved inside the control.
+         */
         protected bool MouseDownOnControl;
 
-        // Keep track of whether the mouse has already entered the control, to prevent firing OnMouseEnter too many times.
+        /**
+         * Keep track of whether the mouse has already entered the control, to prevent firing OnMouseEnter too many times.
+         */
         protected bool MouseEntered;
 
 
@@ -259,13 +197,60 @@ namespace RozWorld.Graphics.UI
         {
             this._Visible = true;
             DrawInstructions = new List<DrawInstruction>();
-        }        
+        }
+
+
+        /// <summary>
+        /// Update the position of this control based on border offsets and anchor status.
+        /// </summary>
+        /// <param name="offsetX">The x-offset of the control position.</param>
+        /// <param name="offsetY">The y-offset of the control position.</param>
+        protected void UpdatePosition(Vector2 offsets)
+        {
+            // Variables to store the final coordinates after manipulation
+            float finalX;
+            float finalY;
+
+            switch (this.Anchor)
+            {
+                case AnchorType.None:
+                    this._Position = offsets;
+                    break;
+
+                case AnchorType.Right:
+                    finalX = this.ParentWindow.WindowScale[0] - offsets.x;
+                    this._Position = new Vector2(finalX, offsets.y);
+                    break;
+
+                case AnchorType.Bottom:
+                    finalY = this.ParentWindow.WindowScale[1] - offsets.y;
+                    this._Position = new Vector2(offsets.x, finalY);
+                    break;
+
+                case AnchorType.BottomRight:
+                    finalX = this.ParentWindow.WindowScale[0] - offsets.x;
+                    finalY = this.ParentWindow.WindowScale[1] - offsets.y;
+                    this._Position = new Vector2(finalX, finalY);
+                    break;
+
+                case AnchorType.TopCentre:
+                    finalX = (this.ParentWindow.WindowScale[0] / 2) - (this.Width / 2) + offsets.x;
+                    this._Position = new Vector2(finalX, offsets.y);
+                    break;
+
+                case AnchorType.BottomCentre:
+                    finalX = (this.ParentWindow.WindowScale[0] / 2) - (this.Width / 2) + offsets.x;
+                    finalY = this.ParentWindow.WindowScale[1] - offsets.y;
+                    this._Position = new Vector2(finalX, finalY);
+                    break;
+            }
+        }
 
 
         /// <summary>
         /// Base method to load all texture references used by the control.
         /// </summary>
-        public abstract void LoadReferences();
+        protected abstract void LoadReferences();
 
 
         /// <summary>
