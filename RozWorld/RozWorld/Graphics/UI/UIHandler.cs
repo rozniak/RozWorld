@@ -170,116 +170,39 @@ namespace RozWorld.Graphics.UI
 
 
         /// <summary>
-        /// Create a system dialog box with the specified message and action.
+        /// Alerts the user of a critical error and closes the game.
         /// </summary>
-        /// <param name="title">The title of the dialog.</param>
-        /// <param name="content">The dialog content body.</param>
-        /// <param name="buttons">The buttons present in the dialog.</param>
-        /// <param name="icon">The icon present in the dialog.</param>
-        /// <param name="action">The action to be performed accordingly.</param>
-        /// <returns>Whether the function caller should retry or not.</returns>
-        public static bool DialogBox(string title, string content, MessageBoxButtons buttons, MessageBoxIcon icon, string action = "")
+        /// <param name="errorCode">The error code to handle.</param>
+        public static void CriticalError(short errorCode, string details = null)
         {
-            // should return whether to retry or not
-            
-            DialogResult dialogResult = MessageBox.Show(content, title, buttons, icon);
-            
-            switch (buttons)
+            string detailsProvided = String.Empty;
+
+            if(details != null)
             {
-                case MessageBoxButtons.AbortRetryIgnore:
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        return true;
-                    }
-                
-                    return false;
-                
-                case MessageBoxButtons.OK:
-                    ExecuteAction(action);
-                    return false;
-                
-                case MessageBoxButtons.OKCancel:
-                    if (dialogResult == DialogResult.OK)
-                    {
-                        ExecuteAction(action);
-                    }
-                
-                    return false;
-                
-                case MessageBoxButtons.RetryCancel:
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        return true;
-                    }
-                
-                    return false;
-                
-                case MessageBoxButtons.YesNo:
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        ExecuteAction(action);
-                    }
-                
-                    return false;
-                
-                case MessageBoxButtons.YesNoCancel:
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        ExecuteAction(action);
-                    }
-                
-                    return false;
-                
+                detailsProvided = "\n\nDetails provided:\n" + details;
+            }
+
+            switch (errorCode)
+            {
+                case Error.MISSING_CRITICAL_FILES:
+                    MessageBox.Show("RozWorld failed to find critical game assets necessary to run." + detailsProvided + "\n\nRozWorld will now exit.",
+                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+
+                case Error.INVALID_GUI_DICTIONARY_KEY:
+                    MessageBox.Show("A reference was made to a non-existent GUI control or control system. " + detailsProvided + "\n\nRozWorld will now exit.",
+                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    break;
+
                 default:
-                    return false;
+                    MessageBox.Show("An unknown critical error occurred. " + detailsProvided + "\n\nRozWorld will now exit.",
+                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    break;
             }
-        }
-        
-        
-        private static void ExecuteAction(string action)
-        {
-            if (action.Length > 0)
-            {
-                string[] splitAction = action.Split();
-                string command = splitAction[0];
-                string[] args = new string[] { };
-                
-                if (splitAction.Length > 1)
-                {
-                    Array.Copy(splitAction, args, 1);
-                }
-                
-                switch (command)
-                {
-                    case "url":
-                        if (args.Length == 1)
-                        {
-                            // Open a URL in default browser
-                        }
-                        
-                        break;
-                    
-                    case "exit":
-                        if (args.Length == 1)
-                        {
-                            int exitCode;
-                            
-                            if (int.TryParse(args[0], out exitCode))
-                            {
-                                Environment.Exit(exitCode);
-                            }
-                        }
-                        else
-                        {
-                            Environment.Exit(1);
-                        }
-                    
-                        break;
-                    
-                    default:
-                        break;
-                }
-            }
+
+            Environment.Exit(1);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace RozWorld.Network
 
                 do
                 {
-                    NetPort = Globals.Rand.Next(49152, 65536);
+                    //NetPort = Globals.Rand.Next(49152, 65536);
                     try
                     {
                         NetClient = new UdpClient(NetPort);
@@ -98,7 +98,7 @@ namespace RozWorld.Network
 
                 do
                 {
-                    NetPort = Globals.Rand.Next(49152, 65536);
+                    //NetPort = Globals.Rand.Next(49152, 65536);
                     try
                     {
                         NetClient = new UdpClient(NetPort);

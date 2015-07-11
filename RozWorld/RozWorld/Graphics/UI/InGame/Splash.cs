@@ -83,6 +83,7 @@ namespace RozWorld.Graphics.UI.InGame
         /// </summary>
         void SplashTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            SplashTimer.Stop();
             // Start the main menu
             ParentWindow.GameInterface.ControlSystems.Add("MainMenu", new MainMenu(this.ParentWindow));
             ParentWindow.GameInterface.ControlSystems["MainMenu"].Start();
@@ -99,7 +100,7 @@ namespace RozWorld.Graphics.UI.InGame
         {
             ParentWindow.GameInterface.KillFromDialogKey(this.DialogKey);
 
-            SplashTimer.Stop();
+            
             SplashTimer.Dispose();
 
             ParentWindow.GameInterface.ControlSystems.Remove("Splash");

@@ -42,17 +42,19 @@ namespace RozWorld.Graphics.UI.InGame
             screenTitle.Text = "Play Game";
             screenTitle.ForeColour = VectorColour.OpaqueWhite;
             screenTitle.ZIndex = 1;
-            screenTitle.Position = new Vector2(218, 148);
+            screenTitle.Position = new Vector2(-100, 148);
+            screenTitle.Anchor = AnchorType.TopCentre;
             screenTitle.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("ScreenTitle", screenTitle);
 
-            // New game button
+            // New world button
             Button newWorld = new Button(this.ParentWindow);
 
             newWorld.Text = "New World...";
             newWorld.Width = 200;
-            newWorld.Position = new Vector2(218, 288);
+            newWorld.Position = new Vector2(0, 288);
+            newWorld.Anchor = AnchorType.TopCentre;
             newWorld.DialogKey = this.DialogKey;
             newWorld.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             newWorld.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -66,7 +68,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             returnMenu.Text = "Return...";
             returnMenu.Width = 200;
-            returnMenu.Position = new Vector2(218, 328);
+            returnMenu.Position = new Vector2(0, 328);
+            returnMenu.Anchor = AnchorType.TopCentre;
             returnMenu.DialogKey = this.DialogKey;
             returnMenu.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             returnMenu.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -156,6 +159,18 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["ExitGameButton"].Visible = true;
 
             
+        }
+
+
+        /// <summary>
+        /// Implementation of the base control position updater method.
+        /// </summary>
+        public override void UpdateControlPositions()
+        {
+            ParentWindow.GameInterface.Controls["Title"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["ScreenTitle"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["NewWorldButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["ReturnSPMenuButton"].UpdatePosition();
         }
     }
 }

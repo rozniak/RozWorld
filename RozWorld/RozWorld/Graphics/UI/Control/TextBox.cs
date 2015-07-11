@@ -62,9 +62,7 @@ namespace RozWorld.Graphics.UI.Control
             }
         }
 
-
-        private int _Width;
-        public int Width
+        public override float Width
         {
             get
             {
@@ -74,7 +72,7 @@ namespace RozWorld.Graphics.UI.Control
             set
             {
                 this._Width = (int)Math.Round((double)value / 11) * 11;
-                UpdateDrawInstruction("control");
+                UpdatePosition();
             }
         }
 
@@ -105,7 +103,7 @@ namespace RozWorld.Graphics.UI.Control
         /// <summary>
         /// Implementation of the base texture reference loading method.
         /// </summary>
-        public override void LoadReferences()
+        protected override void LoadReferences()
         {
             TextBoxBorderCornerRight = ParentWindow.TextureManagement.GetTexture("TextBoxBorderCornerRight");
             TextBoxBorderCornerLeft = ParentWindow.TextureManagement.GetTexture("TextBoxBorderCornerLeft");
@@ -134,158 +132,161 @@ namespace RozWorld.Graphics.UI.Control
 
                     DrawInstructions.Clear();
 
-                    // Draw the TextBox Border
-
-                    // Top Left Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderCornerRight,
-                        new Vector2(3, 3),
-                        new Vector2(0, 0),
-                        new Size(3, 3),
-                        new Vector2(xTextBox, yTextBox),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Top Bar //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderTop,
-                        new Vector2(0, 0),
-                        new Vector2(1, 3),
-                        new Size(Width, 3),
-                        new Vector2(xTextBox + 3, yTextBox),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Top Right Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderCornerLeft,
-                        new Vector2(3, 3),
-                        new Vector2(0, 0),
-                        new Size(3, 3),
-                        new Vector2(xTextBox + Width + 3, yTextBox),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Left Side //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderSide,
-                        new Vector2(3, 1),
-                        new Vector2(0, 0),
-                        new Size(3, 22),
-                        new Vector2(xTextBox, yTextBox + 3),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Bottom Left Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderCornerLeft,
-                        new Vector2(0, 0),
-                        new Vector2(3, 3),
-                        new Size(3, 3),
-                        new Vector2(xTextBox, yTextBox + 25),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Bottom Bar //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderTop,
-                        new Vector2(1, 3),
-                        new Vector2(0, 0),
-                        new Size(Width, 3),
-                        new Vector2(xTextBox + 3, yTextBox + 25),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Bottom Right Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderCornerRight,
-                        new Vector2(0, 0),
-                        new Vector2(3, 3),
-                        new Size(3, 3),
-                        new Vector2(xTextBox + Width + 3, yTextBox + 25),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Right Side //
-                    DrawInstructions.Add(new DrawInstruction(
-                        TextBoxBorderSide,
-                        new Vector2(0, 0),
-                        new Vector2(3, 1),
-                        new Size(3, 22),
-                        new Vector2(xTextBox + Width + 3, yTextBox + 3),
-                        ParentWindow,
-                        TintColour,
-                        "textbox"));
-
-                    // Draw the TextBox Body
-                    for (int offset = 0; offset < Width; offset += 11)
+                    if (Visible)
                     {
+                        // Draw the TextBox Border
+
+                        // Top Left Corner //
                         DrawInstructions.Add(new DrawInstruction(
-                            TextBoxBody,
+                            TextBoxBorderCornerRight,
+                            new Vector2(3, 3),
                             new Vector2(0, 0),
-                            new Vector2(11, 22),
-                            new Size(11, 22),
-                            new Vector2(xTextBox + offset + 3, yTextBox + 3),
+                            new Size(3, 3),
+                            new Vector2(xTextBox, yTextBox),
                             ParentWindow,
                             TintColour,
                             "textbox"));
-                    }
 
-                    // Draw TextBox Text
+                        // Top Bar //
+                        DrawInstructions.Add(new DrawInstruction(
+                            TextBoxBorderTop,
+                            new Vector2(0, 0),
+                            new Vector2(1, 3),
+                            new Size((int)Width, 3),
+                            new Vector2(xTextBox + 3, yTextBox),
+                            ParentWindow,
+                            TintColour,
+                            "textbox"));
 
-                    if (Text != null)
-                    {
-                        foreach (char c in Text)
+                        // Top Right Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            TextBoxBorderCornerLeft,
+                            new Vector2(3, 3),
+                            new Vector2(0, 0),
+                            new Size(3, 3),
+                            new Vector2(xTextBox + Width + 3, yTextBox),
+                            ParentWindow,
+                            TintColour,
+                            "textbox"));
+
+                        // Left Side //
+                        DrawInstructions.Add(new DrawInstruction(
+                            TextBoxBorderSide,
+                            new Vector2(3, 1),
+                            new Vector2(0, 0),
+                            new Size(3, 22),
+                            new Vector2(xTextBox, yTextBox + 3),
+                            ParentWindow,
+                            TintColour,
+                            "textbox"));
+
+                        // Bottom Left Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            TextBoxBorderCornerLeft,
+                            new Vector2(0, 0),
+                            new Vector2(3, 3),
+                            new Size(3, 3),
+                            new Vector2(xTextBox, yTextBox + 25),
+                            ParentWindow,
+                            TintColour,
+                            "textbox"));
+
+                        // Bottom Bar //
+                        DrawInstructions.Add(new DrawInstruction(
+                            TextBoxBorderTop,
+                            new Vector2(1, 3),
+                            new Vector2(0, 0),
+                            new Size((int)Width, 3),
+                            new Vector2(xTextBox + 3, yTextBox + 25),
+                            ParentWindow,
+                            TintColour,
+                            "textbox"));
+
+                        // Bottom Right Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            TextBoxBorderCornerRight,
+                            new Vector2(0, 0),
+                            new Vector2(3, 3),
+                            new Size(3, 3),
+                            new Vector2(xTextBox + Width + 3, yTextBox + 25),
+                            ParentWindow,
+                            TintColour,
+                            "textbox"));
+
+                        // Right Side //
+                        DrawInstructions.Add(new DrawInstruction(
+                            TextBoxBorderSide,
+                            new Vector2(0, 0),
+                            new Vector2(3, 1),
+                            new Size(3, 22),
+                            new Vector2(xTextBox + Width + 3, yTextBox + 3),
+                            ParentWindow,
+                            TintColour,
+                            "textbox"));
+
+                        // Draw the TextBox Body
+                        for (int offset = 0; offset < Width; offset += 11)
                         {
-                            Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(FontType.SmallText, c);
+                            DrawInstructions.Add(new DrawInstruction(
+                                TextBoxBody,
+                                new Vector2(0, 0),
+                                new Vector2(11, 22),
+                                new Size(11, 22),
+                                new Vector2(xTextBox + offset + 3, yTextBox + 3),
+                                ParentWindow,
+                                TintColour,
+                                "textbox"));
+                        }
 
-                            if (position != null)
+                        // Draw TextBox Text
+
+                        if (Text != null)
+                        {
+                            foreach (char c in Text)
                             {
-                                if (c == 'g' || c == 'y')
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SmallFont,
-                                        position[0], 
-                                        position[1], 
-                                        new Size(11, 11),
-                                        new Vector2(xString + textOffset, yString + 3),
-                                        ParentWindow,
-                                        ForeColour, 
-                                        "text"));
-                                }
-                                else if (c == 'p' || c == 'q')
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SmallFont,
-                                        position[0],
-                                        position[1],
-                                        new Size(11, 11),
-                                        new Vector2(xString + textOffset, yString + 2),
-                                        ParentWindow,
-                                        ForeColour,
-                                        "text"));
-                                }
-                                else
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SmallFont,
-                                        position[0],
-                                        position[1],
-                                        new Size(11, 11),
-                                        new Vector2(xString + textOffset, yString),
-                                        ParentWindow,
-                                        ForeColour,
-                                        "text"));
-                                }
+                                Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(FontType.SmallText, c);
 
-                                textOffset += 10;
+                                if (position != null)
+                                {
+                                    if (c == 'g' || c == 'y')
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SmallFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(xString + textOffset, yString + 3),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+                                    else if (c == 'p' || c == 'q')
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SmallFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(xString + textOffset, yString + 2),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+                                    else
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SmallFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(xString + textOffset, yString),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+
+                                    textOffset += 10;
+                                }
                             }
                         }
                     }

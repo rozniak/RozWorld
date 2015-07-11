@@ -43,7 +43,8 @@ namespace RozWorld.Graphics.UI.InGame
             tagWorldName.Text = "World Name:";
             tagWorldName.ForeColour = VectorColour.OpaqueWhite;
             tagWorldName.ZIndex = 1;
-            tagWorldName.Position = new Vector2(218, 180);
+            tagWorldName.Position = new Vector2(-100, 180);
+            tagWorldName.Anchor = AnchorType.TopCentre;
             tagWorldName.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("TagWorldName", tagWorldName);
@@ -54,7 +55,8 @@ namespace RozWorld.Graphics.UI.InGame
             worldName.Width = 200;
             worldName.ForeColour = VectorColour.OpaqueBlack;
             worldName.ZIndex = 1;
-            worldName.Position = new Vector2(218, 200);
+            worldName.Position = new Vector2(0, 200);
+            worldName.Anchor = AnchorType.TopCentre;
             worldName.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("WorldNameBox", worldName);
@@ -64,7 +66,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             playWorld.Text = "Play!";
             playWorld.Width = 200;
-            playWorld.Position = new Vector2(218, 288);
+            playWorld.Position = new Vector2(0, 288);
+            playWorld.Anchor = AnchorType.TopCentre;
             playWorld.DialogKey = this.DialogKey;
             playWorld.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             playWorld.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -78,7 +81,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             returnMenu.Text = "Return...";
             returnMenu.Width = 200;
-            returnMenu.Position = new Vector2(218, 328);
+            returnMenu.Position = new Vector2(0, 328);
+            returnMenu.Anchor = AnchorType.TopCentre;
             returnMenu.DialogKey = this.DialogKey;
             returnMenu.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             returnMenu.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -166,6 +170,20 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["ReturnSPMenuButton"].Visible = true;
 
             ParentWindow.GameInterface.ControlSystems.Remove("NewWorldMenu");
+        }
+
+
+        /// <summary>
+        /// Implementation of the base control position updater method.
+        /// </summary>
+        public override void UpdateControlPositions()
+        {
+            ParentWindow.GameInterface.Controls["Title"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["ScreenTitle"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["PlayWorldButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["ReturnNWMenuButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["WorldNameBox"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["TagWorldName"].UpdatePosition();
         }
     }
 }

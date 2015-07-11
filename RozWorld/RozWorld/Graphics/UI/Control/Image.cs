@@ -73,6 +73,8 @@ namespace RozWorld.Graphics.UI.Control
                 if (value.Width > 0 && value.Height > 0)
                 {
                     this._Dimensions = value;
+                    this.Width = value.Width;
+                    this.Height = value.Height;
                     UpdateDrawInstruction("texture");
                 }
             }
@@ -231,7 +233,7 @@ namespace RozWorld.Graphics.UI.Control
         /// <summary>
         /// Implementation of the base texture reference loading method.
         /// </summary>
-        public override void LoadReferences()
+        protected override void LoadReferences()
         {
             this.ImageTexture = ParentWindow.TextureManagement.GetTexture("Missing");
         }
@@ -249,17 +251,20 @@ namespace RozWorld.Graphics.UI.Control
                 case "texture":
                     DrawInstructions.Clear();
 
-                    if (Dimensions != null)
+                    if (Visible)
                     {
-                        DrawInstructions.Add(new DrawInstruction(
-                            ImageTexture,
-                            BlitFrom,
-                            BlitTo,
-                            Dimensions,
-                            Position,
-                            ParentWindow,
-                            TintColour));
-                    }                    
+                        if (Dimensions != null)
+                        {
+                            DrawInstructions.Add(new DrawInstruction(
+                                ImageTexture,
+                                BlitFrom,
+                                BlitTo,
+                                Dimensions,
+                                Position,
+                                ParentWindow,
+                                TintColour));
+                        }
+                    }
 
                     break;
 

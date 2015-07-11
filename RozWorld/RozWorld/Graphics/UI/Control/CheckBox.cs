@@ -116,7 +116,7 @@ namespace RozWorld.Graphics.UI.Control
         /// <summary>
         /// Implementation of the base texture reference loading method.
         /// </summary>
-        public override void LoadReferences()
+        protected override void LoadReferences()
         {
             CheckBoxBorderCornerRight = ParentWindow.TextureManagement.GetTexture("CheckBoxBorderCornerRight");
             CheckBoxBorderCornerLeft = ParentWindow.TextureManagement.GetTexture("CheckBoxBorderCornerLeft");
@@ -142,101 +142,104 @@ namespace RozWorld.Graphics.UI.Control
 
                     DrawInstructions.Clear();
 
-                    // Draw the CheckBox Border
-
-                    // Top Left Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderCornerRight,
-                        new Vector2(3, 3),
-                        new Vector2(0, 0),
-                        new Size(3, 3),
-                        new Vector2(xCheckBox, yCheckBox),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    // Top Bar //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderTop,
-                        new Vector2(0, 0),
-                        new Vector2(1, 3),
-                        new Size(22, 3),
-                        new Vector2(xCheckBox + 3, yCheckBox),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    // Top Right Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderCornerLeft,
-                        new Vector2(3, 3),
-                        new Vector2(0, 0),
-                        new Size(3, 3),
-                        new Vector2(xCheckBox + 25, yCheckBox),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    // Left Side //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderSide,
-                        new Vector2(3, 1),
-                        new Vector2(0, 0),
-                        new Size(3, 22),
-                        new Vector2(xCheckBox, yCheckBox + 3),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    // Bottom Left Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderCornerLeft,
-                        new Vector2(0, 0),
-                        new Vector2(3, 3),
-                        new Size(3, 3),
-                        new Vector2(xCheckBox, yCheckBox + 25),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    // Bottom Bar //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderTop,
-                        new Vector2(1, 3),
-                        new Vector2(0, 0),
-                        new Size(22, 3),
-                        new Vector2(xCheckBox + 3, yCheckBox + 25),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    // Bottom Right Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderCornerRight,
-                        new Vector2(0, 0),
-                        new Vector2(3, 3),
-                        new Size(3, 3),
-                        new Vector2(xCheckBox + 25, yCheckBox + 25),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    // Right Side //
-                    DrawInstructions.Add(new DrawInstruction(
-                        CheckBoxBorderSide,
-                        new Vector2(0, 0),
-                        new Vector2(3, 1),
-                        new Size(3, 22),
-                        new Vector2(xCheckBox + 25, yCheckBox + 3),
-                        ParentWindow,
-                        TintColour,
-                        "checkbox"));
-
-                    DrawCheckBoxBody();
-
-                    if (Checked)
+                    if (Visible)
                     {
-                        DrawCheckBoxTick();
+                        // Draw the CheckBox Border
+
+                        // Top Left Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderCornerRight,
+                            new Vector2(3, 3),
+                            new Vector2(0, 0),
+                            new Size(3, 3),
+                            new Vector2(xCheckBox, yCheckBox),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        // Top Bar //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderTop,
+                            new Vector2(0, 0),
+                            new Vector2(1, 3),
+                            new Size(22, 3),
+                            new Vector2(xCheckBox + 3, yCheckBox),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        // Top Right Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderCornerLeft,
+                            new Vector2(3, 3),
+                            new Vector2(0, 0),
+                            new Size(3, 3),
+                            new Vector2(xCheckBox + 25, yCheckBox),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        // Left Side //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderSide,
+                            new Vector2(3, 1),
+                            new Vector2(0, 0),
+                            new Size(3, 22),
+                            new Vector2(xCheckBox, yCheckBox + 3),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        // Bottom Left Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderCornerLeft,
+                            new Vector2(0, 0),
+                            new Vector2(3, 3),
+                            new Size(3, 3),
+                            new Vector2(xCheckBox, yCheckBox + 25),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        // Bottom Bar //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderTop,
+                            new Vector2(1, 3),
+                            new Vector2(0, 0),
+                            new Size(22, 3),
+                            new Vector2(xCheckBox + 3, yCheckBox + 25),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        // Bottom Right Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderCornerRight,
+                            new Vector2(0, 0),
+                            new Vector2(3, 3),
+                            new Size(3, 3),
+                            new Vector2(xCheckBox + 25, yCheckBox + 25),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        // Right Side //
+                        DrawInstructions.Add(new DrawInstruction(
+                            CheckBoxBorderSide,
+                            new Vector2(0, 0),
+                            new Vector2(3, 1),
+                            new Size(3, 22),
+                            new Vector2(xCheckBox + 25, yCheckBox + 3),
+                            ParentWindow,
+                            TintColour,
+                            "checkbox"));
+
+                        DrawCheckBoxBody();
+
+                        if (Checked)
+                        {
+                            DrawCheckBoxTick();
+                        }
                     }
 
                     break;

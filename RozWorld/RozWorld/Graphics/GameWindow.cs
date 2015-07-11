@@ -296,10 +296,39 @@ namespace RozWorld.Graphics
         {
             WindowScale[0] = width;
             WindowScale[1] = height;
+
+            // Make sure the screen updates, so you don't get the solitaire effect
+            OnDisplay();
+            Draw();
+
             GLProgram.Use();
         }
 
-        private void OnDisplay() { }
+        private void OnDisplay()
+        {
+            try
+            {
+                foreach (var item in GameInterface.ControlSystems)
+                {
+                    if (LastSystemAmount != GameInterface.ControlSystems.Count)
+                    {
+                        continue;
+                    }
+
+                    item.Value.UpdateControlPositions();
+                }
+            }
+            catch (KeyNotFoundException ex)
+            {
+                UIHandler.CriticalError(Error.INVALID_GUI_DICTIONARY_KEY, "A reference to a non-existent key was made when updating control positions during OnDisplay() loop, check the code of any possibly active control systems' UpdateControlPositions() method.");
+            }
+            catch { } // Most likely transitioning from control systems
+
+            if (RozWorld.SHOW_VERSION_STRING)
+            {
+                GameInterface.Controls["VersionString"].UpdatePosition();
+            }
+        }
 
 
         /// <summary>
@@ -311,16 +340,20 @@ namespace RozWorld.Graphics
             CurrentKeyStates.KeyDown(key);
 
             LastSystemAmount = GameInterface.ControlSystems.Count;
-
-            foreach (var item in GameInterface.ControlSystems)
+            
+            try
             {
-                if (LastSystemAmount != GameInterface.ControlSystems.Count)
+                foreach (var item in GameInterface.ControlSystems)
                 {
-                    continue;
-                }
+                    if (LastSystemAmount != GameInterface.ControlSystems.Count)
+                    {
+                        continue;
+                    }
 
-                item.Value.TriggerKeyboard(true, key);
+                    item.Value.TriggerKeyboard(true, key);
+                }
             }
+            catch { } // Most likely transitioning from control systems
         }
 
 

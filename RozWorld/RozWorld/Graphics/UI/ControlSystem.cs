@@ -50,6 +50,12 @@ namespace RozWorld.Graphics.UI
 
 
         /// <summary>
+        /// Base method for calling all control position updating routines.
+        /// </summary>
+        public virtual void UpdateControlPositions() { }
+
+
+        /// <summary>
         /// Triggers mouse checks on each of the subscribed controls.
         /// </summary>
         public void TriggerMouse() 

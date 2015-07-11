@@ -173,7 +173,7 @@ namespace RozWorld.Graphics.UI.Control
         /// <summary>
         /// Implementation of the base texture reference loading method.
         /// </summary>
-        public override void LoadReferences()
+        protected override void LoadReferences()
         {
             this.SmallFont = ParentWindow.TextureManagement.GetTexture("SmallFont");
         }
@@ -195,50 +195,53 @@ namespace RozWorld.Graphics.UI.Control
                     {
                         DrawInstructions.Clear();
 
-                        foreach (char c in Text)
+                        if (Visible)
                         {
-                            Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
-
-                            if (position != null)
+                            foreach (char c in Text)
                             {
-                                if (c == 'g' || c == 'y')
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SmallFont,
-                                        position[0], 
-                                        position[1], 
-                                        new Size(11, 11),
-                                        new Vector2(Position.x + textOffset, Position.y + 3),
-                                        ParentWindow,
-                                        ForeColour, 
-                                        "text"));
-                                }
-                                else if (c == 'p' || c == 'q')
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SmallFont,
-                                        position[0],
-                                        position[1],
-                                        new Size(11, 11),
-                                        new Vector2(Position.x + textOffset, Position.y + 2),
-                                        ParentWindow,
-                                        ForeColour,
-                                        "text"));
-                                }
-                                else
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SmallFont,
-                                        position[0],
-                                        position[1],
-                                        new Size(11, 11),
-                                        new Vector2(Position.x + textOffset, Position.y),
-                                        ParentWindow,
-                                        ForeColour,
-                                        "text"));
-                                }
+                                Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
 
-                                textOffset += 10;
+                                if (position != null)
+                                {
+                                    if (c == 'g' || c == 'y')
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SmallFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(Position.x + textOffset, Position.y + 3),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+                                    else if (c == 'p' || c == 'q')
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SmallFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(Position.x + textOffset, Position.y + 2),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+                                    else
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SmallFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(Position.x + textOffset, Position.y),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+
+                                    textOffset += 10;
+                                }
                             }
                         }
                     }

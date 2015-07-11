@@ -46,6 +46,7 @@ namespace RozWorld.Graphics.UI
             set
             {
                 this._Width = value;
+                UpdatePosition();
             }
         }
 
@@ -60,6 +61,7 @@ namespace RozWorld.Graphics.UI
             set
             {
                 this._Height = value;
+                UpdatePosition();
             }
         }
 
@@ -77,7 +79,6 @@ namespace RozWorld.Graphics.UI
             set
             {
                 UpdatePosition(value);
-                UpdateDrawInstruction("position");
             }
         }
 
@@ -92,7 +93,7 @@ namespace RozWorld.Graphics.UI
             set
             {
                 this._Anchor = value;
-                UpdateDrawInstruction("position");
+                UpdatePosition();
             }
         }
 
@@ -203,6 +204,14 @@ namespace RozWorld.Graphics.UI
         /// <summary>
         /// Update the position of this control based on border offsets and anchor status.
         /// </summary>
+        public void UpdatePosition()
+        {
+            UpdatePosition(new Vector2(this.OffsetX, this.OffsetY));
+        }
+
+        /// <summary>
+        /// Update the position of this control based on border offsets and anchor status.
+        /// </summary>
         /// <param name="offsetX">The x-offset of the control position.</param>
         /// <param name="offsetY">The y-offset of the control position.</param>
         protected void UpdatePosition(Vector2 offsets)
@@ -211,25 +220,29 @@ namespace RozWorld.Graphics.UI
             float finalX;
             float finalY;
 
+            this._OffsetX = offsets.x;
+            this._OffsetY = offsets.y;
+
             switch (this.Anchor)
             {
+                default:
                 case AnchorType.None:
                     this._Position = offsets;
                     break;
 
                 case AnchorType.Right:
-                    finalX = this.ParentWindow.WindowScale[0] - offsets.x;
+                    finalX = this.ParentWindow.WindowScale[0] - this.Width - offsets.x;
                     this._Position = new Vector2(finalX, offsets.y);
                     break;
 
                 case AnchorType.Bottom:
-                    finalY = this.ParentWindow.WindowScale[1] - offsets.y;
+                    finalY = this.ParentWindow.WindowScale[1] - this.Height - offsets.y;
                     this._Position = new Vector2(offsets.x, finalY);
                     break;
 
                 case AnchorType.BottomRight:
-                    finalX = this.ParentWindow.WindowScale[0] - offsets.x;
-                    finalY = this.ParentWindow.WindowScale[1] - offsets.y;
+                    finalX = this.ParentWindow.WindowScale[0] - this.Width - offsets.x;
+                    finalY = this.ParentWindow.WindowScale[1] - this.Height - offsets.y;
                     this._Position = new Vector2(finalX, finalY);
                     break;
 
@@ -240,10 +253,12 @@ namespace RozWorld.Graphics.UI
 
                 case AnchorType.BottomCentre:
                     finalX = (this.ParentWindow.WindowScale[0] / 2) - (this.Width / 2) + offsets.x;
-                    finalY = this.ParentWindow.WindowScale[1] - offsets.y;
+                    finalY = this.ParentWindow.WindowScale[1] - this.Height - offsets.y;
                     this._Position = new Vector2(finalX, finalY);
                     break;
             }
+
+            UpdateDrawInstruction("position");
         }
 
 

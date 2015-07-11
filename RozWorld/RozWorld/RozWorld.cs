@@ -18,7 +18,7 @@ namespace RozWorld
     public static class RozWorld
     {
         public const bool SHOW_VERSION_STRING = true;
-        public const string VERSION_STRING = "RozWorld private status build Jun 04 2015 ";
+        public const string VERSION_STRING = "RozWorld inprog Jul 11 2015 ";
 
         public static RozClient GameClient;
         public static RozServer GameServer;

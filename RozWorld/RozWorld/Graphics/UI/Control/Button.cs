@@ -93,7 +93,7 @@ namespace RozWorld.Graphics.UI.Control
             set
             {
                 this._Width = (int)Math.Round((double)value / 11) * 11;
-                UpdateDrawInstruction("control");
+                UpdatePosition();
             }
         }
 
@@ -213,7 +213,7 @@ namespace RozWorld.Graphics.UI.Control
         /// <summary>
         /// Implementation of the base texture reference loading method.
         /// </summary>
-        public override void LoadReferences()
+        protected override void LoadReferences()
         {
             this.ButtonBorderCornerRight = ParentWindow.TextureManagement.GetTexture("ButtonBorderCornerRight");
             this.ButtonBorderCornerLeft = ParentWindow.TextureManagement.GetTexture("ButtonBorderCornerLeft");
@@ -241,162 +241,163 @@ namespace RozWorld.Graphics.UI.Control
                     int yButton = (int)Position.y;
                     int textOffset = 0;
 
-                    
-
                     DrawInstructions.Clear();
 
-                    // Draw the Button Border
-
-                    // Top Left Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderCornerRight,
-                        new Vector2(3, 3),
-                        new Vector2(0, 0),
-                        new Size(3, 3),
-                        new Vector2(xButton, yButton),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-
-                    // Top Bar //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderTop,
-                        new Vector2(0, 0),
-                        new Vector2(1, 3),
-                        new Size((int)Width, 3),
-                        new Vector2(xButton + 3, yButton),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-                    
-                    // Top Right Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderCornerLeft,
-                        new Vector2(3, 3),
-                        new Vector2(0, 0),
-                        new Size(3, 3),
-                        new Vector2(xButton + Width + 3, yButton),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-                    
-                    // Left Side //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderSide,
-                        new Vector2(3, 1),
-                        new Vector2(0, 0),
-                        new Size(3, 22),
-                        new Vector2(xButton, yButton + 3),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-
-                    // Bottom Left Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderCornerLeft,
-                        new Vector2(0, 0),
-                        new Vector2(3, 3),
-                        new Size(3, 3),
-                        new Vector2(xButton, yButton + 25),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-                    
-                    // Bottom Bar //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderTop,
-                        new Vector2(1, 3),
-                        new Vector2(0, 0),
-                        new Size((int)Width, 3),
-                        new Vector2(xButton + 3, yButton + 25),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-                    
-                    // Button Right Corner //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderCornerRight,
-                        new Vector2(0, 0),
-                        new Vector2(3, 3),
-                        new Size(3, 3),
-                        new Vector2(xButton + Width + 3, yButton + 25),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-                    
-                    // Right Side //
-                    DrawInstructions.Add(new DrawInstruction(
-                        ButtonBorderSide,
-                        new Vector2(0, 0),
-                        new Vector2(3, 1),
-                        new Size(3, 22),
-                        new Vector2(xButton + Width + 3, yButton + 3),
-                        ParentWindow,
-                        TintColour,
-                        "button"));
-
-                    // Draw the Button Body
-                    for (int offset = 0; offset < Width; offset += 11)
+                    if (Visible)
                     {
+                        // Draw the Button Border
+
+                        // Top Left Corner //
                         DrawInstructions.Add(new DrawInstruction(
-                            ButtonBody,
+                            ButtonBorderCornerRight,
+                            new Vector2(3, 3),
                             new Vector2(0, 0),
-                            new Vector2(11, 22),
-                            new Size(11, 22),
-                            new Vector2(xButton + offset + 3, yButton + 3),
+                            new Size(3, 3),
+                            new Vector2(xButton, yButton),
                             ParentWindow,
                             TintColour,
                             "button"));
-                    }
 
-                    // Draw Button Text
+                        // Top Bar //
+                        DrawInstructions.Add(new DrawInstruction(
+                            ButtonBorderTop,
+                            new Vector2(0, 0),
+                            new Vector2(1, 3),
+                            new Size((int)Width, 3),
+                            new Vector2(xButton + 3, yButton),
+                            ParentWindow,
+                            TintColour,
+                            "button"));
 
-                    if (Text != null)
-                    {
-                        foreach (char c in Text)
+                        // Top Right Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            ButtonBorderCornerLeft,
+                            new Vector2(3, 3),
+                            new Vector2(0, 0),
+                            new Size(3, 3),
+                            new Vector2(xButton + Width + 3, yButton),
+                            ParentWindow,
+                            TintColour,
+                            "button"));
+
+                        // Left Side //
+                        DrawInstructions.Add(new DrawInstruction(
+                            ButtonBorderSide,
+                            new Vector2(3, 1),
+                            new Vector2(0, 0),
+                            new Size(3, 22),
+                            new Vector2(xButton, yButton + 3),
+                            ParentWindow,
+                            TintColour,
+                            "button"));
+
+                        // Bottom Left Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            ButtonBorderCornerLeft,
+                            new Vector2(0, 0),
+                            new Vector2(3, 3),
+                            new Size(3, 3),
+                            new Vector2(xButton, yButton + 25),
+                            ParentWindow,
+                            TintColour,
+                            "button"));
+
+                        // Bottom Bar //
+                        DrawInstructions.Add(new DrawInstruction(
+                            ButtonBorderTop,
+                            new Vector2(1, 3),
+                            new Vector2(0, 0),
+                            new Size((int)Width, 3),
+                            new Vector2(xButton + 3, yButton + 25),
+                            ParentWindow,
+                            TintColour,
+                            "button"));
+
+                        // Button Right Corner //
+                        DrawInstructions.Add(new DrawInstruction(
+                            ButtonBorderCornerRight,
+                            new Vector2(0, 0),
+                            new Vector2(3, 3),
+                            new Size(3, 3),
+                            new Vector2(xButton + Width + 3, yButton + 25),
+                            ParentWindow,
+                            TintColour,
+                            "button"));
+
+                        // Right Side //
+                        DrawInstructions.Add(new DrawInstruction(
+                            ButtonBorderSide,
+                            new Vector2(0, 0),
+                            new Vector2(3, 1),
+                            new Size(3, 22),
+                            new Vector2(xButton + Width + 3, yButton + 3),
+                            ParentWindow,
+                            TintColour,
+                            "button"));
+
+                        // Draw the Button Body
+                        for (int offset = 0; offset < Width; offset += 11)
                         {
-                            Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
+                            DrawInstructions.Add(new DrawInstruction(
+                                ButtonBody,
+                                new Vector2(0, 0),
+                                new Vector2(11, 22),
+                                new Size(11, 22),
+                                new Vector2(xButton + offset + 3, yButton + 3),
+                                ParentWindow,
+                                TintColour,
+                                "button"));
+                        }
 
-                            if (position != null)
+                        // Draw Button Text
+
+                        if (Text != null)
+                        {
+                            foreach (char c in Text)
                             {
-                                if (c == 'g' || c == 'y')
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SpriteFont,
-                                        position[0],
-                                        position[1],
-                                        new Size(11, 11),
-                                        new Vector2(xString + textOffset, yString + 3),
-                                        ParentWindow,
-                                        ForeColour,
-                                        "text"));
-                                }
-                                else if (c == 'p' || c == 'q')
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SpriteFont,
-                                        position[0],
-                                        position[1],
-                                        new Size(11, 11),
-                                        new Vector2(xString + textOffset, yString + 2),
-                                        ParentWindow,
-                                        ForeColour,
-                                        "text"));
-                                }
-                                else
-                                {
-                                    DrawInstructions.Add(new DrawInstruction(
-                                        SpriteFont,
-                                        position[0],
-                                        position[1],
-                                        new Size(11, 11),
-                                        new Vector2(xString + textOffset, yString),
-                                        ParentWindow,
-                                        ForeColour,
-                                        "text"));
-                                }
+                                Vector2[] position = DrawInstruction.CreateBlitCoordsForFont(Font, c);
 
-                                textOffset += 10;
+                                if (position != null)
+                                {
+                                    if (c == 'g' || c == 'y')
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SpriteFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(xString + textOffset, yString + 3),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+                                    else if (c == 'p' || c == 'q')
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SpriteFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(xString + textOffset, yString + 2),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+                                    else
+                                    {
+                                        DrawInstructions.Add(new DrawInstruction(
+                                            SpriteFont,
+                                            position[0],
+                                            position[1],
+                                            new Size(11, 11),
+                                            new Vector2(xString + textOffset, yString),
+                                            ParentWindow,
+                                            ForeColour,
+                                            "text"));
+                                    }
+
+                                    textOffset += 10;
+                                }
                             }
                         }
                     }

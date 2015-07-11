@@ -37,7 +37,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             title.TextureName = "Title";
             title.ZIndex = 1;
-            title.Position = new Vector2(106, 12);
+            title.Position = new Vector2(0, 12);
+            title.Anchor = AnchorType.TopCentre;
             title.DialogKey = this.DialogKey;
 
             ParentWindow.GameInterface.Controls.Add("Title", title);
@@ -56,7 +57,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             playGame.Text = "Play Game";
             playGame.Width = 200;
-            playGame.Position = new Vector2(218, 148);
+            playGame.Position = new Vector2(0, 178);
+            playGame.Anchor = AnchorType.TopCentre;
             playGame.DialogKey = this.DialogKey;
             playGame.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             playGame.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -70,7 +72,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             multiplayer.Text = "Multiplayer";
             multiplayer.Width = 200;
-            multiplayer.Position = new Vector2(218, 188);
+            multiplayer.Position = new Vector2(0, 218);
+            multiplayer.Anchor = AnchorType.TopCentre;
             multiplayer.DialogKey = this.DialogKey;
             multiplayer.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             multiplayer.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -84,7 +87,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             settings.Text = "Settings";
             settings.Width = 200;
-            settings.Position = new Vector2(218, 228);
+            settings.Position = new Vector2(0, 258);
+            settings.Anchor = AnchorType.TopCentre;
             settings.DialogKey = this.DialogKey;
             settings.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             settings.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -98,7 +102,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             exitGame.Text = "Exit Game";
             exitGame.Width = 200;
-            exitGame.Position = new Vector2(218, 268);
+            exitGame.Position = new Vector2(0, 298);
+            exitGame.Anchor = AnchorType.TopCentre;
             exitGame.DialogKey = this.DialogKey;
             exitGame.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
             exitGame.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
@@ -202,6 +207,19 @@ namespace RozWorld.Graphics.UI.InGame
         public override void Close()
         {
             ParentWindow.GameInterface.KillFromDialogKey(this.DialogKey);
+        }
+
+
+        /// <summary>
+        /// Implementation of the base control position updater method.
+        /// </summary>
+        public override void UpdateControlPositions()
+        {
+            ParentWindow.GameInterface.Controls["Title"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["PlayGameButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["MultiplayerButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["SettingsButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["ExitGameButton"].UpdatePosition();
         }
     }
 }
