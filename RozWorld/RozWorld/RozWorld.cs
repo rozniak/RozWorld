@@ -18,12 +18,13 @@ namespace RozWorld
     public static class RozWorld
     {
         public const bool SHOW_VERSION_STRING = true;
-        public const string VERSION_STRING = "RozWorld inprog Jul 11 2015 ";
+        public const string VERSION_STRING = "RozWorld inprog Jul 13 2015 ";
 
-        public static RozClient GameClient;
-        public static RozServer GameServer;
-        public static GameWindow GameWindow;
-        public static ComfyContent GameContent;
+        public static RozClient Client;
+        public static RozServer Server;
+        public static GameWindow MainWindow;
+        public static ComfyContent Content;
+        public static GameSettings Settings;
 
         private static Status _GameStatus;
         public static Status GameStatus

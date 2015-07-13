@@ -32,7 +32,9 @@ namespace RozWorld.Graphics.UI.InGame
         {
             // Hide the singleplayer menu controls
             ParentWindow.GameInterface.Controls["NewWorldButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["NewWorldButton"]).TintColour = VectorColour.NoTint;
             ParentWindow.GameInterface.Controls["ReturnSPMenuButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["ReturnSPMenuButton"]).TintColour = VectorColour.NoTint;
 
             // Change title of menu
             ((Label)ParentWindow.GameInterface.Controls["ScreenTitle"]).Text = "New World";

@@ -32,9 +32,13 @@ namespace RozWorld.Graphics.UI.InGame
         {
             // Hide the main menu controls
             ParentWindow.GameInterface.Controls["PlayGameButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["PlayGameButton"]).TintColour = VectorColour.NoTint;
             ParentWindow.GameInterface.Controls["MultiplayerButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["MultiplayerButton"]).TintColour = VectorColour.NoTint;
             ParentWindow.GameInterface.Controls["SettingsButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["SettingsButton"]).TintColour = VectorColour.NoTint;
             ParentWindow.GameInterface.Controls["ExitGameButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["ExitGameButton"]).TintColour = VectorColour.NoTint;
 
             // Single player title label
             Label screenTitle = new Label(this.ParentWindow);

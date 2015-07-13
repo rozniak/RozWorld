@@ -35,7 +35,7 @@ namespace RozWorld.World
 
             set
             {
-                this._SpawnPoint = new Position(value.LocalX, value.LocalY, value.ChunkX, value.ChunkY);
+                this._SpawnPoint = new Position(value.LocalX, value.LocalY, value.ChunkX, value.ChunkY, this);
             }
         }
 
@@ -70,7 +70,7 @@ namespace RozWorld.World
 
             foreach (ServerPlayerHandler player in ParentServer.GetPlayers())
             {
-                if (player.GetWorldName() == Name)
+                if (player.Position.LocalWorld.Name == Name)
                 {
                     players.Add(player);
                 }

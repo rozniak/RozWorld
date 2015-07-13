@@ -35,10 +35,10 @@ namespace RozWorld
         private static void Initialise()
         {
             Files.SetupGameDirectories();
-            RozWorld.GameContent = ComfyInterpreter.Load();
+            RozWorld.Content = ComfyInterpreter.Load();
 
             // Graphic initialisation here
-            RozWorld.GameWindow = new GameWindow();
+            RozWorld.MainWindow = new GameWindow();
 
             // Check when the game window/textures have successfully loaded or not
             do

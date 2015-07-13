@@ -42,7 +42,7 @@ namespace RozWorld.Graphics.UI.InGame
 
                 versionString.Text = RozWorld.VERSION_STRING;
                 versionString.Position = new Vector2(10, 10);
-                versionString.ForeColour = VectorColour.OpaqueGrey;
+                versionString.ForeColour = VectorColour.OpaqueBlack;
                 versionString.ZIndex = 9000;
 
                 ParentWindow.GameInterface.Controls.Add("VersionString", versionString);
@@ -52,7 +52,7 @@ namespace RozWorld.Graphics.UI.InGame
 
                 fpsCounter.Text = "FPS: 0";
                 fpsCounter.Position = new Vector2(10, 26);
-                fpsCounter.ForeColour = VectorColour.OpaqueGrey;
+                fpsCounter.ForeColour = VectorColour.OpaqueBlack;
                 fpsCounter.ZIndex = 9000;
 
                 ParentWindow.GameInterface.Controls.Add("FPSCounter", fpsCounter);

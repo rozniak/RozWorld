@@ -47,7 +47,7 @@ namespace RozWorld.Entity.Player
 
             set 
             {
-                if (RozWorld.GameServer.ServerConfiguration.PermissionGroups.ContainsKey(value)) {
+                if (this.ParentServer.ServerConfiguration.PermissionGroups.ContainsKey(value)) {
                     this._Group = value;
                 } 
             }
@@ -131,9 +131,9 @@ namespace RozWorld.Entity.Player
             Muted = false;
 
             // get username.dat file
-            if (!Directory.Exists(RozWorld.GameServer.SaveDirectory + "\\players"))
+            if (!Directory.Exists(this.ParentServer.SaveDirectory + "\\players"))
             {
-                Directory.CreateDirectory(RozWorld.GameServer.SaveDirectory + "\\players");
+                Directory.CreateDirectory(this.ParentServer.SaveDirectory + "\\players");
                 CreateDefaultUserData();
             }
 
@@ -147,6 +147,8 @@ namespace RozWorld.Entity.Player
         private void LoadUserData()
         {
             string[] userData = Files.GetTextFile(ParentServer.SaveDirectory + "\\players\\" + Nickname + ".dat");
+
+            // TODO: Finish this
         }
 
 
@@ -155,7 +157,7 @@ namespace RozWorld.Entity.Player
         /// </summary>
         private void CreateDefaultUserData()
         {
-            // TODO: create the default user data
+            // TODO: Create the default user data
         }
 
 
@@ -356,16 +358,6 @@ namespace RozWorld.Entity.Player
 
 
         /// <summary>
-        /// Gets the name of the world in which this player is located.
-        /// </summary>
-        /// <returns>The name of the world in which this player is located.</returns>
-        public string GetWorldName()
-        {
-            return Position.WorldName;
-        }
-
-
-        /// <summary>
         /// Attempts to teleport this player to another world.
         /// </summary>
         /// <param name="newWorld">The world to teleport the player to.</param>
@@ -391,7 +383,7 @@ namespace RozWorld.Entity.Player
         /// <returns>Whether this player was successfully teleported or not.</returns>
         public bool ChangeWorld(Position newPosition)
         {
-            if (ParentServer.WorldExists(newPosition.WorldName))
+            if (ParentServer.WorldExists(newPosition.LocalWorld.Name))
             {
                 Position = newPosition;
 

@@ -17,12 +17,7 @@ namespace RozWorld.World
 {
     public class Position
     {
-        public string WorldName
-        {
-            get { return this.WorldName; }
-            set { if (RozWorld.GameServer.WorldExists(RozEncoding.StripSpecialCharacters(value, StripType.Both))) { this.WorldName = RozEncoding.StripSpecialCharacters(value, StripType.Both); } }
-        }
-
+        public World LocalWorld;
         public int ChunkX;
         public int ChunkY;
         public double LocalX;
@@ -38,9 +33,9 @@ namespace RozWorld.World
         }
 
 
-        public Position(double localX, double localY, int chunkX, int chunkY, string worldName = "")
+        public Position(double localX, double localY, int chunkX, int chunkY, World localWorld)
         {
-            WorldName = worldName;
+            LocalWorld = localWorld;
             ChunkX = chunkX;
             ChunkY = chunkY;
             LocalX = localX;
@@ -56,7 +51,7 @@ namespace RozWorld.World
         {
             return new byte[][]
             {
-                RozEncoding.GetBytes(WorldName),
+                RozEncoding.GetBytes(LocalWorld.Name),
                 RozEncoding.GetBytes(LocalX.ToString()),
                 RozEncoding.GetBytes(LocalY.ToString()),
                 RozEncoding.GetBytes(ChunkX.ToString()),

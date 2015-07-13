@@ -33,7 +33,7 @@ namespace RozWorld.Graphics
             // If there are textures already loaded, make sure they are disposed.
             DumpAllTextures();
 
-            foreach (var dictionaryItem in RozWorld.GameContent.Textures)
+            foreach (var dictionaryItem in RozWorld.Content.Textures)
             {
                 string textureLocation = Files.ReplaceSpecialDirectories(dictionaryItem.Value);
 

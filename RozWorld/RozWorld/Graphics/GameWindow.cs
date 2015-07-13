@@ -26,7 +26,9 @@ namespace RozWorld.Graphics
     {
         public const string WINDOW_TITLE = "RozWorld ' OR '1'='1";
 
-        // Resolution relevant stuff //
+        /**
+         * Resolution relevant stuff.
+         */
         public int[] WindowScale
         {
             get;
@@ -90,6 +92,10 @@ namespace RozWorld.Graphics
             private set;
         }
 
+        private Timer MouseInputDelay;
+
+        private bool CheckMouseInput;
+
         /**
          * Keyboard relevant stuff.
          */
@@ -108,7 +114,7 @@ namespace RozWorld.Graphics
         /**
          * FPS relevant stuff.
          */
-        private Stopwatch Timer;
+        private Stopwatch FPSTimer;
 
         public double FPS
         {
@@ -141,8 +147,14 @@ namespace RozWorld.Graphics
 
         public GameWindow()
         {
-            WindowScale = new int[] { 640, 480 };
+            WindowScale = new int[] { 800, 600 };
 
+            // Set up mouse input delay timer...
+            MouseInputDelay = new Timer(1);
+            MouseInputDelay.Elapsed += new ElapsedEventHandler(MouseInputDelay_Elapsed);
+            CheckMouseInput = true;
+            
+            // Initialise GL stuff...
             Glut.glutInit();
 
             // Create GL window...
@@ -182,7 +194,7 @@ namespace RozWorld.Graphics
                 RozWorld.GameStatus = Status.Splash;
             }
 
-            Timer = Stopwatch.StartNew();
+            FPSTimer = Stopwatch.StartNew();
             LowestFPS = double.MaxValue;
 
             GameInterface.ControlSystems.Add("Splash", new Splash(this));
@@ -201,24 +213,13 @@ namespace RozWorld.Graphics
         private void Draw()
         {
             // FPS check system:
-            Timer.Stop();
-
-            FPS = Math.Round(1000 / (double)Timer.ElapsedMilliseconds);
-
-            if (FPS > HighestFPS && FPS < 90) // Ignore extreme values
-            {
-                HighestFPS = FPS;
-            }
-            else if (FPS < LowestFPS && FPS > 20)
-            {
-                LowestFPS = FPS;
-            }
-
-            Timer.Restart();
+            FPSTimer.Stop();
+            FPS = Math.Round(1000 / (double)FPSTimer.ElapsedMilliseconds);
+            FPSTimer.Restart();
 
             try
             {
-                ((UI.Control.Label)GameInterface.Controls["FPSCounter"]).Text = "FPS: " + FPS.ToString() + "; Highest: " + HighestFPS.ToString() + "; Lowest: " + LowestFPS;
+                ((UI.Control.Label)GameInterface.Controls["FPSCounter"]).Text = "FPS: " + FPS.ToString();
             }
             catch { } // No FPS counter
 
@@ -306,6 +307,12 @@ namespace RozWorld.Graphics
 
         private void OnDisplay()
         {
+            // Make sure the screen stays at least at the minimal resolution
+            if (WindowScale[0] < 800 && WindowScale[1] < 600)
+            {
+                Glut.glutReshapeWindow(800, 600);
+            }
+
             try
             {
                 foreach (var item in GameInterface.ControlSystems)
@@ -398,19 +405,31 @@ namespace RozWorld.Graphics
 
             LastSystemAmount = GameInterface.ControlSystems.Count;
 
-            try
+            // Make sure we actually want to activate any mouse events right now
+            if (CheckMouseInput)
             {
-                foreach (var item in GameInterface.ControlSystems)
+                try
                 {
-                    if (LastSystemAmount != GameInterface.ControlSystems.Count)
+                    foreach (var item in GameInterface.ControlSystems)
                     {
-                        continue;
-                    }
+                        if (LastSystemAmount != GameInterface.ControlSystems.Count)
+                        {
+                            continue;
+                        }
 
-                    item.Value.TriggerMouse();
+                        item.Value.TriggerMouse();
+                    }
+                }
+                catch
+                {
+                    /**
+                     * Most likely transitioning from control systems, start mouse
+                     * delay to prevent it leaking to other controls.
+                     */
+                    CheckMouseInput = false;
+                    MouseInputDelay.Start();
                 }
             }
-            catch { } // Most likely transitioning from control systems
         }
 
 
@@ -424,19 +443,40 @@ namespace RozWorld.Graphics
 
             LastSystemAmount = GameInterface.ControlSystems.Count;
 
-            try
+            if (CheckMouseInput)
             {
-                foreach (var item in GameInterface.ControlSystems)
+                try
                 {
-                    if (LastSystemAmount != GameInterface.ControlSystems.Count)
+                    foreach (var item in GameInterface.ControlSystems)
                     {
-                        continue;
-                    }
+                        if (LastSystemAmount != GameInterface.ControlSystems.Count)
+                        {
+                            continue;
+                        }
 
-                    item.Value.TriggerMouse();
+                        item.Value.TriggerMouse();
+                    }
+                }
+                catch
+                {
+                    /**
+                     * Most likely transitioning from control systems, start mouse
+                     * delay to prevent it leaking to other controls.
+                     */
+                    CheckMouseInput = false;
+                    MouseInputDelay.Start();
                 }
             }
-            catch { } // Most likely transitioning from control systems
+        }
+
+
+        /// <summary>
+        /// [Event] Mouse input delay timer elapsed.
+        /// </summary>
+        void MouseInputDelay_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            MouseInputDelay.Stop();
+            CheckMouseInput = true;
         }
     }
 }
