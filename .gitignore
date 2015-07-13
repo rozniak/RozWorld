@@ -1,0 +1,6 @@
+*.exe
+*.suo
+*.application
+*.manifest
+*.pdb
+/RozWorld/RozWorld/obj
