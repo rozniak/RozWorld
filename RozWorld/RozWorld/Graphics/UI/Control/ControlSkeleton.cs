@@ -256,6 +256,14 @@ namespace RozWorld.Graphics.UI
                     finalY = this.ParentWindow.WindowScale[1] - this.Height - offsets.y;
                     this._Position = new Vector2(finalX, finalY);
                     break;
+
+                case AnchorType.Centre:
+                    finalX = (this.ParentWindow.WindowScale[0] / 2) - (this.Width / 2);
+                    finalY = (this.ParentWindow.WindowScale[1] / 2) - (this.Height / 2);
+                    this._OffsetX = 0f;
+                    this._OffsetY = 0f;
+                    this._Position = new Vector2(finalX, finalY);
+                    break;
             }
 
             UpdateDrawInstruction("position");

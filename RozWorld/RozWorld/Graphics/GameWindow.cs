@@ -50,6 +50,7 @@ namespace RozWorld.Graphics
          * GL relevant stuff.
          */
         private ShaderProgram GLProgram;
+
         public TextureManager TextureManagement
         {
             get;
@@ -202,6 +203,11 @@ namespace RozWorld.Graphics
             GameInterface.ControlSystems["Splash"].Start();
 
             //FloatPoint[] fp = DrawInstruction.CreateBlitCoordsForFont(FontType.SmallText, 'r'); test that the code works.
+
+            Gl.ClearColor(VectorColour.OpaqueWhite.x,
+                VectorColour.OpaqueWhite.y,
+                VectorColour.OpaqueWhite.z,
+                VectorColour.OpaqueWhite.w);
             
             Glut.glutMainLoop();
         }
@@ -235,7 +241,6 @@ namespace RozWorld.Graphics
             LastKeyStates = CurrentKeyStates;
 
             // Actual OpenGL drawing stuff starts here:
-
             Gl.Viewport(0, 0, WindowScale[0], WindowScale[1]);
             Gl.Clear(ClearBufferMask.ColorBufferBit);
             Gl.UseProgram(GLProgram);

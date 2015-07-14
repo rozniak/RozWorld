@@ -63,6 +63,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             splashScreen.Dimensions = new System.Drawing.Size(640, 480);
             splashScreen.DialogKey = this.DialogKey;
+            splashScreen.Anchor = AnchorType.Centre;
             splashScreen.TextureName = "OddmaticsSplash";
             splashScreen.ZIndex = 1;
 
