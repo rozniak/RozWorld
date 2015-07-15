@@ -165,7 +165,6 @@ namespace RozWorld.Graphics
             // Set up GL functions...
             Glut.glutIdleFunc(Draw);
             Glut.glutCloseFunc(OnClose);
-            
             Glut.glutKeyboardFunc(OnKeyDown);
             Glut.glutKeyboardUpFunc(OnKeyUp);
             Glut.glutMouseFunc(OnMouseChanged);
@@ -313,7 +312,7 @@ namespace RozWorld.Graphics
         private void OnDisplay()
         {
             // Make sure the screen stays at least at the minimal resolution
-            if (WindowScale[0] < 800 && WindowScale[1] < 600)
+            if (WindowScale[0] < 800 || WindowScale[1] < 600)
             {
                 Glut.glutReshapeWindow(800, 600);
             }

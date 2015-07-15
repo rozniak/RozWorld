@@ -12,6 +12,7 @@
 using System.Drawing;
 
 using OpenGL;
+using System;
 
 namespace RozWorld.Graphics.UI.Control
 {
@@ -79,6 +80,8 @@ namespace RozWorld.Graphics.UI.Control
                 }
             }
         }
+
+        public ImageSizeMode SizeMode;
 
         /**
          * Blitting information, more information on blitting in DrawInstruction.cs.
@@ -253,16 +256,108 @@ namespace RozWorld.Graphics.UI.Control
 
                     if (Visible)
                     {
-                        if (Dimensions != null)
+                        switch (SizeMode)
                         {
-                            DrawInstructions.Add(new DrawInstruction(
-                                ImageTexture,
-                                BlitFrom,
-                                BlitTo,
-                                Dimensions,
-                                Position,
-                                ParentWindow,
-                                TintColour));
+                            default:
+                            case ImageSizeMode.Default:
+                                if (Dimensions != null)
+                                {
+                                    DrawInstructions.Add(new DrawInstruction(
+                                        ImageTexture,
+                                        BlitFrom,
+                                        BlitTo,
+                                        Dimensions,
+                                        Position,
+                                        ParentWindow,
+                                        TintColour));
+                                }
+                                break;
+
+                            case ImageSizeMode.Tile:
+                                if (Dimensions != null)
+                                {
+                                    // Get how many times we will draw the texture across the two dimensions
+                                    int tilesX = (int)Math.Ceiling((double)Dimensions.Width / ImageTexture.Size.Width);
+                                    int tilesY = (int)Math.Ceiling((double)Dimensions.Height / ImageTexture.Size.Height);
+
+                                    // See what the dimensions are for textures that go offscreen (clip them)
+                                    int clipWidth = 0;
+                                    int clipHeight = 0;
+
+                                    // See where we are at on the screen
+                                    int offsetX = 0;
+                                    int offsetY = 0;
+
+                                    // The y-blitting must be inverted to clip off the bottom rather than the top of the texture
+                                    int blitY = 0;
+
+                                    for (int y = 1; y <= tilesY; y++)
+                                    {
+                                        for (int x = 1; x <= tilesX; x++)
+                                        {
+                                            if (y == tilesY && x == tilesX)
+                                            {
+                                                clipWidth = Dimensions.Width - offsetX;
+                                                clipHeight = Dimensions.Height - offsetY;
+                                                blitY = ImageTexture.Size.Height - clipHeight;
+
+                                                DrawInstructions.Add(new DrawInstruction(
+                                                    ImageTexture,
+                                                    new Vector2(0, blitY),
+                                                    new Vector2(clipWidth, ImageTexture.Size.Height),
+                                                    new Size(clipWidth, clipHeight),
+                                                    new Vector2(offsetX, offsetY),
+                                                    ParentWindow,
+                                                    TintColour));
+                                            }
+                                            else if (y == tilesY)
+                                            {
+                                                clipHeight = Dimensions.Height - offsetY;
+                                                blitY = ImageTexture.Size.Height - clipHeight;
+
+                                                DrawInstructions.Add(new DrawInstruction(
+                                                    ImageTexture,
+                                                    new Vector2(0, blitY),
+                                                    new Vector2(ImageTexture.Size.Width, ImageTexture.Size.Height),
+                                                    new Size(ImageTexture.Size.Width, clipHeight),
+                                                    new Vector2(offsetX, offsetY),
+                                                    ParentWindow,
+                                                    TintColour));
+                                            }
+                                            else if (x == tilesX)
+                                            {
+                                                clipWidth = Dimensions.Width - offsetX;
+
+                                                DrawInstructions.Add(new DrawInstruction(
+                                                    ImageTexture,
+                                                    new Vector2(0, 0),
+                                                    new Vector2(clipWidth, ImageTexture.Size.Height),
+                                                    new Size(clipWidth, ImageTexture.Size.Height),
+                                                    new Vector2(offsetX, offsetY),
+                                                    ParentWindow,
+                                                    TintColour));
+                                            }
+                                            else
+                                            {
+                                                DrawInstructions.Add(new DrawInstruction(
+                                                    ImageTexture,
+                                                    BlitFrom,
+                                                    BlitTo,
+                                                    new Size(ImageTexture.Size.Width, ImageTexture.Size.Height),
+                                                    new Vector2(offsetX, offsetY),
+                                                    ParentWindow,
+                                                    TintColour));
+                                            }
+
+                                            offsetX += ImageTexture.Size.Width;
+                                        }
+
+                                        offsetX = 0;
+                                        offsetY += ImageTexture.Size.Height;
+                                    }
+                                }
+
+                                break;
                         }
                     }
 

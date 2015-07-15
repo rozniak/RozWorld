@@ -106,5 +106,11 @@ namespace RozWorld.Graphics.UI.InGame
 
             ParentWindow.GameInterface.ControlSystems.Remove("Splash");
         }
+
+
+        public override void UpdateControlPositions()
+        {
+            ParentWindow.GameInterface.Controls["SplashScreen"].UpdatePosition();
+        }
     }
 }

@@ -150,3 +150,14 @@ public enum AnchorType
     BottomCentre,
     Centre
 }
+
+
+/**
+ * The different types of sizing Image controls may use, the default is simply whatever is given
+ * to the contol (in terms of scale and blitting).
+ */
+public enum ImageSizeMode
+{
+    Default,
+    Tile
+}
