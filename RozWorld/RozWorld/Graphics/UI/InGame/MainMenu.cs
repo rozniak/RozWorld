@@ -13,6 +13,7 @@ using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
 
 using System;
+using System.Timers;
 
 using OpenGL;
 
@@ -20,6 +21,24 @@ namespace RozWorld.Graphics.UI.InGame
 {
     public class MainMenu : ControlSystem
     {
+        /**
+         * Temporary backdrop animation code, will be moved to a separate control system
+         * in future...
+         */
+        private Timer BackDropAnimator = new Timer(50);
+        private float BackDropSpeed = 1f;
+        private float BackDropTopSpeed = 5f;
+        private Vector2[] BackDropTargets = new Vector2[] {
+            new Vector2(0, -16),
+            new Vector2(-16, -16),
+            new Vector2(-16, 0),
+            new Vector2(16, 32),
+            new Vector2(32, 32),
+            new Vector2(32, 16)
+        };
+        private int CurrentTarget = 0;
+
+
         public MainMenu(GameWindow parentWindow)
         {
             this.ParentWindow = parentWindow;
@@ -114,7 +133,20 @@ namespace RozWorld.Graphics.UI.InGame
 
             ParentWindow.GameInterface.Controls.Add("ExitGameButton", exitGame);
 
+            // Back drop animator timer
+            BackDropAnimator.Elapsed += new ElapsedEventHandler(BackDropAnimator_Elapsed);
+            BackDropAnimator.Start();
+
             SetupSubscribers();
+        }
+
+
+        /// <summary>
+        /// [Event] Back drop animation timer elapsed.
+        /// </summary>
+        void BackDropAnimator_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            
         }
 
 
@@ -124,6 +156,10 @@ namespace RozWorld.Graphics.UI.InGame
         void settings_OnMouseUp(object sender)
         {
             ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            // Start the settings menu
+            ParentWindow.GameInterface.ControlSystems.Add("SettingsMenu", new SettingsMenu(this.ParentWindow));
+            ParentWindow.GameInterface.ControlSystems["SettingsMenu"].Start();
         }
 
 
@@ -222,8 +258,10 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["MultiplayerButton"].UpdatePosition();
             ParentWindow.GameInterface.Controls["SettingsButton"].UpdatePosition();
             ParentWindow.GameInterface.Controls["ExitGameButton"].UpdatePosition();
+
+            // Backdrop details
             ParentWindow.GameInterface.Controls["BackDrop"].UpdatePosition();
-            ((Image)ParentWindow.GameInterface.Controls["BackDrop"]).Dimensions = new System.Drawing.Size(ParentWindow.WindowScale[0], ParentWindow.WindowScale[1]);
+            ((Image)ParentWindow.GameInterface.Controls["BackDrop"]).Dimensions = new System.Drawing.Size(ParentWindow.WindowScale[0] + 16, ParentWindow.WindowScale[1] + 16);
         }
     }
 }

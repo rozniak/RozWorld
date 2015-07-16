@@ -118,6 +118,7 @@
     <Compile Include="Graphics\UI\InGame\MainMenu.cs" />
     <Compile Include="Graphics\UI\InGame\MultiplayerMenu.cs" />
     <Compile Include="Graphics\UI\InGame\NewWorldMenu.cs" />
+    <Compile Include="Graphics\UI\InGame\SettingsMenu.cs" />
     <Compile Include="Graphics\UI\InGame\SinglePlayerMenu.cs" />
     <Compile Include="Graphics\UI\InGame\Splash.cs" />
     <Compile Include="Graphics\UI\KeyboardState.cs" />
