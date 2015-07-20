@@ -18,7 +18,7 @@ namespace RozWorld
     public static class RozWorld
     {
         public const bool SHOW_VERSION_STRING = true;
-        public const string VERSION_STRING = "RozWorld inprog Jul 15 2015";
+        public const string VERSION_STRING = "RozWorld inprog Jul 18 2015";
 
         public static RozClient Client;
         public static RozServer Server;

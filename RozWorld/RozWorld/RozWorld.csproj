@@ -121,6 +121,7 @@
     <Compile Include="Graphics\UI\InGame\SettingsMenu.cs" />
     <Compile Include="Graphics\UI\InGame\SinglePlayerMenu.cs" />
     <Compile Include="Graphics\UI\InGame\Splash.cs" />
+    <Compile Include="Graphics\UI\InGame\VideoSettingsMenu.cs" />
     <Compile Include="Graphics\UI\KeyboardState.cs" />
     <Compile Include="Graphics\UI\MouseState.cs" />
     <Compile Include="Graphics\UI\UIHandler.cs" />

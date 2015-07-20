@@ -20,7 +20,7 @@ namespace RozWorld.Graphics.UI.InGame
         public SettingsMenu(GameWindow parentWindow)
         {
             this.ParentWindow = parentWindow;
-            this.DialogKey = 5;
+            this.DialogKey = 6;
         }
 
 
@@ -51,6 +51,21 @@ namespace RozWorld.Graphics.UI.InGame
 
             ParentWindow.GameInterface.Controls.Add("ScreenTitle", screenTitle);
 
+            // Video settings button
+            Button videoSettings = new Button(this.ParentWindow);
+
+            videoSettings.Text = "Video Settings...";
+            videoSettings.Width = 200;
+            videoSettings.Position = new Vector2(-110, 180);
+            videoSettings.Anchor = AnchorType.TopCentre;
+            videoSettings.DialogKey = this.DialogKey;
+            videoSettings.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
+            videoSettings.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
+            videoSettings.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            videoSettings.OnMouseUp += new SenderEventHandler(videoSettings_OnMouseUp);
+
+            ParentWindow.GameInterface.Controls.Add("VideoSettingsButton", videoSettings);
+
             // Return button
             Button returnMenu = new Button(this.ParentWindow);
 
@@ -67,6 +82,16 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls.Add("ReturnSTMenuButton", returnMenu);
 
             SetupSubscribers();
+        }
+
+
+        /// <summary>
+        /// [Event] "Video Settings..." button clicked.
+        /// </summary>
+        void videoSettings_OnMouseUp(object sender)
+        {
+            ParentWindow.GameInterface.ControlSystems.Add("VideoSettingsMenu", new VideoSettingsMenu(this.ParentWindow));
+            ParentWindow.GameInterface.ControlSystems["VideoSettingsMenu"].Start();
         }
 
 
@@ -114,7 +139,8 @@ namespace RozWorld.Graphics.UI.InGame
         public override void SetupSubscribers()
         {
             this.MouseSubscribers = new ControlSkeleton[] {
-                ParentWindow.GameInterface.Controls["ReturnSTMenuButton"]
+                ParentWindow.GameInterface.Controls["ReturnSTMenuButton"],
+                ParentWindow.GameInterface.Controls["VideoSettingsButton"]
             };
         }
 
@@ -142,6 +168,7 @@ namespace RozWorld.Graphics.UI.InGame
         {
             ParentWindow.GameInterface.Controls["Title"].UpdatePosition();
             ParentWindow.GameInterface.Controls["ScreenTitle"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["VideoSettingsButton"].UpdatePosition();
             ParentWindow.GameInterface.Controls["ReturnSTMenuButton"].UpdatePosition();
         }
     }

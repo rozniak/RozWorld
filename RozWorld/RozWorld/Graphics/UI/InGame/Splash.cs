@@ -100,10 +100,7 @@ namespace RozWorld.Graphics.UI.InGame
         public override void Close()
         {
             ParentWindow.GameInterface.KillFromDialogKey(this.DialogKey);
-
-            
             SplashTimer.Dispose();
-
             ParentWindow.GameInterface.ControlSystems.Remove("Splash");
         }
 
