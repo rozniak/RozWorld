@@ -41,7 +41,7 @@ namespace RozWorld.Graphics.UI.InGame
             // Window resolution label
             Label resolutionLabel = new Label(this.ParentWindow);
 
-            resolutionLabel.Text = "Preferred Resolution:";
+            resolutionLabel.Text = "Preferred resolution:";
             resolutionLabel.Position = new Vector2(-315, 188);
             resolutionLabel.Anchor = AnchorType.TopCentre;
             resolutionLabel.ForeColour = VectorColour.OpaqueWhite;
@@ -67,7 +67,7 @@ namespace RozWorld.Graphics.UI.InGame
             // Minimum size is preferred label
             Label minimumSizeLabel = new Label(this.ParentWindow);
 
-            minimumSizeLabel.Text = "Preferred Res is Minimum:";
+            minimumSizeLabel.Text = "Preferred res is minimum:";
             minimumSizeLabel.Position = new Vector2(-355, 228);
             minimumSizeLabel.Anchor = AnchorType.TopCentre;
             minimumSizeLabel.ForeColour = VectorColour.OpaqueWhite;
@@ -89,6 +89,47 @@ namespace RozWorld.Graphics.UI.InGame
             minimumSizeButton.OnMouseUp += new SenderEventHandler(minimumSizeButton_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("MinimumSizeButton", minimumSizeButton);
+
+            // Aero offsets label
+            Label aeroOffsetsLabel = new Label(this.ParentWindow);
+
+            aeroOffsetsLabel.Text = "Use aero window offsets:";
+            aeroOffsetsLabel.Position = new Vector2(-345, 268);
+            aeroOffsetsLabel.Anchor = AnchorType.TopCentre;
+            aeroOffsetsLabel.ForeColour = VectorColour.OpaqueWhite;
+            aeroOffsetsLabel.DialogKey = this.DialogKey;
+
+            ParentWindow.GameInterface.Controls.Add("AeroOffsetsLabel", aeroOffsetsLabel);
+
+            // Aero offsets button
+            Button aeroOffsetsButton = new Button(this.ParentWindow);
+
+            aeroOffsetsButton.Text = "TRUE";
+            aeroOffsetsButton.Width = 100;
+            aeroOffsetsButton.Position = new Vector2(-50, 260);
+            aeroOffsetsButton.Anchor = AnchorType.TopCentre;
+            aeroOffsetsButton.DialogKey = this.DialogKey;
+            aeroOffsetsButton.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
+            aeroOffsetsButton.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
+            aeroOffsetsButton.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            aeroOffsetsButton.OnMouseUp += new SenderEventHandler(aeroOffsetsButton_OnMouseUp);
+
+            ParentWindow.GameInterface.Controls.Add("AeroOffsetsButton", aeroOffsetsButton);
+
+            // Texture pack screen button
+            Button texturePackButton = new Button(this.ParentWindow);
+
+            texturePackButton.Text = "Texture Pack...";
+            texturePackButton.Width = 200;
+            texturePackButton.Position = new Vector2(150, 180);
+            texturePackButton.Anchor = AnchorType.TopCentre;
+            texturePackButton.DialogKey = this.DialogKey;
+            texturePackButton.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
+            texturePackButton.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
+            texturePackButton.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            texturePackButton.OnMouseUp += new SenderEventHandler(texturePackButton_OnMouseUp);
+
+            ParentWindow.GameInterface.Controls.Add("TexturePackButton", texturePackButton);
 
             // Return button
             Button returnButton = new Button(this.ParentWindow);
@@ -116,10 +157,10 @@ namespace RozWorld.Graphics.UI.InGame
         {
             this.MouseSubscribers = new ControlSkeleton[] {
                 ParentWindow.GameInterface.Controls["ReturnVSMenuButton"],
-                ParentWindow.GameInterface.Controls["ResolutionLabel"],
                 ParentWindow.GameInterface.Controls["ResolutionButton"],
-                ParentWindow.GameInterface.Controls["MinimumSizeLabel"],
-                ParentWindow.GameInterface.Controls["MinimumSizeButton"]
+                ParentWindow.GameInterface.Controls["MinimumSizeButton"],
+                ParentWindow.GameInterface.Controls["AeroOffsetsButton"],
+                ParentWindow.GameInterface.Controls["TexturePackButton"]
             };
         }
 
@@ -151,6 +192,27 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["ResolutionButton"].UpdatePosition();
             ParentWindow.GameInterface.Controls["MinimumSizeLabel"].UpdatePosition();
             ParentWindow.GameInterface.Controls["MinimumSizeButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["AeroOffsetsLabel"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["AeroOffsetsButton"].UpdatePosition();
+            ParentWindow.GameInterface.Controls["TexturePackButton"].UpdatePosition();
+        }
+
+
+        /// <summary>
+        /// "Texture Pack..." button clicked.
+        /// </summary>
+        void texturePackButton_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+        }
+
+
+        /// <summary>
+        /// Use aero offsets option clicked.
+        /// </summary>
+        void aeroOffsetsButton_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
         }
 
 
