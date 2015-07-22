@@ -115,6 +115,7 @@
     <Compile Include="Graphics\UI\Control\TextBox.cs" />
     <Compile Include="Graphics\UI\DrawInstruction.cs" />
     <Compile Include="Graphics\UI\Error.cs" />
+    <Compile Include="Graphics\UI\InGame\Generic\ButtonEvent.cs" />
     <Compile Include="Graphics\UI\InGame\MainMenu.cs" />
     <Compile Include="Graphics\UI\InGame\MultiplayerMenu.cs" />
     <Compile Include="Graphics\UI\InGame\NewWorldMenu.cs" />

@@ -11,6 +11,7 @@
 
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
+using RozWorld.Graphics.UI.InGame.Generic;
 
 using System;
 using System.Timers;
@@ -81,9 +82,9 @@ namespace RozWorld.Graphics.UI.InGame
             playGame.Position = new Vector2(0, 178);
             playGame.Anchor = AnchorType.TopCentre;
             playGame.DialogKey = this.DialogKey;
-            playGame.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            playGame.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            playGame.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            playGame.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            playGame.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            playGame.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             playGame.OnMouseUp += new SenderEventHandler(playGame_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("PlayGameButton", playGame);
@@ -96,9 +97,9 @@ namespace RozWorld.Graphics.UI.InGame
             multiplayer.Position = new Vector2(0, 218);
             multiplayer.Anchor = AnchorType.TopCentre;
             multiplayer.DialogKey = this.DialogKey;
-            multiplayer.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            multiplayer.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            multiplayer.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            multiplayer.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            multiplayer.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            multiplayer.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             multiplayer.OnMouseUp += new SenderEventHandler(multiplayer_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("MultiplayerButton", multiplayer);
@@ -111,9 +112,9 @@ namespace RozWorld.Graphics.UI.InGame
             settings.Position = new Vector2(0, 258);
             settings.Anchor = AnchorType.TopCentre;
             settings.DialogKey = this.DialogKey;
-            settings.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            settings.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            settings.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            settings.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            settings.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            settings.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             settings.OnMouseUp += new SenderEventHandler(settings_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("SettingsButton", settings);
@@ -126,9 +127,9 @@ namespace RozWorld.Graphics.UI.InGame
             exitGame.Position = new Vector2(0, 298);
             exitGame.Anchor = AnchorType.TopCentre;
             exitGame.DialogKey = this.DialogKey;
-            exitGame.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            exitGame.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            exitGame.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            exitGame.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            exitGame.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            exitGame.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             exitGame.OnMouseUp += new SenderEventHandler(exitGame_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ExitGameButton", exitGame);
@@ -138,90 +139,6 @@ namespace RozWorld.Graphics.UI.InGame
             BackDropAnimator.Start();
 
             SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// [Event] Back drop animation timer elapsed.
-        /// </summary>
-        void BackDropAnimator_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            
-        }
-
-
-        /// <summary>
-        /// [Event] "Settings" button clicked.
-        /// </summary>
-        void settings_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-
-            // Start the settings menu
-            ParentWindow.GameInterface.ControlSystems.Add("SettingsMenu", new SettingsMenu(this.ParentWindow));
-            ParentWindow.GameInterface.ControlSystems["SettingsMenu"].Start();
-        }
-
-
-        /// <summary>
-        /// [Event] "Multiplayer" button clicked.
-        /// </summary>
-        void multiplayer_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-        }
-
-
-        /// <summary>
-        /// [Event] "Play Game" button clicked.
-        /// </summary>
-        void playGame_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-
-            // Start the singleplayer menu
-            ParentWindow.GameInterface.ControlSystems.Add("SinglePlayerMenu", new SinglePlayerMenu(this.ParentWindow));
-            ParentWindow.GameInterface.ControlSystems["SinglePlayerMenu"].Start();
-        }
-
-        
-        /// <summary>
-        /// [Event] "Exit Game" button clicked.
-        /// </summary>
-        void exitGame_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-            Environment.Exit(1);
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse down.
-        /// </summary>
-        /// <param name="sender"></param>
-        void Button_OnMouseDown(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonDownTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse enter.
-        /// </summary>
-        /// <param name="sender"></param>
-        void Button_OnMouseEnter(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse leave.
-        /// </summary>
-        /// <param name="sender"></param>
-        void Button_OnMouseLeave(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.NoTint;
         }
 
 
@@ -262,6 +179,60 @@ namespace RozWorld.Graphics.UI.InGame
             // Backdrop details
             ParentWindow.GameInterface.Controls["BackDrop"].UpdatePosition();
             ((Image)ParentWindow.GameInterface.Controls["BackDrop"]).Dimensions = new System.Drawing.Size(ParentWindow.WindowScale[0] + 16, ParentWindow.WindowScale[1] + 16);
+        }
+
+
+        /// <summary>
+        /// [Event] Back drop animation timer elapsed.
+        /// </summary>
+        void BackDropAnimator_Elapsed(object sender, ElapsedEventArgs e)
+        {
+
+        }
+
+
+        /// <summary>
+        /// [Event] "Settings" button clicked.
+        /// </summary>
+        void settings_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            // Start the settings menu
+            ParentWindow.GameInterface.ControlSystems.Add("SettingsMenu", new SettingsMenu(this.ParentWindow));
+            ParentWindow.GameInterface.ControlSystems["SettingsMenu"].Start();
+        }
+
+
+        /// <summary>
+        /// [Event] "Multiplayer" button clicked.
+        /// </summary>
+        void multiplayer_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+        }
+
+
+        /// <summary>
+        /// [Event] "Play Game" button clicked.
+        /// </summary>
+        void playGame_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            // Start the singleplayer menu
+            ParentWindow.GameInterface.ControlSystems.Add("SinglePlayerMenu", new SinglePlayerMenu(this.ParentWindow));
+            ParentWindow.GameInterface.ControlSystems["SinglePlayerMenu"].Start();
+        }
+
+
+        /// <summary>
+        /// [Event] "Exit Game" button clicked.
+        /// </summary>
+        void exitGame_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+            Environment.Exit(1);
         }
     }
 }

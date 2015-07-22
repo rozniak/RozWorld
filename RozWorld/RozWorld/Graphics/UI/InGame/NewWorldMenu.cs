@@ -11,6 +11,7 @@
 
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
+using RozWorld.Graphics.UI.InGame.Generic;
 
 using OpenGL;
 
@@ -71,9 +72,9 @@ namespace RozWorld.Graphics.UI.InGame
             playWorld.Position = new Vector2(0, 288);
             playWorld.Anchor = AnchorType.TopCentre;
             playWorld.DialogKey = this.DialogKey;
-            playWorld.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            playWorld.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            playWorld.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            playWorld.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            playWorld.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            playWorld.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             playWorld.OnMouseUp += new SenderEventHandler(playWorld_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("PlayWorldButton", playWorld);
@@ -86,62 +87,14 @@ namespace RozWorld.Graphics.UI.InGame
             returnMenu.Position = new Vector2(0, 328);
             returnMenu.Anchor = AnchorType.TopCentre;
             returnMenu.DialogKey = this.DialogKey;
-            returnMenu.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            returnMenu.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            returnMenu.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            returnMenu.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            returnMenu.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            returnMenu.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             returnMenu.OnMouseUp += new SenderEventHandler(returnMenu_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ReturnNWMenuButton", returnMenu);
 
             SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// [Event] "Return..." button clicked.
-        /// </summary>
-        void returnMenu_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-            this.Close();
-        }
-
-
-        /// <summary>
-        /// [Event] "Play!" button clicked.
-        /// </summary>
-        void playWorld_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-
-            // TODO: Start the game with a new world here
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse leave.
-        /// </summary>
-        void Button_OnMouseLeave(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.NoTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse enter.
-        /// </summary>
-        void Button_OnMouseEnter(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse down.
-        /// </summary>
-        void Button_OnMouseDown(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonDownTint;
         }
 
 
@@ -186,6 +139,27 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["ReturnNWMenuButton"].UpdatePosition();
             ParentWindow.GameInterface.Controls["WorldNameBox"].UpdatePosition();
             ParentWindow.GameInterface.Controls["TagWorldName"].UpdatePosition();
+        }
+
+
+        /// <summary>
+        /// [Event] "Return..." button clicked.
+        /// </summary>
+        void returnMenu_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+            this.Close();
+        }
+
+
+        /// <summary>
+        /// [Event] "Play!" button clicked.
+        /// </summary>
+        void playWorld_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            // TODO: Start the game with a new world here
         }
     }
 }

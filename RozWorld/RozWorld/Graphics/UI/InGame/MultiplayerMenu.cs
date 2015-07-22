@@ -11,6 +11,7 @@
 
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
+using RozWorld.Graphics.UI.InGame.Generic;
 
 using OpenGL;
 
@@ -54,9 +55,9 @@ namespace RozWorld.Graphics.UI.InGame
             connectButton.Width = 200;
             connectButton.Position = new Vector2(218, 288);
             connectButton.DialogKey = this.DialogKey;
-            connectButton.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            connectButton.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            connectButton.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            connectButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            connectButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            connectButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             connectButton.OnMouseUp += new SenderEventHandler(connectButton_OnMouseUp);
 
             // Specify (direct connect) button
@@ -66,46 +67,11 @@ namespace RozWorld.Graphics.UI.InGame
             specifyButton.Width = 200;
             specifyButton.Position = new Vector2(218, 328);
             specifyButton.DialogKey = this.DialogKey;
-            specifyButton.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            specifyButton.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            specifyButton.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
-            
-        }
+            specifyButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            specifyButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            specifyButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
 
-
-        /// <summary>
-        /// [Event] "Connect" button clicked.
-        /// </summary>
-        private void connectButton_OnMouseUp(object sender)
-        {
-            // TODO: connect code here
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse leave.
-        /// </summary>
-        private void Button_OnMouseLeave(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.NoTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse enter.
-        /// </summary>
-        private void Button_OnMouseEnter(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse down.
-        /// </summary>
-        private void Button_OnMouseDown(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonDownTint;
+            SetupSubscribers();            
         }
 
 
@@ -124,6 +90,24 @@ namespace RozWorld.Graphics.UI.InGame
         public override void Close()
         {
             throw new System.NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// Implementation of the base control position updater method.
+        /// </summary>
+        public override void UpdateControlPositions()
+        {
+            // TODO: Finish this screen, sort of.
+        }
+
+
+        /// <summary>
+        /// [Event] "Connect" button clicked.
+        /// </summary>
+        private void connectButton_OnMouseUp(object sender)
+        {
+            // TODO: connect code here
         }
     }
 }

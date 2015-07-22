@@ -11,6 +11,7 @@
 
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Control;
+using RozWorld.Graphics.UI.InGame.Generic;
 
 using OpenGL;
 
@@ -60,9 +61,9 @@ namespace RozWorld.Graphics.UI.InGame
             newWorld.Position = new Vector2(0, 288);
             newWorld.Anchor = AnchorType.TopCentre;
             newWorld.DialogKey = this.DialogKey;
-            newWorld.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            newWorld.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            newWorld.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            newWorld.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            newWorld.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            newWorld.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             newWorld.OnMouseUp += new SenderEventHandler(newWorld_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("NewWorldButton", newWorld);
@@ -75,64 +76,14 @@ namespace RozWorld.Graphics.UI.InGame
             returnMenu.Position = new Vector2(0, 328);
             returnMenu.Anchor = AnchorType.TopCentre;
             returnMenu.DialogKey = this.DialogKey;
-            returnMenu.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            returnMenu.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            returnMenu.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            returnMenu.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            returnMenu.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            returnMenu.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             returnMenu.OnMouseUp += new SenderEventHandler(returnMenu_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ReturnSPMenuButton", returnMenu);
 
             SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// [Event] "Return..." button clicked.
-        /// </summary>
-        void returnMenu_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-            this.Close();
-        }
-
-
-        /// <summary>
-        /// [Event] "New World" button clicked.
-        /// </summary>
-        void newWorld_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-
-            // Start the new world menu
-            ParentWindow.GameInterface.ControlSystems.Add("NewWorldMenu", new NewWorldMenu(this.ParentWindow));
-            ParentWindow.GameInterface.ControlSystems["NewWorldMenu"].Start();
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse leave.
-        /// </summary>
-        void Button_OnMouseLeave(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.NoTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse enter.
-        /// </summary>
-        void Button_OnMouseEnter(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse down.
-        /// </summary>
-        void Button_OnMouseDown(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonDownTint;
         }
 
 
@@ -173,6 +124,29 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["ScreenTitle"].UpdatePosition();
             ParentWindow.GameInterface.Controls["NewWorldButton"].UpdatePosition();
             ParentWindow.GameInterface.Controls["ReturnSPMenuButton"].UpdatePosition();
+        }
+
+
+        /// <summary>
+        /// [Event] "Return..." button clicked.
+        /// </summary>
+        void returnMenu_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+            this.Close();
+        }
+
+
+        /// <summary>
+        /// [Event] "New World" button clicked.
+        /// </summary>
+        void newWorld_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            // Start the new world menu
+            ParentWindow.GameInterface.ControlSystems.Add("NewWorldMenu", new NewWorldMenu(this.ParentWindow));
+            ParentWindow.GameInterface.ControlSystems["NewWorldMenu"].Start();
         }
     }
 }

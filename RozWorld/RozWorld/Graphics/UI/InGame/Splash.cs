@@ -80,6 +80,26 @@ namespace RozWorld.Graphics.UI.InGame
 
 
         /// <summary>
+        /// Implementation of the base control system closing method.
+        /// </summary>
+        public override void Close()
+        {
+            ParentWindow.GameInterface.KillFromDialogKey(this.DialogKey);
+            SplashTimer.Dispose();
+            ParentWindow.GameInterface.ControlSystems.Remove("Splash");
+        }
+
+
+        /// <summary>
+        /// Implementation of the base control position updater method.
+        /// </summary>
+        public override void UpdateControlPositions()
+        {
+            ParentWindow.GameInterface.Controls["SplashScreen"].UpdatePosition();
+        }
+
+
+        /// <summary>
         /// [Event] Splash Screen transition timer elapsed.
         /// </summary>
         void SplashTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -91,23 +111,6 @@ namespace RozWorld.Graphics.UI.InGame
 
             // Kill the splash screen
             this.Close();
-        }
-
-
-        /// <summary>
-        /// Implementation of the base control system closing method.
-        /// </summary>
-        public override void Close()
-        {
-            ParentWindow.GameInterface.KillFromDialogKey(this.DialogKey);
-            SplashTimer.Dispose();
-            ParentWindow.GameInterface.ControlSystems.Remove("Splash");
-        }
-
-
-        public override void UpdateControlPositions()
-        {
-            ParentWindow.GameInterface.Controls["SplashScreen"].UpdatePosition();
         }
     }
 }

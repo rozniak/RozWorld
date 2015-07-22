@@ -10,6 +10,7 @@
  */
 
 using RozWorld.Graphics.UI.Control;
+using RozWorld.Graphics.UI.InGame.Generic;
 
 using OpenGL;
 
@@ -59,9 +60,9 @@ namespace RozWorld.Graphics.UI.InGame
             videoSettings.Position = new Vector2(-110, 180);
             videoSettings.Anchor = AnchorType.TopCentre;
             videoSettings.DialogKey = this.DialogKey;
-            videoSettings.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            videoSettings.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            videoSettings.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            videoSettings.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            videoSettings.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            videoSettings.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             videoSettings.OnMouseUp += new SenderEventHandler(videoSettings_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("VideoSettingsButton", videoSettings);
@@ -74,62 +75,14 @@ namespace RozWorld.Graphics.UI.InGame
             returnMenu.Position = new Vector2(0, 500);
             returnMenu.Anchor = AnchorType.TopCentre;
             returnMenu.DialogKey = this.DialogKey;
-            returnMenu.OnMouseDown += new SenderEventHandler(Button_OnMouseDown);
-            returnMenu.OnMouseEnter += new SenderEventHandler(Button_OnMouseEnter);
-            returnMenu.OnMouseLeave += new SenderEventHandler(Button_OnMouseLeave);
+            returnMenu.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            returnMenu.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            returnMenu.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             returnMenu.OnMouseUp += new SenderEventHandler(returnMenu_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ReturnSTMenuButton", returnMenu);
 
             SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// [Event] "Video Settings..." button clicked.
-        /// </summary>
-        void videoSettings_OnMouseUp(object sender)
-        {
-            ParentWindow.GameInterface.ControlSystems.Add("VideoSettingsMenu", new VideoSettingsMenu(this.ParentWindow));
-            ParentWindow.GameInterface.ControlSystems["VideoSettingsMenu"].Start();
-        }
-
-
-        /// <summary>
-        /// [Event] "Return..." button clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        void returnMenu_OnMouseUp(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-            this.Close();
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse leave.
-        /// </summary>
-        void Button_OnMouseLeave(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.NoTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse enter.
-        /// </summary>
-        void Button_OnMouseEnter(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
-        }
-
-
-        /// <summary>
-        /// [Event] Generic button mouse down.
-        /// </summary>
-        void Button_OnMouseDown(object sender)
-        {
-            ((Button)sender).TintColour = VectorColour.ButtonDownTint;
         }
 
 
@@ -170,6 +123,27 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["ScreenTitle"].UpdatePosition();
             ParentWindow.GameInterface.Controls["VideoSettingsButton"].UpdatePosition();
             ParentWindow.GameInterface.Controls["ReturnSTMenuButton"].UpdatePosition();
+        }
+
+
+        /// <summary>
+        /// [Event] "Video Settings..." button clicked.
+        /// </summary>
+        void videoSettings_OnMouseUp(object sender)
+        {
+            ParentWindow.GameInterface.ControlSystems.Add("VideoSettingsMenu", new VideoSettingsMenu(this.ParentWindow));
+            ParentWindow.GameInterface.ControlSystems["VideoSettingsMenu"].Start();
+        }
+
+
+        /// <summary>
+        /// [Event] "Return..." button clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        void returnMenu_OnMouseUp(object sender)
+        {
+            ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+            this.Close();
         }
     }
 }
