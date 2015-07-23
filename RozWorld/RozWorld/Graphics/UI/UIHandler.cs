@@ -23,7 +23,7 @@ namespace RozWorld.Graphics.UI
 {
     public class UIHandler
     {
-        public StringIntPair[] ControlZMap
+        public Tuple<string, int>[] ControlZMap
         {
             get;
             private set;
@@ -39,11 +39,11 @@ namespace RozWorld.Graphics.UI
         public void SortControlZIndexes()
         {
             int indexSetup = 0;
-            ControlZMap = new StringIntPair[Controls.Count];
+            ControlZMap = new Tuple<string, int>[Controls.Count];
 
             foreach (var item in Controls)
             {
-                ControlZMap[indexSetup] = new StringIntPair(item.Key, item.Value.ZIndex);
+                ControlZMap[indexSetup] = new Tuple<string, int>(item.Key, item.Value.ZIndex);
                 indexSetup++;
             }
 
@@ -56,13 +56,13 @@ namespace RozWorld.Graphics.UI
         /// </summary>
         /// <param name="map">The Z-Index map array.</param>
         /// <returns>The sorted array.</returns>
-        private StringIntPair[] MergeSortZMap(StringIntPair[] map)
+        private Tuple<string, int>[] MergeSortZMap(Tuple<string, int>[] map)
         {
             if (map.Length <= 1) { return map; }
 
             int middle = map.Length / 2;
-            StringIntPair[] left = new StringIntPair[middle];
-            StringIntPair[] right = new StringIntPair[map.Length - middle];
+            Tuple<string, int>[] left = new Tuple<string, int>[middle];
+            Tuple<string, int>[] right = new Tuple<string, int>[map.Length - middle];
 
             for (int i = 0; i < middle; i++)
             {
@@ -87,15 +87,15 @@ namespace RozWorld.Graphics.UI
         /// <param name="left">The left sub-array.</param>
         /// <param name="right">The right sub-array.</param>
         /// <returns>The compared and merged left and right sub-arrays in one array.</returns>
-        private StringIntPair[] MergeZMap(StringIntPair[] left, StringIntPair[] right)
+        private Tuple<string, int>[] MergeZMap(Tuple<string, int>[] left, Tuple<string, int>[] right)
         {
-            StringIntPair[] result = new StringIntPair[left.Length + right.Length];
-            StringIntPair[] buffer = new StringIntPair[0]; // Array to hold values temporarily when shrinking left or right during appending to result.
+            Tuple<string, int>[] result = new Tuple<string, int>[left.Length + right.Length];
+            Tuple<string, int>[] buffer = new Tuple<string, int>[0]; // Array to hold values temporarily when shrinking left or right during appending to result.
             int appendingIndex = 0; // Keep track of the next index that will be appended to in result.
 
             do
             {
-                if (left[0].IntegerValue <= right[0].IntegerValue)
+                if (left[0].Item2 <= right[0].Item2)
                 {
                     result[appendingIndex] = left[0];
                     appendingIndex++;
@@ -106,10 +106,10 @@ namespace RozWorld.Graphics.UI
                     }
                     else
                     {
-                        buffer = new StringIntPair[left.Length - 1];
+                        buffer = new Tuple<string, int>[left.Length - 1];
                         Array.Copy(left, 1, buffer, 0, left.Length - 1);
 
-                        left = new StringIntPair[buffer.Length];
+                        left = new Tuple<string, int>[buffer.Length];
                         Array.Copy(buffer, left, buffer.Length);
                     }
                 }
@@ -124,10 +124,10 @@ namespace RozWorld.Graphics.UI
                     }
                     else
                     {
-                        buffer = new StringIntPair[right.Length - 1];
+                        buffer = new Tuple<string, int>[right.Length - 1];
                         Array.Copy(right, 1, buffer, 0, right.Length - 1);
 
-                        right = new StringIntPair[buffer.Length];
+                        right = new Tuple<string, int>[buffer.Length];
                         Array.Copy(buffer, right, buffer.Length);
                     }
                 }

@@ -44,15 +44,15 @@ namespace RozWorld.COMFY
 
                 foreach (string line in fileContent)
                 {
-                    ParsedLineData[] parsedContent = Files.ParseLine(line);
+                    Tuple<ParsedObjectType, object>[] parsedContent = Files.ParseLine(line);
 
-                    if (parsedContent.Length == 0 || parsedContent[0].Type != ParsedObjectType.Word)
+                    if (parsedContent.Length == 0 || parsedContent[0].Item1 != ParsedObjectType.Word)
                     {
                         continue;
                     }
 
                     // Used to examine the first WORD of a line...
-                    string firstWord = ((string)parsedContent[0].Data).ToLower();
+                    string firstWord = ((string)parsedContent[0].Item2).ToLower();
 
                     if (!currentlyDefining)
                     {
@@ -93,7 +93,7 @@ namespace RozWorld.COMFY
                                         break;
                                 }
                             }
-                            else if (parsedContent.Length == 2 && parsedContent[1].Type == ParsedObjectType.Word)
+                            else if (parsedContent.Length == 2 && parsedContent[1].Item1 == ParsedObjectType.Word)
                             {
                                 switch (firstWord)
                                 {
@@ -132,7 +132,7 @@ namespace RozWorld.COMFY
 
                                         break;
                                 }
-                                objectName = (string)parsedContent[1].Data;
+                                objectName = (string)parsedContent[1].Item2;
                                 expectingOpeningBrace = true;
                             }
                         }
@@ -162,19 +162,19 @@ namespace RozWorld.COMFY
                                 switch (parsedContent.Length)
                                 {
                                     case 2:
-                                        if (parsedContent[1].Type == ParsedObjectType.String)
+                                        if (parsedContent[1].Item1 == ParsedObjectType.String)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'NAME' definition (usage: 'name: Name'):
                                                 case "name:":
-                                                    ((InformationDefinition)currentDefinition).Name = (string)parsedContent[1].Data;
+                                                    ((InformationDefinition)currentDefinition).Name = (string)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'AUTHOR' definition (usage: 'author: Author'):
                                                 case "author:":
-                                                    ((InformationDefinition)currentDefinition).Author = (string)parsedContent[1].Data;
+                                                    ((InformationDefinition)currentDefinition).Author = (string)parsedContent[1].Item2;
 
                                                     break;
 
@@ -184,14 +184,14 @@ namespace RozWorld.COMFY
                                                     break;
                                             }
                                         }
-                                        else if (parsedContent[1].Type == ParsedObjectType.Word)
+                                        else if (parsedContent[1].Item1 == ParsedObjectType.Word)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'VERSION' definition (usage: 'version: Version'):
                                                 case "version:":
                                                     double parsedVersion;
-                                                    bool successfulParse = double.TryParse((string)parsedContent[1].Data, out parsedVersion);
+                                                    bool successfulParse = double.TryParse((string)parsedContent[1].Item2, out parsedVersion);
 
                                                     if (successfulParse)
                                                     {
@@ -214,7 +214,7 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             ((InformationDefinition)currentDefinition).MD5Hash = Files.GetMD5Hash(file);
                                             comfyContent.InformationDefinitions[file] = (InformationDefinition)currentDefinition;
@@ -242,9 +242,9 @@ namespace RozWorld.COMFY
                                 {
                                     case 3:
                                         // 'ENTRY' definition (usage: 'entry: EntryKey EntryData'):
-                                        if (firstWord == "entry:" && parsedContent[1].Type == ParsedObjectType.Word && parsedContent[2].Type == ParsedObjectType.Word)
+                                        if (firstWord == "entry:" && parsedContent[1].Item1 == ParsedObjectType.Word && parsedContent[2].Item1 == ParsedObjectType.Word)
                                         {
-                                            ((ItemDefinition)currentDefinition).Entry[(string)parsedContent[1].Data] = (string)parsedContent[2].Data;
+                                            ((ItemDefinition)currentDefinition).Entry[(string)parsedContent[1].Item2] = (string)parsedContent[2].Item2;
                                         }
                                         else
                                         {
@@ -254,25 +254,25 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 2:
-                                        if (parsedContent[1].Type == ParsedObjectType.Word)
+                                        if (parsedContent[1].Item1 == ParsedObjectType.Word)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'NAME' definition (usage: 'name: LanguageName'):
                                                 case "name:":
-                                                    ((ItemDefinition)currentDefinition).LanguageName = (string)parsedContent[1].Data;
+                                                    ((ItemDefinition)currentDefinition).LanguageName = (string)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'TEXTURE' definition (usage: 'texture: TextureName'):
                                                 case "texture:":
-                                                    ((ItemDefinition)currentDefinition).Texture = (string)parsedContent[1].Data;
+                                                    ((ItemDefinition)currentDefinition).Texture = (string)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'TYPE' definition (usage: 'type: ItemType'):
                                                 case "type:":
-                                                    switch (((string)parsedContent[1].Data).ToLower())
+                                                    switch (((string)parsedContent[1].Item2).ToLower())
                                                     {
                                                         case "weapon":
                                                             ((ItemDefinition)currentDefinition).Type = ItemType.Weapon;
@@ -292,13 +292,13 @@ namespace RozWorld.COMFY
 
                                                 // 'PLACES' definition (usage: 'places: Places'):
                                                 case "places:":
-                                                    ((ItemDefinition)currentDefinition).Places = (string)parsedContent[1].Data;
+                                                    ((ItemDefinition)currentDefinition).Places = (string)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'ORIGINAL' definition (usage: 'original: Original'):
                                                 case "original:":
-                                                    ((ItemDefinition)currentDefinition).Original = (string)parsedContent[1].Data;
+                                                    ((ItemDefinition)currentDefinition).Original = (string)parsedContent[1].Item2;
 
                                                     break;
 
@@ -308,13 +308,13 @@ namespace RozWorld.COMFY
                                                     break;
                                             }
                                         }
-                                        else if (parsedContent[1].Type == ParsedObjectType.Integer)
+                                        else if (parsedContent[1].Item1 == ParsedObjectType.Integer)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'POWER' definition (usage: 'power: Power'):
                                                 case "power:":
-                                                    ((ItemDefinition)currentDefinition).Power = (int)parsedContent[1].Data;
+                                                    ((ItemDefinition)currentDefinition).Power = (int)parsedContent[1].Item2;
 
                                                     break;
 
@@ -332,18 +332,18 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             comfyContent.ItemDefinitions[objectName] = (ItemDefinition)currentDefinition;
                                             currentlyDefining = false;
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '+')   // SET FLAG '+FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '+')   // SET FLAG '+FLAG'
                                         {
-                                            ((ItemDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((ItemDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '-')   // REMOVE FLAG '-FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '-')   // REMOVE FLAG '-FLAG'
                                         {
-                                            ((ItemDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((ItemDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
                                         else
                                         {
@@ -371,9 +371,9 @@ namespace RozWorld.COMFY
                                 {
                                     case 3:
                                         // 'LOAD' definition (usage: 'load: LanguageName Source'):
-                                        if (firstWord == "load:" && parsedContent[1].Type == ParsedObjectType.String && parsedContent[2].Type == ParsedObjectType.String)
+                                        if (firstWord == "load:" && parsedContent[1].Item1 == ParsedObjectType.String && parsedContent[2].Item1 == ParsedObjectType.String)
                                         {
-                                            comfyContent.LanguageDefinitions[(string)parsedContent[1].Data] = Files.ReplaceSpecialDirectories((string)parsedContent[2].Data);
+                                            comfyContent.LanguageDefinitions[(string)parsedContent[1].Item2] = Files.ReplaceSpecialDirectories((string)parsedContent[2].Item2);
                                         }
                                         else
                                         {
@@ -383,7 +383,7 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             currentlyDefining = false;
                                         }
@@ -412,19 +412,19 @@ namespace RozWorld.COMFY
                                 switch (parsedContent.Length)
                                 {
                                     case 2:
-                                        if (parsedContent[1].Type == ParsedObjectType.Word)
+                                        if (parsedContent[1].Item1 == ParsedObjectType.Word)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'NAME' definition (usage: 'name: LanguageName'):
                                                 case "name:":
-                                                    ((PetDefinition)currentDefinition).LanguageName = (string)parsedContent[1].Data;
+                                                    ((PetDefinition)currentDefinition).LanguageName = (string)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'TEXTURE' definition (usage: 'texture: TextureName'):
                                                 case "texture:":
-                                                    ((PetDefinition)currentDefinition).Texture = (string)parsedContent[1].Data;
+                                                    ((PetDefinition)currentDefinition).Texture = (string)parsedContent[1].Item2;
 
                                                     break;
 
@@ -434,11 +434,11 @@ namespace RozWorld.COMFY
                                                     break;
                                             }
                                         }
-                                        else if (parsedContent[1].Type == ParsedObjectType.Integer)
+                                        else if (parsedContent[1].Item1 == ParsedObjectType.Integer)
                                         {
                                             if (firstWord == "health:")
                                             {
-                                                ((PetDefinition)currentDefinition).Health = (int)parsedContent[1].Data;
+                                                ((PetDefinition)currentDefinition).Health = (int)parsedContent[1].Item2;
                                             }
                                         }
                                         else
@@ -449,18 +449,18 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             comfyContent.PetDefinitions[objectName] = (PetDefinition)currentDefinition;
                                             currentlyDefining = false;
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '+')   // SET FLAG '+FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '+')   // SET FLAG '+FLAG'
                                         {
-                                            ((PetDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((PetDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '-')   // REMOVE FLAG '-FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '-')   // REMOVE FLAG '-FLAG'
                                         {
-                                            ((PetDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((PetDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
                                         else
                                         {
@@ -487,14 +487,14 @@ namespace RozWorld.COMFY
                                 switch (parsedContent.Length)
                                 {
                                     case 2:
-                                        if (parsedContent[1].Type == ParsedObjectType.Word)
+                                        if (parsedContent[1].Item1 == ParsedObjectType.Word)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'BASESPEED' definition (usage: 'basespeed: BaseSpeed'):
                                                 case "basespeed:":
                                                     double parsedSpeed;
-                                                    bool successfulParse = double.TryParse((string)parsedContent[1].Data, out parsedSpeed);
+                                                    bool successfulParse = double.TryParse((string)parsedContent[1].Item2, out parsedSpeed);
 
                                                     if (successfulParse)
                                                     {
@@ -506,7 +506,7 @@ namespace RozWorld.COMFY
                                                 // 'MAXSPEED' definition (usage: 'maxspeed: MaxSpeed'):
                                                 case "maxspeed:":
                                                     double parsedSpeed_;
-                                                    bool successfulParse_ = double.TryParse((string)parsedContent[1].Data, out parsedSpeed_);
+                                                    bool successfulParse_ = double.TryParse((string)parsedContent[1].Item2, out parsedSpeed_);
 
                                                     if (successfulParse_)
                                                     {
@@ -521,31 +521,31 @@ namespace RozWorld.COMFY
                                                     break;
                                             }
                                         }
-                                        else if (parsedContent[1].Type == ParsedObjectType.Integer)
+                                        else if (parsedContent[1].Item1 == ParsedObjectType.Integer)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'BASESTRENGTH' definition (usage: 'basestrength: BaseStrength'):
                                                 case "basestrength:":
-                                                    ((PlayerPawnDefinition)currentDefinition).BaseStrength = (int)parsedContent[1].Data;
+                                                    ((PlayerPawnDefinition)currentDefinition).BaseStrength = (int)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'BASEDEFENCE' definition (usage: 'basedefence: BaseDefence'):
                                                 case "basedefence:":
-                                                    ((PlayerPawnDefinition)currentDefinition).BaseDefence = (int)parsedContent[1].Data;
+                                                    ((PlayerPawnDefinition)currentDefinition).BaseDefence = (int)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'HEALTH' definition (usage: 'health: Health'):
                                                 case "health:":
-                                                    ((PlayerPawnDefinition)currentDefinition).Health = (int)parsedContent[1].Data;
+                                                    ((PlayerPawnDefinition)currentDefinition).Health = (int)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'MAXLEVEL' definition (usage: 'maxlevel: MaxLevel'):
                                                 case "maxlevel:":
-                                                    ((PlayerPawnDefinition)currentDefinition).MaxLevel = (int)parsedContent[1].Data;
+                                                    ((PlayerPawnDefinition)currentDefinition).MaxLevel = (int)parsedContent[1].Item2;
 
                                                     break;
 
@@ -559,7 +559,7 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             comfyContent.PlayerPawn = (PlayerPawnDefinition)currentDefinition;
                                             currentlyDefining = false;
@@ -590,9 +590,9 @@ namespace RozWorld.COMFY
                                 {
                                     case 2:
                                         // 'SRC' definition (usage: 'src: Source')
-                                        if (firstWord == "src:" && parsedContent[1].Type == ParsedObjectType.String)
+                                        if (firstWord == "src:" && parsedContent[1].Item1 == ParsedObjectType.String)
                                         {
-                                            ((SoundDefinition)currentDefinition).Source = Files.ReplaceSpecialDirectories((string)parsedContent[1].Data);
+                                            ((SoundDefinition)currentDefinition).Source = Files.ReplaceSpecialDirectories((string)parsedContent[1].Item2);
                                         }
                                         else
                                         {
@@ -602,7 +602,7 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             comfyContent.SoundDefinitions[objectName] = (SoundDefinition)currentDefinition;
                                             currentlyDefining = false;
@@ -633,9 +633,9 @@ namespace RozWorld.COMFY
                                 {
                                     case 3:
                                         // 'LOAD' definition (usage: 'load: TextureName Source'):
-                                        if (firstWord == "load:" && parsedContent[1].Type == ParsedObjectType.String && parsedContent[2].Type == ParsedObjectType.String)
+                                        if (firstWord == "load:" && parsedContent[1].Item1 == ParsedObjectType.String && parsedContent[2].Item1 == ParsedObjectType.String)
                                         {
-                                            comfyContent.Textures[(string)parsedContent[1].Data] = Files.ReplaceSpecialDirectories((string)parsedContent[2].Data);
+                                            comfyContent.Textures[(string)parsedContent[1].Item2] = Files.ReplaceSpecialDirectories((string)parsedContent[2].Item2);
                                         }
                                         else
                                         {
@@ -645,7 +645,7 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             currentlyDefining = false;
                                         }
@@ -675,9 +675,9 @@ namespace RozWorld.COMFY
                                 {
                                     case 3:
                                         // 'DROPS' definition (usage 'drops: ItemName Quantity'):
-                                        if (firstWord == "drops:" && parsedContent[1].Type == ParsedObjectType.Word && parsedContent[2].Type == ParsedObjectType.Integer)
+                                        if (firstWord == "drops:" && parsedContent[1].Item1 == ParsedObjectType.Word && parsedContent[2].Item1 == ParsedObjectType.Integer)
                                         {
-                                            ((ThingDefinition)currentDefinition).Drops = new ItemStack(new Item.Item((string)parsedContent[1].Data), (int)parsedContent[2].Data);
+                                            ((ThingDefinition)currentDefinition).Drops = new ItemStack(new Item.Item((string)parsedContent[1].Item2), (int)parsedContent[2].Item2);
                                         }
                                         else
                                         {
@@ -687,19 +687,19 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 2:
-                                        if (parsedContent[1].Type == ParsedObjectType.Word)
+                                        if (parsedContent[1].Item1 == ParsedObjectType.Word)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'NAME' definition (usage: 'name: LanguageName'):
                                                 case "name:":
-                                                    ((ThingDefinition)currentDefinition).LanguageName = (string)parsedContent[1].Data;
+                                                    ((ThingDefinition)currentDefinition).LanguageName = (string)parsedContent[1].Item2;
 
                                                     break;
 
                                                 // 'TEXTURE' definition (usage: 'texture: TextureName'):
                                                 case "texture:":
-                                                    ((ThingDefinition)currentDefinition).Texture = (string)parsedContent[1].Data;
+                                                    ((ThingDefinition)currentDefinition).Texture = (string)parsedContent[1].Item2;
 
                                                     break;
 
@@ -722,13 +722,13 @@ namespace RozWorld.COMFY
                                                     break;
                                             }
                                         }
-                                        else if (parsedContent[1].Type == ParsedObjectType.Integer)
+                                        else if (parsedContent[1].Item1 == ParsedObjectType.Integer)
                                         {
                                             switch (firstWord)
                                             {
                                                 // 'HEALTH' definition (usage: 'health: Health'):
                                                 case "health:":
-                                                    ((ThingDefinition)currentDefinition).Health = (int)parsedContent[1].Data;
+                                                    ((ThingDefinition)currentDefinition).Health = (int)parsedContent[1].Item2;
 
                                                     break;
 
@@ -746,18 +746,18 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             comfyContent.ThingDefinitions[objectName] = (ThingDefinition)currentDefinition;
                                             currentlyDefining = false;
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '+')   // SET FLAG '+FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '+')   // SET FLAG '+FLAG'
                                         {
-                                            ((ThingDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((ThingDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '-')   // REMOVE FLAG '-FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '-')   // REMOVE FLAG '-FLAG'
                                         {
-                                            ((ThingDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((ThingDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
                                         else
                                         {
@@ -788,7 +788,7 @@ namespace RozWorld.COMFY
                                         {
                                             // 'TEXTURE' definition (usage: 'texture: TextureName'):
                                             case "texture:":
-                                                ((TileFloorDefinition)currentDefinition).Texture = (string)parsedContent[1].Data;
+                                                ((TileFloorDefinition)currentDefinition).Texture = (string)parsedContent[1].Item2;
 
                                                 break;
                                         }
@@ -796,18 +796,18 @@ namespace RozWorld.COMFY
                                         break;
 
                                     case 1:
-                                        if ((string)parsedContent[0].Data == "}")   // END OF DEFINITION '}'
+                                        if ((string)parsedContent[0].Item2 == "}")   // END OF DEFINITION '}'
                                         {
                                             comfyContent.TileFloorDefinitions[objectName] = (TileFloorDefinition)currentDefinition;
                                             currentlyDefining = false;
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '+')   // SET FLAG '+FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '+')   // SET FLAG '+FLAG'
                                         {
-                                            ((TileFloorDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((TileFloorDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
-                                        else if (((string)parsedContent[0].Data)[0] == '-')   // REMOVE FLAG '-FLAG'
+                                        else if (((string)parsedContent[0].Item2)[0] == '-')   // REMOVE FLAG '-FLAG'
                                         {
-                                            ((TileFloorDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((TileFloorDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
 
                                         break;
@@ -834,13 +834,13 @@ namespace RozWorld.COMFY
                                         {
                                             // 'TEXTURE' definition (usage: 'texture: TextureName'):
                                             case "texture:":
-                                                ((TileWallDefinition)currentDefinition).Texture = (string)parsedContent[1].Data;
+                                                ((TileWallDefinition)currentDefinition).Texture = (string)parsedContent[1].Item2;
 
                                                 break;
 
                                             // 'BREAKS' definition (usage: 'breaks: Breaks'):
                                             case "breaks:":
-                                                bool successfulParse = bool.TryParse((string)parsedContent[1].Data, out ((TileWallDefinition)currentDefinition).Breaks);
+                                                bool successfulParse = bool.TryParse((string)parsedContent[1].Item2, out ((TileWallDefinition)currentDefinition).Breaks);
 
                                                 if (!successfulParse)
                                                 {
@@ -865,11 +865,11 @@ namespace RozWorld.COMFY
                                         }
                                         else if (firstWord[0] == '+')   // SET FLAG '+FLAG'
                                         {
-                                            ((TileWallDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((TileWallDefinition)currentDefinition).SetFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
                                         else if (firstWord[0] == '-')   // REMOVE FLAG '-FLAG'
                                         {
-                                            ((TileWallDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Data).Substring(1));
+                                            ((TileWallDefinition)currentDefinition).RemoveFlag(((string)parsedContent[0].Item2).Substring(1));
                                         }
 
                                         break;

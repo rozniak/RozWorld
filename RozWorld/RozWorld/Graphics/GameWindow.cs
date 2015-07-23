@@ -244,11 +244,11 @@ namespace RozWorld.Graphics
             Gl.Clear(ClearBufferMask.ColorBufferBit);
             Gl.UseProgram(GLProgram);
 
-            foreach (StringIntPair key in GameInterface.ControlZMap)
+            foreach (Tuple<string, int> key in GameInterface.ControlZMap)
             {
                 try
                 {
-                    foreach (DrawInstruction instruction in GameInterface.Controls[key.StringValue].DrawInstructions)
+                    foreach (DrawInstruction instruction in GameInterface.Controls[key.Item1].DrawInstructions)
                     {
                         VBO<Vector3> TextureDrawVectors = new VBO<Vector3>(new Vector3[] { new Vector3(instruction.DrawPoints[0].x, instruction.DrawPoints[0].y, 0), new Vector3(instruction.DrawPoints[1].x, instruction.DrawPoints[1].y, 0), new Vector3(instruction.DrawPoints[2].x, instruction.DrawPoints[2].y, 0), new Vector3(instruction.DrawPoints[3].x, instruction.DrawPoints[3].y, 0) });
                         VBO<int> TextureQuads = new VBO<int>(new int[] { 0, 1, 2, 3 }, BufferTarget.ElementArrayBuffer);

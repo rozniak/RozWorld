@@ -33,9 +33,13 @@ namespace RozWorld.Graphics.UI.InGame
         {
             // Hide the main menu controls
             ParentWindow.GameInterface.Controls["PlayGameButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["PlayGameButton"]).TintColour = VectorColour.NoTint;
             ParentWindow.GameInterface.Controls["MultiplayerButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["MultiplayerButton"]).TintColour = VectorColour.NoTint;
             ParentWindow.GameInterface.Controls["SettingsButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["SettingsButton"]).TintColour = VectorColour.NoTint;
             ParentWindow.GameInterface.Controls["ExitGameButton"].Visible = false;
+            ((Button)ParentWindow.GameInterface.Controls["ExitGameButton"]).TintColour = VectorColour.NoTint;
 
             // Multiplayer title label
             Label screenTitle = new Label(this.ParentWindow);
@@ -52,7 +56,7 @@ namespace RozWorld.Graphics.UI.InGame
             Button connectButton = new Button(this.ParentWindow);
 
             connectButton.Text = "Connect";
-            connectButton.Width = 200;
+            connectButton.Width = 100;
             connectButton.Position = new Vector2(218, 288);
             connectButton.DialogKey = this.DialogKey;
             connectButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
@@ -60,16 +64,20 @@ namespace RozWorld.Graphics.UI.InGame
             connectButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
             connectButton.OnMouseUp += new SenderEventHandler(connectButton_OnMouseUp);
 
+            ParentWindow.GameInterface.Controls.Add("ConnectButton", connectButton);
+
             // Specify (direct connect) button
             Button specifyButton = new Button(this.ParentWindow);
 
             specifyButton.Text = "Specify";
-            specifyButton.Width = 200;
+            specifyButton.Width = 100;
             specifyButton.Position = new Vector2(218, 328);
             specifyButton.DialogKey = this.DialogKey;
             specifyButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
             specifyButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
             specifyButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+
+            ParentWindow.GameInterface.Controls.Add("SpecifyButton", specifyButton);
 
             SetupSubscribers();            
         }
@@ -80,7 +88,10 @@ namespace RozWorld.Graphics.UI.InGame
         /// </summary>
         public override void SetupSubscribers()
         {
-            base.SetupSubscribers();
+            MouseSubscribers = new ControlSkeleton[] {
+                ParentWindow.GameInterface.Controls["ConnectButton"],
+                ParentWindow.GameInterface.Controls["SpecifyButton"]
+            };
         } 
 
 
@@ -98,7 +109,7 @@ namespace RozWorld.Graphics.UI.InGame
         /// </summary>
         public override void UpdateControlPositions()
         {
-            // TODO: Finish this screen, sort of.
+            
         }
 
 

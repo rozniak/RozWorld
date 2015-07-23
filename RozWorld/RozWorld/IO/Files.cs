@@ -144,9 +144,9 @@ namespace RozWorld.IO
         /// </summary>
         /// <param name="line">The string data to parse.</param>
         /// <returns>The array of data objects retrieved from the string data.</returns>
-        public static ParsedLineData[] ParseLine(string line)
+        public static Tuple<ParsedObjectType, object>[] ParseLine(string line)
         {
-            List<ParsedLineData> parsedLineData = new List<ParsedLineData>();
+            var parsedLineData = new List<Tuple<ParsedObjectType, object>>();
 
             bool insideQuotes = false;
             bool finished = false;
@@ -308,16 +308,15 @@ namespace RozWorld.IO
                     {
                         startedDefining = false;
 
-                        ParsedLineData parsedDataItem = new ParsedLineData();
-
-                        parsedDataItem.Data = definingData;
+                        object parsedObject = definingData;
+                        ParsedObjectType parsedType;
 
                         if (!errors)
                         {
                             if (definingData.Length >= 2 && definingData[0] == '"' && definingData[definingData.Length - 1] == '"')
                             {
-                                parsedDataItem.Data = definingData.Substring(1, definingData.Length - 2);
-                                parsedDataItem.Type = ParsedObjectType.String;
+                                parsedObject = definingData.Substring(1, definingData.Length - 2);
+                                parsedType = ParsedObjectType.String;
                             }
                             else
                             {
@@ -326,22 +325,22 @@ namespace RozWorld.IO
 
                                 if (successfulParse)
                                 {
-                                    parsedDataItem.Type = ParsedObjectType.Integer;
-                                    parsedDataItem.Data = resultingParsedInt;
+                                    parsedType = ParsedObjectType.Integer;
+                                    parsedObject = resultingParsedInt;
                                 }
                                 else
                                 {
-                                    parsedDataItem.Type = ParsedObjectType.Word;
+                                    parsedType = ParsedObjectType.Word;
                                 }
                             }
                         }
                         else
                         {
-                            parsedDataItem.Type = ParsedObjectType.Invalid;
+                            parsedType = ParsedObjectType.Invalid;
                             errors = false;
                         }
 
-                        parsedLineData.Add(parsedDataItem);
+                        parsedLineData.Add(new Tuple<ParsedObjectType, object>(parsedType, parsedObject));
 
                         definingData = "";
                         individualFinished = false;
