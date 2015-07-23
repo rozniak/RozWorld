@@ -182,6 +182,7 @@ namespace RozWorld.Graphics.UI.Control
                 {
                     if (OnMouseUp != null)
                     {
+                        this.ParentWindow.DelayMouse(); // Prevent ghosting of the mouse
                         OnMouseUp(this);
                     }
                 }

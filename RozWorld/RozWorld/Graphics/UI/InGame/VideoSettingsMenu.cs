@@ -14,10 +14,30 @@ using RozWorld.Graphics.UI.InGame.Generic;
 
 using OpenGL;
 
+using System.Drawing;
+
 namespace RozWorld.Graphics.UI.InGame
 {
     public class VideoSettingsMenu : ControlSystem
     {
+        private Size WindowResolution;
+        private Size[] StandardResolutions = new Size[]{
+            new Size(800, 600),
+            new Size(1024, 768),
+            new Size(1152, 864),
+            new Size(1280, 720),
+            new Size(1280, 960),
+            new Size(1366, 768),
+            new Size(1440, 1080),
+            new Size(1600, 900),
+            new Size(1600, 1200),
+            new Size(1920, 1080),
+        };
+        private int SelectedResolution = 0;
+
+        private bool AeroOffsets;
+        private bool MinimumSizeIsPreferred;
+
         public VideoSettingsMenu(GameWindow parentWindow)
         {
             this.ParentWindow = parentWindow;
@@ -38,6 +58,14 @@ namespace RozWorld.Graphics.UI.InGame
 
             // Change title of menu
             ((Label)ParentWindow.GameInterface.Controls["ScreenTitle"]).Text = "Video Settings";
+
+            // Load current settings
+            WindowResolution = RozWorld.Settings.WindowResolution;
+            AeroOffsets = RozWorld.Settings.AeroOffsets;
+            MinimumSizeIsPreferred = RozWorld.Settings.MinimumSizeIsPreferred;
+
+            // Set up the resolution button
+            FindClosestResolution();
         
             // Window resolution label
             Label resolutionLabel = new Label(this.ParentWindow);
@@ -53,7 +81,7 @@ namespace RozWorld.Graphics.UI.InGame
             // Window resolution button
             Button resolutionButton = new Button(this.ParentWindow);
 
-            resolutionButton.Text = "800x600";
+            resolutionButton.Text = WindowResolution.Width.ToString() + "x" + WindowResolution.Height.ToString();
             resolutionButton.Width = 100;
             resolutionButton.Position = new Vector2(-50, 180);
             resolutionButton.Anchor = AnchorType.TopCentre;
@@ -79,7 +107,7 @@ namespace RozWorld.Graphics.UI.InGame
             // Minimum size is preferred button
             Button minimumSizeButton = new Button(this.ParentWindow);
 
-            minimumSizeButton.Text = "TRUE";
+            minimumSizeButton.Text = MinimumSizeIsPreferred.ToString().ToUpper();
             minimumSizeButton.Width = 100;
             minimumSizeButton.Position = new Vector2(-50, 220);
             minimumSizeButton.Anchor = AnchorType.TopCentre;
@@ -105,7 +133,7 @@ namespace RozWorld.Graphics.UI.InGame
             // Aero offsets button
             Button aeroOffsetsButton = new Button(this.ParentWindow);
 
-            aeroOffsetsButton.Text = "TRUE";
+            aeroOffsetsButton.Text = AeroOffsets.ToString().ToUpper();
             aeroOffsetsButton.Width = 100;
             aeroOffsetsButton.Position = new Vector2(-50, 260);
             aeroOffsetsButton.Anchor = AnchorType.TopCentre;
@@ -171,6 +199,10 @@ namespace RozWorld.Graphics.UI.InGame
         /// </summary>
         public override void Close()
         {
+            // Save current settings
+            RozWorld.Settings.UpdateVideoSettings(WindowResolution, AeroOffsets, MinimumSizeIsPreferred);
+
+            // Kill this screen
             ParentWindow.GameInterface.KillFromDialogKey(this.DialogKey);
             ParentWindow.GameInterface.ControlSystems.Remove("VideoSettingsMenu");
 
@@ -200,6 +232,35 @@ namespace RozWorld.Graphics.UI.InGame
 
 
         /// <summary>
+        /// Finds the closest standard resolution to the currently active one so the button doesn't always reset to 800x600.
+        /// </summary>
+        private void FindClosestResolution()
+        {
+            bool matched = false;
+            int i = 0;
+
+            do
+            {
+                if (StandardResolutions[i].Width >= WindowResolution.Width)
+                {
+                    matched = true;
+                }
+                else
+                {
+                    i++;
+                }
+            } while (i <= StandardResolutions.Length - 1 && !matched);
+
+            if (i > StandardResolutions.Length - 1)
+            {
+                i = StandardResolutions.Length - 1;
+            }
+
+            SelectedResolution = i;
+        }
+
+
+        /// <summary>
         /// "Texture Pack..." button clicked.
         /// </summary>
         void texturePackButton_OnMouseUp(object sender)
@@ -214,6 +275,17 @@ namespace RozWorld.Graphics.UI.InGame
         void aeroOffsetsButton_OnMouseUp(object sender)
         {
             ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            if (AeroOffsets)
+            {
+                AeroOffsets = false;
+            }
+            else
+            {
+                AeroOffsets = true;
+            }
+
+            ((Button)sender).Text = AeroOffsets.ToString().ToUpper();
         }
 
 
@@ -224,6 +296,17 @@ namespace RozWorld.Graphics.UI.InGame
         void minimumSizeButton_OnMouseUp(object sender)
         {
             ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            if (MinimumSizeIsPreferred)
+            {
+                MinimumSizeIsPreferred = false;
+            }
+            else
+            {
+                MinimumSizeIsPreferred = true;
+            }
+
+            ((Button)sender).Text = MinimumSizeIsPreferred.ToString().ToUpper();
         }
 
 
@@ -233,6 +316,15 @@ namespace RozWorld.Graphics.UI.InGame
         void resolutionButton_OnMouseUp(object sender)
         {
             ((Button)sender).TintColour = VectorColour.ButtonHoverTint;
+
+            if (SelectedResolution++ == StandardResolutions.Length - 1)
+            {
+                SelectedResolution = 0;
+            }
+
+            WindowResolution = StandardResolutions[SelectedResolution];
+
+            ((Button)sender).Text = WindowResolution.Width + "x" + WindowResolution.Height;
         }
 
 

@@ -430,8 +430,7 @@ namespace RozWorld.Graphics
                      * Most likely transitioning from control systems, start mouse
                      * delay to prevent it leaking to other controls.
                      */
-                    CheckMouseInput = false;
-                    MouseInputDelay.Start();
+                    DelayMouse();
                 }
             }
         }
@@ -467,9 +466,21 @@ namespace RozWorld.Graphics
                      * Most likely transitioning from control systems, start mouse
                      * delay to prevent it leaking to other controls.
                      */
-                    CheckMouseInput = false;
-                    MouseInputDelay.Start();
+                    DelayMouse();
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Delay the mouse input for 1ms to prevent ghosting.
+        /// </summary>
+        public void DelayMouse()
+        {
+            if (CheckMouseInput)
+            {
+                CheckMouseInput = false;
+                MouseInputDelay.Start();
             }
         }
 
