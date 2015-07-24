@@ -171,6 +171,8 @@ namespace RozWorld.IO
                         }
                     }
                 }
+
+                return finalDictionary;
             }
 
             return null;

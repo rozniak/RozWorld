@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Timers;
 
 using OpenGL;
@@ -29,7 +30,7 @@ namespace RozWorld.Graphics
         /**
          * Resolution relevant stuff.
          */
-        public int[] WindowScale
+        public Size WindowScale
         {
             get;
             private set;
@@ -148,7 +149,7 @@ namespace RozWorld.Graphics
 
         public GameWindow()
         {
-            WindowScale = new int[] { 800, 600 };
+            WindowScale = RozWorld.Settings.WindowResolution;
 
             // Set up mouse input delay timer...
             MouseInputDelay = new Timer(1);
@@ -159,7 +160,7 @@ namespace RozWorld.Graphics
             Glut.glutInit();
 
             // Create GL window...
-            Glut.glutInitWindowSize(WindowScale[0], WindowScale[1]);
+            Glut.glutInitWindowSize(WindowScale.Width, WindowScale.Height);
             Glut.glutCreateWindow(WINDOW_TITLE);
 
             // Set up GL functions...
@@ -240,7 +241,7 @@ namespace RozWorld.Graphics
             LastKeyStates = CurrentKeyStates;
 
             // Actual OpenGL drawing stuff starts here:
-            Gl.Viewport(0, 0, WindowScale[0], WindowScale[1]);
+            Gl.Viewport(0, 0, WindowScale.Width, WindowScale.Height);
             Gl.Clear(ClearBufferMask.ColorBufferBit);
             Gl.UseProgram(GLProgram);
 
@@ -299,8 +300,7 @@ namespace RozWorld.Graphics
         /// <param name="height">New height of the window.</param>
         private void OnReshape(int width, int height)
         {
-            WindowScale[0] = width;
-            WindowScale[1] = height;
+            WindowScale = new Size(width, height);
 
             // Make sure the screen updates, so you don't get the solitaire effect
             OnDisplay();
@@ -314,8 +314,8 @@ namespace RozWorld.Graphics
             // Make sure the screen stays at least at the minimal resolution
             if (RozWorld.Settings.MinimumSizeIsPreferred)
             {
-                if (WindowScale[0] < RozWorld.Settings.WindowResolution.Width ||
-                    WindowScale[1] < RozWorld.Settings.WindowResolution.Height)
+                if (WindowScale.Width < RozWorld.Settings.WindowResolution.Width ||
+                    WindowScale.Height < RozWorld.Settings.WindowResolution.Height)
                 {
                     Glut.glutReshapeWindow(RozWorld.Settings.WindowResolution.Width,
                         RozWorld.Settings.WindowResolution.Height);
@@ -323,7 +323,7 @@ namespace RozWorld.Graphics
             }
             else
             {
-                if (WindowScale[0] < 800 || WindowScale[1] < 600)
+                if (WindowScale.Width < 800 || WindowScale.Height < 600)
                 {
                     Glut.glutReshapeWindow(800, 600);
                 }
@@ -347,6 +347,7 @@ namespace RozWorld.Graphics
             }
             catch { } // Most likely transitioning from control systems
 
+            // Update the version string location, if it is active
             if (RozWorld.SHOW_VERSION_STRING)
             {
                 GameInterface.Controls["VersionString"].UpdatePosition();

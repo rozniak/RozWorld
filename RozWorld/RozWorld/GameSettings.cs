@@ -14,7 +14,9 @@ using System.Drawing;
 
 using RozWorld.Graphics.UI;
 using RozWorld.IO;
+
 using System;
+using System.IO;
 
 namespace RozWorld
 {
@@ -89,7 +91,12 @@ namespace RozWorld
         {
             if (settingsPath == "")
             {
-                settingsPath = Environment.CurrentDirectory + @"\settings.ini";
+                settingsPath = Environment.CurrentDirectory + @"\game.ini";
+
+                if (!File.Exists(settingsPath))
+                {
+                    GenerateDefaultSettings();
+                }
             }
 
             try
@@ -120,19 +127,57 @@ namespace RozWorld
         /// <summary>
         /// Save the settings for RozWorld, specifying a file to save to if necessary.
         /// </summary>
-        /// <param name="settingsPath"></param>
+        /// <param name="settingsPath">Specify the path to save the settings to.</param>
         public void Save(string settingsPath = "")
         {
+            string[] settingsINIFile = new string[] {
+                "# RozWorld game settings",
+                "# -",
+                "# [VideoSettings]",
+                "WindowWidth:" + WindowResolution.Width.ToString(),
+                "WindowHeight:" + WindowResolution.Height.ToString(),
+                "TextureDirectory:" + TexturePackDirectory,
+                "AeroOffsets:" + AeroOffsets.ToString(),
+                "MinimumSizeIsPreferred:" + MinimumSizeIsPreferred.ToString()
+            };
 
+            if (settingsPath == "")
+            {
+                Files.PutTextFile(Environment.CurrentDirectory + @"\game.ini", settingsINIFile);
+            }
+            else
+            {
+                Files.PutTextFile(settingsPath, settingsINIFile);
+            }
         }
 
 
         /// <summary>
         /// Generates a default settings file in the local game directory.
         /// </summary>
-        public void GenerateDefaultSettings()
+        /// <param name="asMainSettings">Specify whether this should generate the main settings file for RozWorld.</param>
+        public void GenerateDefaultSettings(bool asMainSettings = false)
         {
+            // This is the game's default INI file, this will be generated on first run/and load errors
+            string[] defaultINIFile = new string[] {
+                "# RozWorld default configuration file",
+                "# -",
+                "# [VideoSettings]",
+                "WindowWidth:800",
+                "WindowHeight:600",
+                "TextureDirectory:roz",
+                "AeroOffsets:false",
+                "MinimumSizeIsPreferred:true"
+            };
 
+            if (asMainSettings)
+            {
+                Files.PutTextFile(Environment.CurrentDirectory + @"\game.ini", defaultINIFile);
+            }
+            else
+            {
+                Files.PutTextFile(Environment.CurrentDirectory + @"\default-configuration.ini", defaultINIFile);
+            }
         }
 
 

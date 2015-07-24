@@ -27,26 +27,13 @@ namespace RozWorld
         {
             // Start initialising game content and environment
             RozWorld.GameStatus = Status.StartingUp;
-            
-            Initialise();
-        }
 
-
-        private static void Initialise()
-        {
             Files.SetupGameDirectories();
             RozWorld.Content = ComfyInterpreter.Load();
+            RozWorld.Settings.Load();
 
-            // Graphic initialisation here
+            // Start the game, events will stem from this window
             RozWorld.MainWindow = new GameWindow();
-
-            // Check when the game window/textures have successfully loaded or not
-            do
-            {
-                // Wait
-            } while (RozWorld.GameStatus == Status.StartingUp);
-
-            //Console.ReadKey(true);
         }
     }
 }

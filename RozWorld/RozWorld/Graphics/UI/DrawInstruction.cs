@@ -153,8 +153,8 @@ namespace RozWorld.Graphics.UI
 
             for (int i = 0; i <= 3; i++)
             {
-                DrawPoints[i].x = ((DrawPoints[i].x / ParentWindow.WindowScale[0]) * 2) - 1.0f;
-                DrawPoints[i].y = (((DrawPoints[i].y / ParentWindow.WindowScale[1]) * 2) - 1.0f) * -1.0f;
+                DrawPoints[i].x = ((DrawPoints[i].x / ParentWindow.WindowScale.Width) * 2) - 1.0f;
+                DrawPoints[i].y = (((DrawPoints[i].y / ParentWindow.WindowScale.Height) * 2) - 1.0f) * -1.0f;
             }
         }
 

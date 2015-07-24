@@ -231,35 +231,35 @@ namespace RozWorld.Graphics.UI
                     break;
 
                 case AnchorType.Right:
-                    finalX = this.ParentWindow.WindowScale[0] - this.Width - offsets.x;
+                    finalX = this.ParentWindow.WindowScale.Width - this.Width - offsets.x;
                     this._Position = new Vector2(finalX, offsets.y);
                     break;
 
                 case AnchorType.Bottom:
-                    finalY = this.ParentWindow.WindowScale[1] - this.Height - offsets.y;
+                    finalY = this.ParentWindow.WindowScale.Height - this.Height - offsets.y;
                     this._Position = new Vector2(offsets.x, finalY);
                     break;
 
                 case AnchorType.BottomRight:
-                    finalX = this.ParentWindow.WindowScale[0] - this.Width - offsets.x;
-                    finalY = this.ParentWindow.WindowScale[1] - this.Height - offsets.y;
+                    finalX = this.ParentWindow.WindowScale.Width - this.Width - offsets.x;
+                    finalY = this.ParentWindow.WindowScale.Height - this.Height - offsets.y;
                     this._Position = new Vector2(finalX, finalY);
                     break;
 
                 case AnchorType.TopCentre:
-                    finalX = (this.ParentWindow.WindowScale[0] / 2) - (this.Width / 2) + offsets.x;
+                    finalX = (this.ParentWindow.WindowScale.Width / 2) - (this.Width / 2) + offsets.x;
                     this._Position = new Vector2(finalX, offsets.y);
                     break;
 
                 case AnchorType.BottomCentre:
-                    finalX = (this.ParentWindow.WindowScale[0] / 2) - (this.Width / 2) + offsets.x;
-                    finalY = this.ParentWindow.WindowScale[1] - this.Height - offsets.y;
+                    finalX = (this.ParentWindow.WindowScale.Width / 2) - (this.Width / 2) + offsets.x;
+                    finalY = this.ParentWindow.WindowScale.Height - this.Height - offsets.y;
                     this._Position = new Vector2(finalX, finalY);
                     break;
 
                 case AnchorType.Centre:
-                    finalX = (this.ParentWindow.WindowScale[0] / 2) - (this.Width / 2);
-                    finalY = (this.ParentWindow.WindowScale[1] / 2) - (this.Height / 2);
+                    finalX = (this.ParentWindow.WindowScale.Width / 2) - (this.Width / 2);
+                    finalY = (this.ParentWindow.WindowScale.Height / 2) - (this.Height / 2);
                     this._OffsetX = 0f;
                     this._OffsetY = 0f;
                     this._Position = new Vector2(finalX, finalY);

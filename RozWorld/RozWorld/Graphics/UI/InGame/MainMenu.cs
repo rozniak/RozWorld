@@ -70,7 +70,7 @@ namespace RozWorld.Graphics.UI.InGame
             backDrop.ZIndex = 0;
             backDrop.DialogKey = this.DialogKey;
             backDrop.SizeMode = ImageSizeMode.Tile;
-            backDrop.Dimensions = new System.Drawing.Size(ParentWindow.WindowScale[0], ParentWindow.WindowScale[1]);
+            backDrop.Dimensions = ParentWindow.WindowScale;
 
             ParentWindow.GameInterface.Controls.Add("BackDrop", backDrop);
 
@@ -178,7 +178,8 @@ namespace RozWorld.Graphics.UI.InGame
 
             // Backdrop details
             ParentWindow.GameInterface.Controls["BackDrop"].UpdatePosition();
-            ((Image)ParentWindow.GameInterface.Controls["BackDrop"]).Dimensions = new System.Drawing.Size(ParentWindow.WindowScale[0] + 16, ParentWindow.WindowScale[1] + 16);
+            ((Image)ParentWindow.GameInterface.Controls["BackDrop"]).Dimensions = new System.Drawing.Size(ParentWindow.WindowScale.Width + 16,
+                ParentWindow.WindowScale.Height + 16);
         }
 
 
