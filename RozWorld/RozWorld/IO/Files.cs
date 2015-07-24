@@ -46,7 +46,7 @@ namespace RozWorld.IO
                 return fileContents.ToArray();
             }
             
-            return new string[] { };
+            return null;
         }
 
 
@@ -62,7 +62,7 @@ namespace RozWorld.IO
                 return File.ReadAllBytes(fileName);
             }
 
-            return new byte[] { };
+            return null;
         }
 
 
@@ -140,217 +140,62 @@ namespace RozWorld.IO
 
 
         /// <summary>
-        /// Parses a string into separate data objects.
+        /// Reads an INI file into a dictionary for easy reading
         /// </summary>
-        /// <param name="line">The string data to parse.</param>
-        /// <returns>The array of data objects retrieved from the string data.</returns>
-        public static Tuple<ParsedObjectType, object>[] ParseLine(string line)
+        /// <param name="filePath">The file path of the INI file to read.</param>
+        /// <returns>A dictionary containing the variable names as keys, alongside their values.</returns>
+        public static Dictionary<string, string> ReadINIToDictionary(string filePath)
         {
-            var parsedLineData = new List<Tuple<ParsedObjectType, object>>();
+            string[] iniFile = GetTextFile(filePath);
 
-            bool insideQuotes = false;
-            bool finished = false;
-            bool escaped = false;
-            bool individualFinished = false;
-            bool startedDefining = false;
-            bool objectWhitespaceSeparated = true;
-            bool errors = false;
-            int index = 0;
-
-            string definingData = "";
-
-            // Strip all tabs, because they are evil.
-            line = line.Replace("\t", "    ");
-
-            if (line.Length > 0)
+            if (iniFile != null)
             {
-                do
+                var finalDictionary = new Dictionary<string, string>();
+
+                foreach (string line in iniFile)
                 {
-                    switch (line[index])
+                    if (!line.StartsWith("#")) // Ignore comments
                     {
-                        //                  //
-                        // Handling spaces. //
-                        //                  //
-                        case ' ':
-                            if (startedDefining)
-                            {
-                                if (insideQuotes)
-                                {
-                                    definingData += " ";
-                                }
-                                else
-                                {
-                                    individualFinished = true;
-                                    objectWhitespaceSeparated = true;
-                                }
-                            }
-                            else if (!objectWhitespaceSeparated)
-                            {
-                                objectWhitespaceSeparated = true;
-                            }
+                        string[] resultingSplit = SplitFirstInstance(":", line);
 
-                            break;
-
-                        //                         //
-                        // Handling hashes/pounds. //
-                        //                         //
-                        case '#':
-                            if (startedDefining)
-                            {
-                                if (insideQuotes)
-                                {
-                                    definingData += "#";
-                                }
-                                else
-                                {
-                                    individualFinished = true;
-                                    finished = true;
-                                }
-                            }
-                            else
-                            {
-                                finished = true;
-                            }
-
-                            break;
-
-                        //                  //
-                        // Handling quotes. //
-                        //                  //
-                        case '"':
-                            if (startedDefining)
-                            {
-                                if (insideQuotes)
-                                {
-                                    if (escaped)
-                                    {
-                                        definingData += "\"";
-                                        escaped = false;
-                                    }
-                                    else
-                                    {
-                                        definingData += "\"";
-                                        insideQuotes = false;
-                                        individualFinished = true;
-                                        objectWhitespaceSeparated = false;
-                                    }
-                                }
-                                else
-                                {
-                                    errors = true;
-                                    individualFinished = true;
-                                    objectWhitespaceSeparated = false;
-                                }
-                            }
-                            else
-                            {
-                                if (objectWhitespaceSeparated)
-                                {
-                                    startedDefining = true;
-                                    definingData += "\"";
-                                    insideQuotes = true;
-                                }
-                            }
-
-                            break;
-
-                        case '\\':
-                            //                       //
-                            // Handling backslashes. //
-                            //                       //
-                            if (insideQuotes)
-                            {
-                                if (escaped)
-                                {
-                                    definingData += "\\";
-                                    escaped = false;
-                                }
-                                else
-                                {
-                                    escaped = true;
-                                }
-                            }
-                            else
-                            {
-                                errors = true;
-                                individualFinished = true;
-                                objectWhitespaceSeparated = false;
-                            }
-
-                            break;
-
-                        default:
-                            //                           //
-                            // Handling everything else. //
-                            //                           //
-                            if (startedDefining)
-                            {
-                                definingData += line[index];
-                            }
-                            else
-                            {
-                                if (objectWhitespaceSeparated)
-                                {
-                                    startedDefining = true;
-                                    definingData += line[index];
-                                }
-                            }
-
-                            break;
-                    }
-
-                    if (index == line.Length - 1 && startedDefining && !individualFinished)
-                    {
-                        individualFinished = true;
-                    }
-
-                    if (individualFinished)
-                    {
-                        startedDefining = false;
-
-                        object parsedObject = definingData;
-                        ParsedObjectType parsedType;
-
-                        if (!errors)
+                        if (resultingSplit[0] != "" && resultingSplit[1] != "") // Check that this line is a valid property
                         {
-                            if (definingData.Length >= 2 && definingData[0] == '"' && definingData[definingData.Length - 1] == '"')
+                            if (finalDictionary.ContainsKey(resultingSplit[0]))
                             {
-                                parsedObject = definingData.Substring(1, definingData.Length - 2);
-                                parsedType = ParsedObjectType.String;
+                                finalDictionary[resultingSplit[0]] = resultingSplit[1];
                             }
                             else
                             {
-                                int resultingParsedInt = 0;
-                                bool successfulParse = int.TryParse(definingData, out resultingParsedInt);
-
-                                if (successfulParse)
-                                {
-                                    parsedType = ParsedObjectType.Integer;
-                                    parsedObject = resultingParsedInt;
-                                }
-                                else
-                                {
-                                    parsedType = ParsedObjectType.Word;
-                                }
+                                finalDictionary.Add(resultingSplit[0], resultingSplit[1]);
                             }
                         }
-                        else
-                        {
-                            parsedType = ParsedObjectType.Invalid;
-                            errors = false;
-                        }
-
-                        parsedLineData.Add(new Tuple<ParsedObjectType, object>(parsedType, parsedObject));
-
-                        definingData = "";
-                        individualFinished = false;
                     }
-
-                    index++;
-                } while (!finished && index <= line.Length - 1);
+                }
             }
 
-            return parsedLineData.ToArray();
+            return null;
+        }
+
+
+        /// <summary>
+        /// Attempts to split a string by a pattern on its first occurrence.
+        /// </summary>
+        /// <param name="pattern">The pattern to split the string by.</param>
+        /// <param name="text">The string to split.</param>
+        /// <returns>The split string at the first occurrence of the pattern, if pattern doesn't exit, returns two empty strings.</returns>
+        public static string[] SplitFirstInstance(string pattern, string text)
+        {
+            string[] resultingSplit = new string[] { "", "" };
+
+            if (text.Contains(pattern))
+            {
+                int splitIndex = text.IndexOf(pattern, 0, text.Length, StringComparison.CurrentCulture);
+
+                resultingSplit[0] = text.Substring(0, splitIndex);
+                resultingSplit[1] = text.Substring(splitIndex + pattern.Length, text.Length - (pattern.Length + splitIndex));
+            }
+
+            return resultingSplit;
         }
 
 

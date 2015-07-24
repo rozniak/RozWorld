@@ -312,9 +312,21 @@ namespace RozWorld.Graphics
         private void OnDisplay()
         {
             // Make sure the screen stays at least at the minimal resolution
-            if (WindowScale[0] < 800 || WindowScale[1] < 600)
+            if (RozWorld.Settings.MinimumSizeIsPreferred)
             {
-                Glut.glutReshapeWindow(800, 600);
+                if (WindowScale[0] < RozWorld.Settings.WindowResolution.Width ||
+                    WindowScale[1] < RozWorld.Settings.WindowResolution.Height)
+                {
+                    Glut.glutReshapeWindow(RozWorld.Settings.WindowResolution.Width,
+                        RozWorld.Settings.WindowResolution.Height);
+                }
+            }
+            else
+            {
+                if (WindowScale[0] < 800 || WindowScale[1] < 600)
+                {
+                    Glut.glutReshapeWindow(800, 600);
+                }
             }
 
             try

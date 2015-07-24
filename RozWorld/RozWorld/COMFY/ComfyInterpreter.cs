@@ -44,7 +44,7 @@ namespace RozWorld.COMFY
 
                 foreach (string line in fileContent)
                 {
-                    Tuple<ParsedObjectType, object>[] parsedContent = Files.ParseLine(line);
+                    Tuple<ParsedObjectType, object>[] parsedContent = ParseLine(line);
 
                     if (parsedContent.Length == 0 || parsedContent[0].Item1 != ParsedObjectType.Word)
                     {
@@ -892,6 +892,221 @@ namespace RozWorld.COMFY
             }
 
             return comfyContent;
+        }
+
+
+        /// <summary>
+        /// Parses a string into separate data objects.
+        /// </summary>
+        /// <param name="line">The string data to parse.</param>
+        /// <returns>The array of data objects retrieved from the string data.</returns>
+        public static Tuple<ParsedObjectType, object>[] ParseLine(string line)
+        {
+            var parsedLineData = new List<Tuple<ParsedObjectType, object>>();
+
+            bool insideQuotes = false;
+            bool finished = false;
+            bool escaped = false;
+            bool individualFinished = false;
+            bool startedDefining = false;
+            bool objectWhitespaceSeparated = true;
+            bool errors = false;
+            int index = 0;
+
+            string definingData = "";
+
+            // Strip all tabs, because they are evil.
+            line = line.Replace("\t", "    ");
+
+            if (line.Length > 0)
+            {
+                do
+                {
+                    switch (line[index])
+                    {
+                        //                  //
+                        // Handling spaces. //
+                        //                  //
+                        case ' ':
+                            if (startedDefining)
+                            {
+                                if (insideQuotes)
+                                {
+                                    definingData += " ";
+                                }
+                                else
+                                {
+                                    individualFinished = true;
+                                    objectWhitespaceSeparated = true;
+                                }
+                            }
+                            else if (!objectWhitespaceSeparated)
+                            {
+                                objectWhitespaceSeparated = true;
+                            }
+
+                            break;
+
+                        //                         //
+                        // Handling hashes/pounds. //
+                        //                         //
+                        case '#':
+                            if (startedDefining)
+                            {
+                                if (insideQuotes)
+                                {
+                                    definingData += "#";
+                                }
+                                else
+                                {
+                                    individualFinished = true;
+                                    finished = true;
+                                }
+                            }
+                            else
+                            {
+                                finished = true;
+                            }
+
+                            break;
+
+                        //                  //
+                        // Handling quotes. //
+                        //                  //
+                        case '"':
+                            if (startedDefining)
+                            {
+                                if (insideQuotes)
+                                {
+                                    if (escaped)
+                                    {
+                                        definingData += "\"";
+                                        escaped = false;
+                                    }
+                                    else
+                                    {
+                                        definingData += "\"";
+                                        insideQuotes = false;
+                                        individualFinished = true;
+                                        objectWhitespaceSeparated = false;
+                                    }
+                                }
+                                else
+                                {
+                                    errors = true;
+                                    individualFinished = true;
+                                    objectWhitespaceSeparated = false;
+                                }
+                            }
+                            else
+                            {
+                                if (objectWhitespaceSeparated)
+                                {
+                                    startedDefining = true;
+                                    definingData += "\"";
+                                    insideQuotes = true;
+                                }
+                            }
+
+                            break;
+
+                        case '\\':
+                            //                       //
+                            // Handling backslashes. //
+                            //                       //
+                            if (insideQuotes)
+                            {
+                                if (escaped)
+                                {
+                                    definingData += "\\";
+                                    escaped = false;
+                                }
+                                else
+                                {
+                                    escaped = true;
+                                }
+                            }
+                            else
+                            {
+                                errors = true;
+                                individualFinished = true;
+                                objectWhitespaceSeparated = false;
+                            }
+
+                            break;
+
+                        default:
+                            //                           //
+                            // Handling everything else. //
+                            //                           //
+                            if (startedDefining)
+                            {
+                                definingData += line[index];
+                            }
+                            else
+                            {
+                                if (objectWhitespaceSeparated)
+                                {
+                                    startedDefining = true;
+                                    definingData += line[index];
+                                }
+                            }
+
+                            break;
+                    }
+
+                    if (index == line.Length - 1 && startedDefining && !individualFinished)
+                    {
+                        individualFinished = true;
+                    }
+
+                    if (individualFinished)
+                    {
+                        startedDefining = false;
+
+                        object parsedObject = definingData;
+                        ParsedObjectType parsedType;
+
+                        if (!errors)
+                        {
+                            if (definingData.Length >= 2 && definingData[0] == '"' && definingData[definingData.Length - 1] == '"')
+                            {
+                                parsedObject = definingData.Substring(1, definingData.Length - 2);
+                                parsedType = ParsedObjectType.String;
+                            }
+                            else
+                            {
+                                int resultingParsedInt = 0;
+                                bool successfulParse = int.TryParse(definingData, out resultingParsedInt);
+
+                                if (successfulParse)
+                                {
+                                    parsedType = ParsedObjectType.Integer;
+                                    parsedObject = resultingParsedInt;
+                                }
+                                else
+                                {
+                                    parsedType = ParsedObjectType.Word;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            parsedType = ParsedObjectType.Invalid;
+                            errors = false;
+                        }
+
+                        parsedLineData.Add(new Tuple<ParsedObjectType, object>(parsedType, parsedObject));
+
+                        definingData = "";
+                        individualFinished = false;
+                    }
+
+                    index++;
+                } while (!finished && index <= line.Length - 1);
+            }
+
+            return parsedLineData.ToArray();
         }
     }
 }

@@ -195,7 +195,14 @@ namespace RozWorld.Graphics.UI
 
                     break;
 
+                case Error.MISSING_INI_DICTIONARY_KEY:
+                    MessageBox.Show("A reference was made to a missing INI variable. " + detailsProvided + "\n\nRozWorld will now exit.",
+                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+
+                    break;
+
                 default:
+                case Error.UNKNOWN_ERROR:
                     MessageBox.Show("An unknown critical error occurred. " + detailsProvided + "\n\nRozWorld will now exit.",
                         "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 

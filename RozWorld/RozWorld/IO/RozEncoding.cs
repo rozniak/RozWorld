@@ -182,28 +182,6 @@ namespace RozWorld.IO
 
 
         /// <summary>
-        /// Attempts to split a string by a pattern on its first occurrence.
-        /// </summary>
-        /// <param name="pattern">The pattern to split the string by.</param>
-        /// <param name="text">The string to split.</param>
-        /// <returns>The split string at the first occurrence of the pattern, if pattern doesn't exit, returns two empty strings.</returns>
-        public static string[] SplitFirstInstance(string pattern, string text)
-        {
-            string[] resultingSplit = new string[] { "", "" };
-
-            if (text.Contains(pattern))
-            {
-                int splitIndex = text.IndexOf(pattern, 0, text.Length, StringComparison.CurrentCulture);
-
-                resultingSplit[0] = text.Substring(0, splitIndex);
-                resultingSplit[1] = text.Substring(splitIndex + pattern.Length, text.Length - (pattern.Length + splitIndex));
-            }
-
-            return resultingSplit;
-        }
-
-
-        /// <summary>
         /// Strips special characters out of a string and also strips characters relating to the specified strip type.
         /// </summary>
         /// <param name="text">The string to strip.</param>

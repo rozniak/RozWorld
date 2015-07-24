@@ -9,7 +9,12 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
+using System.Collections.Generic;
 using System.Drawing;
+
+using RozWorld.Graphics.UI;
+using RozWorld.IO;
+using System;
 
 namespace RozWorld
 {
@@ -23,6 +28,11 @@ namespace RozWorld
             get;
             private set;
         }
+
+        /**
+         * The INI file for the game settings, in dictionary form.
+         */
+        private Dictionary<string, string> SettingsINI;
 
         /**
          * The size of the window at startup.
@@ -77,7 +87,33 @@ namespace RozWorld
         /// </summary>
         public void Load(string settingsPath = "")
         {
+            if (settingsPath == "")
+            {
+                settingsPath = Environment.CurrentDirectory + @"\settings.ini";
+            }
 
+            try
+            {
+                Dictionary<string, string> settingsDictionary = Files.ReadINIToDictionary(settingsPath);
+
+                int windowWidth = Convert.ToInt32(settingsDictionary["WindowWidth"]);
+                int windowHeight = Convert.ToInt32(settingsDictionary["WindowHeight"]);
+
+                WindowResolution = new Size(windowWidth, windowHeight);
+
+                TexturePackDirectory = settingsDictionary["TextureDirectory"];
+
+                AeroOffsets = Convert.ToBoolean(settingsDictionary["AeroOffsets"]);
+                MinimumSizeIsPreferred = Convert.ToBoolean(settingsDictionary["MinimumSizeIsPreferred"]);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                UIHandler.CriticalError(Error.MISSING_INI_DICTIONARY_KEY, "Failed to fully load the game settings; a default settings file has been generated in the game directory, you may replace the current broken one, or use it as a reference to fix it.");
+            }
+            catch
+            {
+                UIHandler.CriticalError(Error.UNKNOWN_ERROR, "Failed to fully load the game settings; a default settings file has been generated in the game directory, you may replace the current broken one, or use it as a reference to fix it.");
+            }
         }
 
 
@@ -86,6 +122,15 @@ namespace RozWorld
         /// </summary>
         /// <param name="settingsPath"></param>
         public void Save(string settingsPath = "")
+        {
+
+        }
+
+
+        /// <summary>
+        /// Generates a default settings file in the local game directory.
+        /// </summary>
+        public void GenerateDefaultSettings()
         {
 
         }

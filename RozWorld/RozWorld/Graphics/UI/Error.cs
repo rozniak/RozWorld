@@ -13,7 +13,9 @@ namespace RozWorld.Graphics.UI
 {
     public static class Error
     {
+        public const short UNKNOWN_ERROR = 0;
         public const short MISSING_CRITICAL_FILES = 1;
         public const short INVALID_GUI_DICTIONARY_KEY = 10;
+        public const short MISSING_INI_DICTIONARY_KEY = 11;
     }
 }
