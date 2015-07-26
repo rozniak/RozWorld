@@ -132,7 +132,11 @@ public enum Status
  */
 public enum FontType
 {
-    SmallText
+    SmallText, // To be removed
+    Huge,
+    Standard,
+    Small,
+    Tiny
 }
 
 
