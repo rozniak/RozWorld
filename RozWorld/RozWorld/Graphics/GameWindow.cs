@@ -25,7 +25,7 @@ namespace RozWorld.Graphics
 {
     public class GameWindow
     {
-        public const string WINDOW_TITLE = "RozWorld ' OR '1'='1";
+        public const string WINDOW_TITLE = "RozWorld";
 
         /**
          * Resolution relevant stuff.
