@@ -1,5 +1,5 @@
 ﻿/**
- * RozWorld.Entity.Thing -- RozWorld Thing
+ * RozWorld.Entity.BasicItem -- RozWorld Item Base Class
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
  * <<http://www.oddmatics.co.uk>>
@@ -9,14 +9,10 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace RozWorld.Entity
 {
-    public class Thing
+    public abstract class BasicItem
     {
+        // TODO: Implement base item class here (this will be inherited by other classes)
     }
 }

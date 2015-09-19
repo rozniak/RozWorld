@@ -13,16 +13,17 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+
 using RozWorld.COMFY;
 
 namespace RozWorld.IO
 {
     public static class Files
     {        
-        public static readonly string ComfyDirectory = Environment.CurrentDirectory + "\\comfy";
-        public static readonly string LanguagesDirectory = Environment.CurrentDirectory + "\\lang";
-        public static readonly string SoundsDirectory = Environment.CurrentDirectory + "\\sounds";
-        public static readonly string TexturesDirectory = Environment.CurrentDirectory + "\\tex";
+        public static readonly string ComfyDirectory = Environment.CurrentDirectory + @"\comfy";
+        public static readonly string LanguagesDirectory = Environment.CurrentDirectory + @"\lang";
+        public static readonly string SoundsDirectory = Environment.CurrentDirectory + @"\sounds";
+        public static readonly string TexturesDirectory = Environment.CurrentDirectory + @"\tex";
 
         /// <summary>
         /// Gets a text file with the specified filename from the disk.

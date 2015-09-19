@@ -98,8 +98,9 @@
     <Compile Include="COMFY\Definition\TileFloorDefinition.cs" />
     <Compile Include="COMFY\Definition\TileWallDefinition.cs" />
     <Compile Include="Delegates.cs" />
+    <Compile Include="Entity\BasicCreature.cs" />
+    <Compile Include="Item\BasicItem.cs" />
     <Compile Include="Entity\Player\ServerPlayerHandler.cs" />
-    <Compile Include="Entity\Thing.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Graphics\GameWindow.cs" />

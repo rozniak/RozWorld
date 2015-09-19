@@ -13,6 +13,8 @@ namespace RozWorld.Item
 {
     public class Item
     {
+        // Replace this class with BasicItem
+
         public const int MAX_QUANTITY = 99;
         public const int MIN_QUANTITY = 0;
 
