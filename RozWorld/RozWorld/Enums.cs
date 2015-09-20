@@ -15,7 +15,10 @@
 public enum ItemType
 {
     Weapon,
-    Bucket
+    Bucket,
+    Floor,
+    Wall,
+    Material
 }
 
 
