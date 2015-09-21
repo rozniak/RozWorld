@@ -9,7 +9,7 @@
  */
 
 
-/** [TO BE UPDATED]
+/**
  * The type of item something is, useful for handling certain events.
  */
 public enum ItemType
@@ -18,7 +18,8 @@ public enum ItemType
     Bucket,
     Floor,
     Wall,
-    Material
+    Material,
+    Artefact
 }
 
 
@@ -39,6 +40,18 @@ public enum NatureType
 {
     Passive,
     Hostile
+}
+
+
+/**
+ *  The type of hazard a floor is.
+ */
+public enum HazardType
+{
+    None,
+    Freezing,
+    Burning,
+    Toxic
 }
 
 
