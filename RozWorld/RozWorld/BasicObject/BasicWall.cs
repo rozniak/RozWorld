@@ -19,5 +19,9 @@ namespace RozWorld.BasicObject
         public abstract string InternalName { get; }
 
 
+        /// <summary>
+        /// Gets whether this wall is solid or not.
+        /// </summary>
+        public abstract bool IsSolid { get; }
     }
 }

@@ -65,7 +65,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenGL">
@@ -86,6 +86,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicObject\BasicCreature.cs" />
+    <Compile Include="BasicObject\BasicFloor.cs" />
+    <Compile Include="BasicObject\BasicPet.cs" />
+    <Compile Include="BasicObject\BasicWall.cs" />
+    <Compile Include="BasicObject\ServerPlugin.cs" />
     <Compile Include="COMFY\ComfyContent.cs" />
     <Compile Include="COMFY\ComfyInterpreter.cs" />
     <Compile Include="COMFY\Definition\InformationDefinition.cs" />
@@ -98,8 +103,7 @@
     <Compile Include="COMFY\Definition\TileFloorDefinition.cs" />
     <Compile Include="COMFY\Definition\TileWallDefinition.cs" />
     <Compile Include="Delegates.cs" />
-    <Compile Include="Entity\BasicCreature.cs" />
-    <Compile Include="Item\BasicItem.cs" />
+    <Compile Include="BasicObject\BasicItem.cs" />
     <Compile Include="Entity\Player\ServerPlayerHandler.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="GameSettings.cs" />

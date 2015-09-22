@@ -14,27 +14,9 @@ namespace RozWorld.BasicObject
     public abstract class BasicFloor
     {
         /// <summary>
-        /// Gets the internal name of this floor, to be used when getting this floor.
+        /// Gets whether a bucket is usable on this floor.
         /// </summary>
-        public abstract string InternalName { get; }
-
-
-        /// <summary>
-        /// Gets whether this floor is liquid or not.
-        /// </summary>
-        public abstract bool IsLiquid { get; }
-
-
-        /// <summary>
-        /// Gets the type of hazard this floor is.
-        /// </summary>
-        public abstract HazardType Hazard { get; }
-
-
-        /// <summary>
-        /// Gets the amount of damage this floor does per second, if it is a hazard.
-        /// </summary>
-        public abstract ushort DamagePerSecond { get; }
+        public abstract bool CanBucket { get; }
 
 
         /// <summary>
@@ -44,20 +26,38 @@ namespace RozWorld.BasicObject
 
 
         /// <summary>
-        /// Gets whether this floor can have items dropped onto it.
-        /// </summary>
-        public abstract bool CanDropUpon { get; }
-
-
-        /// <summary>
         /// Gets whether this floor can be dug.
         /// </summary>
         public abstract bool CanDig { get; }
 
 
         /// <summary>
-        /// Gets whether a bucket is usable on this floor.
+        /// Gets whether this floor can have items dropped onto it.
         /// </summary>
-        public abstract bool CanBucket { get; }
+        public abstract bool CanDropUpon { get; }
+
+
+        /// <summary>
+        /// Gets the amount of damage this floor does per second, if it is a hazard.
+        /// </summary>
+        public abstract ushort DamagePerSecond { get; }
+
+
+        /// <summary>
+        /// Gets the type of hazard this floor is.
+        /// </summary>
+        public abstract HazardType Hazard { get; }
+
+
+        /// <summary>
+        /// Gets the internal name of this floor, to be used when getting this floor.
+        /// </summary>
+        public abstract string InternalName { get; }
+
+
+        /// <summary>
+        /// Gets whether this floor is liquid or not.
+        /// </summary>
+        public abstract bool IsLiquid { get; }
     }
 }

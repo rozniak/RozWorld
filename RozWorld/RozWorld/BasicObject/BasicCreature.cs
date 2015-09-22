@@ -14,9 +14,9 @@ namespace RozWorld.BasicObject
     public abstract class BasicCreature
     {
         /// <summary>
-        /// Gets the internal name of this creature, to be used when getting this creature.
+        /// Gets the status of whether this item is allowed to be renamed.
         /// </summary>
-        public abstract string InternalName { get; }
+        public abstract bool CanRename { get; }
 
 
         /// <summary>
@@ -26,8 +26,14 @@ namespace RozWorld.BasicObject
 
 
         /// <summary>
-        /// Gets the status of whether this item is allowed to be renamed.
+        /// Gets the internal name of this creature, to be used when getting this creature.
         /// </summary>
-        public abstract bool CanRename { get; }
+        public abstract string InternalName { get; }
+
+
+        /// <summary>
+        /// Gets or sets the nature of this creature.
+        /// </summary>
+        public abstract NatureType Nature { get; protected set; }
     }
 }
