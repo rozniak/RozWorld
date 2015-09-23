@@ -1,6 +1,6 @@
 RozWorld licence
 ---
-Copyright (c) 2014 - 2015 Oddmatics (http://www.oddmatics.co.uk)
+Copyright (c) 2014 - 2015 Oddmatics (http://www.oddmatics.uk)
 
 This project is under the Creative Commons Attribution-NonCommercial 4.0 International licence.
 http://creativecommons.org/licenses/by-nc/4.0/legalcode
