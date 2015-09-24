@@ -150,6 +150,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RozWorld.cs" />
+    <Compile Include="WorldPoint.cs" />
     <Compile Include="World\Chunk.cs" />
     <Compile Include="World\Position.cs" />
     <Compile Include="World\Tile.cs" />

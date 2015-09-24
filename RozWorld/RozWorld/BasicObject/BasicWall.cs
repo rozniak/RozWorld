@@ -14,6 +14,13 @@ namespace RozWorld.BasicObject
     public abstract class BasicWall
     {
         /// <summary>
+        /// Gets or sets the ID of this wall.
+        /// </summary>
+        public ushort ID { get { return this._ID; } set { if (this._ID == 0) this._ID = value; } }
+        private ushort _ID;
+
+
+        /// <summary>
         /// Gets the internal name of this wall, to be used when getting this wall.
         /// </summary>
         public abstract string InternalName { get; }

@@ -50,6 +50,13 @@ namespace RozWorld.BasicObject
 
 
         /// <summary>
+        /// Gets or sets the ID of this floor.
+        /// </summary>
+        public ushort ID { get { return this._ID; } set { if (this._ID == 0) this._ID = value; } }
+        private ushort _ID;
+
+
+        /// <summary>
         /// Gets the internal name of this floor, to be used when getting this floor.
         /// </summary>
         public abstract string InternalName { get; }
@@ -59,5 +66,17 @@ namespace RozWorld.BasicObject
         /// Gets whether this floor is liquid or not.
         /// </summary>
         public abstract bool IsLiquid { get; }
+
+        
+        /// <summary>
+        /// Gets whether this floor is a warp or not.
+        /// </summary>
+        public bool IsWarp { get { return !Warp.Equals(null); } }
+
+
+        /// <summary>
+        /// Gets the current warp assigned to this floor.
+        /// </summary>
+        public WorldPoint Warp { get; protected set; }
     }
 }

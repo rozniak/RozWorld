@@ -13,6 +13,35 @@ namespace RozWorld.BasicObject
 {
     public abstract class BasicPet
     {
+        /// <summary>
+        /// Gets the status of whether this pet is allowed to be renamed.
+        /// </summary>
+        public abstract bool CanRename { get; }
 
+
+        /// <summary>
+        /// Gets or sets the player-given name of this pet.
+        /// </summary>
+        public string GivenName { get { return this._GivenName; } set { if (CanRename) this._GivenName = value; } }
+        private string _GivenName;
+
+
+        /// <summary>
+        /// Gets or sets the ID of this pet.
+        /// </summary>
+        public ushort ID { get { return this._ID; } set { if (this._ID == 0) this._ID = value; } }
+        private ushort _ID;
+
+
+        /// <summary>
+        /// Gets the name of this pet to be displayed on interfaces as its original name.
+        /// </summary>
+        public abstract string InterfaceName { get; }
+
+
+        /// <summary>
+        /// Gets the internal name of this pet, to be used when getting this pet.
+        /// </summary>
+        public abstract string InternalName { get; }
     }
 }

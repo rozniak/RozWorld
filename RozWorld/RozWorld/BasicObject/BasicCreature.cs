@@ -20,6 +20,13 @@ namespace RozWorld.BasicObject
 
 
         /// <summary>
+        /// Gets or sets the player-given name of this creature.
+        /// </summary>
+        public string GivenName { get { return this._GivenName; } set { if (CanRename) this._GivenName = value; } }
+        private string _GivenName;
+
+
+        /// <summary>
         /// Gets the name of this creature to be displayed on interfaces as its original name.
         /// </summary>
         public abstract string InterfaceName { get; }
