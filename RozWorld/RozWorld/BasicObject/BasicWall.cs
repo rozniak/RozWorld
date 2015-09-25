@@ -14,6 +14,12 @@ namespace RozWorld.BasicObject
     public abstract class BasicWall
     {
         /// <summary>
+        /// Gets whether this wall contains an inventory.
+        /// </summary>
+        public bool HasInventory { get { return false; /** TODO: Code this */ } }
+
+
+        /// <summary>
         /// Gets or sets the ID of this wall.
         /// </summary>
         public ushort ID { get { return this._ID; } set { if (this._ID == 0) this._ID = value; } }
@@ -30,5 +36,8 @@ namespace RozWorld.BasicObject
         /// Gets whether this wall is solid or not.
         /// </summary>
         public abstract bool IsSolid { get; }
+
+
+        
     }
 }

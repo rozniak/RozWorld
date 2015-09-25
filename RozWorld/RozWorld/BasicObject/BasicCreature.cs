@@ -27,6 +27,18 @@ namespace RozWorld.BasicObject
 
 
         /// <summary>
+        /// Gets whether this creature has an attack target.
+        /// </summary>
+        public virtual bool HasTarget { get { return TargetName != ""; } }
+
+
+        /// <summary>
+        /// Gets or sets the health of this creature.
+        /// </summary>
+        public virtual int Health { get; set; }
+
+
+        /// <summary>
         /// Gets the name of this creature to be displayed on interfaces as its original name.
         /// </summary>
         public abstract string InterfaceName { get; }
@@ -39,8 +51,31 @@ namespace RozWorld.BasicObject
 
 
         /// <summary>
+        /// Gets whether this creature is currently alive.
+        /// </summary>
+        public virtual bool IsAlive { get { return Health > 0; } }
+
+
+        /// <summary>
         /// Gets or sets the nature of this creature.
         /// </summary>
         public abstract NatureType Nature { get; protected set; }
+
+
+        /// <summary>
+        /// Gets or sets the attack target of this creature.
+        /// </summary>
+        public virtual string TargetName { get; protected set; }
+
+
+        public virtual bool Kill(string message = "")
+        {
+            if (IsAlive)
+            {
+                Health = 0;
+
+                // TODO: Finish this
+            }
+        }
     }
 }
