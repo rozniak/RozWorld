@@ -76,6 +76,8 @@ namespace RozWorld.BasicObject
 
                 // TODO: Finish this
             }
+
+            return true; // Temporary
         }
     }
 }
