@@ -10,6 +10,7 @@
  */
 
 using System.Collections.Generic;
+using System.Text;
 
 namespace RozWorld.IO
 {
@@ -29,7 +30,29 @@ namespace RozWorld.IO
         /// <returns>Returns the next byte in the data as a boolean value.</returns>
         public static bool NextBool(IList<byte> data, ref int currentIndex)
         {
-            return true;
+            if (data[currentIndex++] == 1) return true;
+
+            return false; // Assume that it's 0, because if it isn't, then that's just silly
+        }
+
+
+        /// <summary>
+        /// Reads the next 2 bytes into a Unicode character value.
+        /// </summary>
+        /// <param name="data">The byte data to read from.</param>
+        /// <param name="currentIndex">The current index pointer.</param>
+        /// <returns>Returns the next 2 bytes in the data as a character value.</returns>
+        public static char NextChar(IList<byte> data, ref int currentIndex)
+        {
+            char conversion = '\0';
+
+            if (data.Count - 1 >= currentIndex + 1)
+            {
+                conversion = UnicodeEncoding.Unicode.GetString(new byte[] { data[currentIndex], data[currentIndex + 1] })[0];
+                currentIndex += 2;
+            }
+
+            return conversion;
         }
 
 
@@ -40,42 +63,6 @@ namespace RozWorld.IO
         /// <param name="currentIndex">The current index pointer.</param>
         /// <returns>Returns the next 4 bytes in the data as a signed 32-bit integer value.</returns>
         public static int NextInt(IList<byte> data, ref int currentIndex)
-        {
-            return 0;
-        }
-
-
-        /// <summary>
-        /// Reads the next 4 bytes into an unsigned 32-bit integer value.
-        /// </summary>
-        /// <param name="data">The byte data to read from.</param>
-        /// <param name="currentIndex">The current index pointer.</param>
-        /// <returns>Returns the next 4 bytes in the data as an unsigned 32-bit integer value.</returns>
-        public static uint NextUInt(IList<byte> data, ref int currentIndex)
-        {
-            return 0;
-        }
-
-
-        /// <summary>
-        /// Reads the next 2 bytes into a signed 16-bit integer value.
-        /// </summary>
-        /// <param name="data">The byte data to read from.</param>
-        /// <param name="currentIndex">The current index pointer.</param>
-        /// <returns>Returns the next 2 bytes in the data as a signed 16-bit integer value.</returns>
-        public static short NextShort(IList<byte> data, ref int currentIndex)
-        {
-            return 0;
-        }
-
-
-        /// <summary>
-        /// Reads the next 2 bytes into an unsigned 16-bit integer value.
-        /// </summary>
-        /// <param name="data">The byte data to read from.</param>
-        /// <param name="currentIndex">The current index pointer.</param>
-        /// <returns>Returns the next 2 bytes in the data as an unsigned 16-bit integer value.</returns>
-        public static ushort NextUShort(IList<byte> data, ref int currentIndex)
         {
             return 0;
         }
@@ -94,6 +81,73 @@ namespace RozWorld.IO
 
 
         /// <summary>
+        /// Reads the next 2 bytes into a signed 16-bit integer value.
+        /// </summary>
+        /// <param name="data">The byte data to read from.</param>
+        /// <param name="currentIndex">The current index pointer.</param>
+        /// <returns>Returns the next 2 bytes in the data as a signed 16-bit integer value.</returns>
+        public static short NextShort(IList<byte> data, ref int currentIndex)
+        {
+            short conversion = 0;
+
+            if (data.Count - 1 >= currentIndex + 1)
+            {
+                conversion = (short)((data[currentIndex] << 8) + data[currentIndex + 2]);
+                currentIndex += 2;
+            }
+
+            return conversion;
+        }
+
+
+        /// <summary>
+        /// Reads the next set of bytes into a string.
+        /// </summary>
+        /// <param name="data">The byte data to read from.</param>
+        /// <param name="currentIndex">The current index pointer.</param>
+        /// <param name="includeNullCharacter">Whether to include the terminating null character in the converted string or not.</param>
+        /// <returns>Returns the next set of bytes in the data as a string, terminated by a null character or end of data.</returns>
+        public static string NextString(IList<byte> data, ref int currentIndex, bool includeNullCharacter = false)
+        {
+            string conversion = string.Empty;
+            bool endOfString = false; // Set this to true when a null character is discovered
+
+            do
+            {
+                char nextChar = UnicodeEncoding.Unicode.GetString(new byte[] { data[currentIndex], data[currentIndex + 1] })[0];
+                
+                if (nextChar == '\0')
+                {
+                    if (includeNullCharacter)
+                        conversion += nextChar;
+
+                    endOfString = true;
+                }
+                else
+                {
+                    conversion += nextChar;
+                }
+
+                currentIndex += 2;
+            } while (currentIndex < data.Count - 2 || endOfString);
+
+            return conversion;
+        }
+
+
+        /// <summary>
+        /// Reads the next 4 bytes into an unsigned 32-bit integer value.
+        /// </summary>
+        /// <param name="data">The byte data to read from.</param>
+        /// <param name="currentIndex">The current index pointer.</param>
+        /// <returns>Returns the next 4 bytes in the data as an unsigned 32-bit integer value.</returns>
+        public static uint NextUInt(IList<byte> data, ref int currentIndex)
+        {
+            return 0;
+        }
+
+
+        /// <summary>
         /// Reads the next 8 bytes into an unsigned 64-bit integer value.
         /// </summary>
         /// <param name="data">The byte data to read from.</param>
@@ -103,29 +157,17 @@ namespace RozWorld.IO
         {
             return 0;
         }
-
+        
 
         /// <summary>
-        /// Reads the next set of bytes into a string.
+        /// Reads the next 2 bytes into an unsigned 16-bit integer value.
         /// </summary>
         /// <param name="data">The byte data to read from.</param>
         /// <param name="currentIndex">The current index pointer.</param>
-        /// <returns>Returns the next set of bytes in the data as a string, terminated by a null character or end of data.</returns>
-        public static string NextString(IList<byte> data, ref int currentIndex)
+        /// <returns>Returns the next 2 bytes in the data as an unsigned 16-bit integer value.</returns>
+        public static ushort NextUShort(IList<byte> data, ref int currentIndex)
         {
-            return string.Empty;
-        }
-
-
-        /// <summary>
-        /// Reads the next 2 bytes into a Unicode character value.
-        /// </summary>
-        /// <param name="data">The byte data to read from.</param>
-        /// <param name="currentIndex">The current index pointer.</param>
-        /// <returns>Returns the next 2 bytes in the data as a character value.</returns>
-        public static char NextChar(IList<byte> data, ref int currentIndex)
-        {
-            return ' ';
+            return 0;
         }
     }
 }
