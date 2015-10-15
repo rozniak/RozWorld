@@ -64,7 +64,18 @@ namespace RozWorld.IO
         /// <returns>Returns the next 4 bytes in the data as a signed 32-bit integer value.</returns>
         public static int NextInt(IList<byte> data, ref int currentIndex)
         {
-            return 0;
+            int conversion = 0;
+
+            if (data.Count - 1 >= currentIndex + 3)
+            {
+                conversion = (int)((data[currentIndex] << 24) +
+                    (data[currentIndex + 1] << 16) +
+                    (data[currentIndex + 2] << 8) +
+                    data[currentIndex + 3]);
+                currentIndex += 4;
+            }
+
+            return conversion;
         }
 
 
@@ -76,7 +87,23 @@ namespace RozWorld.IO
         /// <returns>Returns the next 8 bytes in the data as a signed 64-bit integer value.</returns>
         public static long NextLong(IList<byte> data, ref int currentIndex)
         {
-            return 0;
+            long conversion = 0;
+
+            if (data.Count - 1 >= currentIndex + 7)
+            {
+                conversion = (long)((data[currentIndex] << 56) +
+                    (data[currentIndex + 1] << 48) +
+                    (data[currentIndex + 2] << 40) +
+                    (data[currentIndex + 3] << 32) +
+                    (data[currentIndex + 4] << 24) +
+                    (data[currentIndex + 5] << 16) +
+                    (data[currentIndex + 6] << 8) +
+                    data[currentIndex + 7]);
+
+                currentIndex += 8;
+            }
+
+            return conversion;
         }
 
 
@@ -143,7 +170,18 @@ namespace RozWorld.IO
         /// <returns>Returns the next 4 bytes in the data as an unsigned 32-bit integer value.</returns>
         public static uint NextUInt(IList<byte> data, ref int currentIndex)
         {
-            return 0;
+            uint conversion = 0;
+
+            if (data.Count - 1 >= currentIndex + 3)
+            {
+                conversion = (uint)((data[currentIndex] << 24) +
+                    (data[currentIndex + 1] << 16) +
+                    (data[currentIndex + 2] << 8) +
+                    data[currentIndex + 3]);
+                currentIndex += 4;
+            }
+
+            return conversion;
         }
 
 
@@ -155,7 +193,23 @@ namespace RozWorld.IO
         /// <returns>Returns the next 8 bytes in the data as an unsigned 64-bit integer value.</returns>
         public static ulong NextULong(IList<byte> data, ref int currentIndex)
         {
-            return 0;
+            ulong conversion = 0;
+
+            if (data.Count - 1 >= currentIndex + 7)
+            {
+                conversion = (ulong)((data[currentIndex] << 56) +
+                    (data[currentIndex + 1] << 48) +
+                    (data[currentIndex + 2] << 40) +
+                    (data[currentIndex + 3] << 32) +
+                    (data[currentIndex + 4] << 24) +
+                    (data[currentIndex + 5] << 16) +
+                    (data[currentIndex + 6] << 8) +
+                    data[currentIndex + 7]);
+
+                currentIndex += 8;
+            }
+
+            return conversion;
         }
         
 
@@ -167,7 +221,15 @@ namespace RozWorld.IO
         /// <returns>Returns the next 2 bytes in the data as an unsigned 16-bit integer value.</returns>
         public static ushort NextUShort(IList<byte> data, ref int currentIndex)
         {
-            return 0;
+            ushort conversion = 0;
+
+            if (data.Count - 1 >= currentIndex + 1)
+            {
+                conversion = (ushort)((data[currentIndex] << 8) + data[currentIndex + 2]);
+                currentIndex += 2;
+            }
+
+            return conversion;
         }
     }
 }
