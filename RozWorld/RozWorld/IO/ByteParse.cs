@@ -16,12 +16,6 @@ namespace RozWorld.IO
 {
     public static class ByteParse
     {
-        /**
-         * I KNOW THIS ALL RETURNS DEFAULT VALUES, JUST GIVE ME A SEC AND IT'LL BE TOP-NOTCH.
-         * 
-         * Maybe not top-notch, but it'll work, I think.
-         */
-
         /// <summary>
         /// Reads the next byte into a boolean value.
         /// </summary>
@@ -68,10 +62,11 @@ namespace RozWorld.IO
 
             if (data.Count - 1 >= currentIndex + 3)
             {
-                conversion = (int)((data[currentIndex] << 24) +
-                    (data[currentIndex + 1] << 16) +
-                    (data[currentIndex + 2] << 8) +
-                    data[currentIndex + 3]);
+                for (int i = 0; i <= 3; i++)
+                {
+                    conversion += (int)(data[currentIndex + i] << (24 - (8 * i)));
+                }
+
                 currentIndex += 4;
             }
 
@@ -91,14 +86,10 @@ namespace RozWorld.IO
 
             if (data.Count - 1 >= currentIndex + 7)
             {
-                conversion = (long)((data[currentIndex] << 56) +
-                    (data[currentIndex + 1] << 48) +
-                    (data[currentIndex + 2] << 40) +
-                    (data[currentIndex + 3] << 32) +
-                    (data[currentIndex + 4] << 24) +
-                    (data[currentIndex + 5] << 16) +
-                    (data[currentIndex + 6] << 8) +
-                    data[currentIndex + 7]);
+                for (int i = 0; i <= 7; i++)
+                {
+                    conversion += (long)(data[currentIndex + i] << (56 - (8 * i)));
+                }
 
                 currentIndex += 8;
             }
@@ -174,10 +165,11 @@ namespace RozWorld.IO
 
             if (data.Count - 1 >= currentIndex + 3)
             {
-                conversion = (uint)((data[currentIndex] << 24) +
-                    (data[currentIndex + 1] << 16) +
-                    (data[currentIndex + 2] << 8) +
-                    data[currentIndex + 3]);
+                for (int i = 0; i <= 3; i++)
+                {
+                    conversion += (uint)(data[currentIndex + i] << (24 - (8 * i)));
+                }
+
                 currentIndex += 4;
             }
 
@@ -197,14 +189,10 @@ namespace RozWorld.IO
 
             if (data.Count - 1 >= currentIndex + 7)
             {
-                conversion = (ulong)((data[currentIndex] << 56) +
-                    (data[currentIndex + 1] << 48) +
-                    (data[currentIndex + 2] << 40) +
-                    (data[currentIndex + 3] << 32) +
-                    (data[currentIndex + 4] << 24) +
-                    (data[currentIndex + 5] << 16) +
-                    (data[currentIndex + 6] << 8) +
-                    data[currentIndex + 7]);
+                for (int i = 0; i <= 7; i++)
+                {
+                    conversion += (ulong)(data[currentIndex + i] << (56 - (8 * i)));
+                }
 
                 currentIndex += 8;
             }
