@@ -24,6 +24,7 @@ namespace RozWorld.IO
         public static readonly string LanguagesDirectory = Environment.CurrentDirectory + @"\lang";
         public static readonly string SoundsDirectory = Environment.CurrentDirectory + @"\sounds";
         public static readonly string TexturesDirectory = Environment.CurrentDirectory + @"\tex";
+        public static readonly string LinksDirectory = Environment.CurrentDirectory + @"\link";
 
         /// <summary>
         /// Gets a text file with the specified filename from the disk.
@@ -213,6 +214,7 @@ namespace RozWorld.IO
             finalReplaced = finalReplaced.Replace("%tex%", TexturesDirectory);
             finalReplaced = finalReplaced.Replace("%lang%", LanguagesDirectory);
             finalReplaced = finalReplaced.Replace("%comfy%", ComfyDirectory);
+            finalReplaced = finalReplaced.Replace("%link%", LinksDirectory);
             return finalReplaced;
         }
         
@@ -223,24 +225,19 @@ namespace RozWorld.IO
         public static void SetupGameDirectories()
         {
             if (!Directory.Exists(Files.ComfyDirectory))
-            {
                 Directory.CreateDirectory(Files.ComfyDirectory);
-            }
 
             if (!Directory.Exists(Files.LanguagesDirectory))
-            {
                 Directory.CreateDirectory(Files.LanguagesDirectory);
-            }
 
             if (!Directory.Exists(Files.SoundsDirectory))
-            {
                 Directory.CreateDirectory(Files.SoundsDirectory);
-            }
 
             if (!Directory.Exists(Files.TexturesDirectory))
-            {
                 Directory.CreateDirectory(Files.TexturesDirectory);
-            }
+
+            if (!Directory.Exists(Files.LinksDirectory))
+                Directory.CreateDirectory(Files.LinksDirectory);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/**
- * RozWorld.Entity.BasicCreature -- RozWorld Creature Base Class
+ * RozWorld.Graphics.UI.Geometry.ElementInfo -- RozWorld UI Element Information
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
  * <<http://www.oddmatics.co.uk>>
@@ -9,10 +9,11 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-namespace RozWorld.Entity
+namespace RozWorld.Graphics.UI.Geometry
 {
-    public abstract class BasicCreature
+    public class ElementInfo
     {
-        // TODO: Implement base creature class here (this will be inherited by other classes)
+        public sbyte XOffset = 0;
+        public sbyte YOffset = 0;
     }
 }
