@@ -120,6 +120,10 @@
     <Compile Include="Graphics\UI\Control\TextBox.cs" />
     <Compile Include="Graphics\UI\DrawInstruction.cs" />
     <Compile Include="Graphics\UI\Error.cs" />
+    <Compile Include="Graphics\UI\Geometry\CharacterInfo.cs" />
+    <Compile Include="Graphics\UI\Geometry\ElementInfo.cs" />
+    <Compile Include="Graphics\UI\Geometry\FontInfo.cs" />
+    <Compile Include="Graphics\UI\Geometry\GUIOMETRY.cs" />
     <Compile Include="Graphics\UI\InGame\Generic\ButtonEvent.cs" />
     <Compile Include="Graphics\UI\InGame\MainMenu.cs" />
     <Compile Include="Graphics\UI\InGame\MultiplayerMenu.cs" />

@@ -186,7 +186,7 @@ namespace RozWorld.Graphics
             TextureManagement = new TextureManager();
             GameInterface = new UIHandler();
 
-            if (!TextureManagement.LoadTextures())
+            if (!TextureManagement.LoadTextures() || !GameInterface.Geometry.Load())
             {
                 RozWorld.GameStatus = Status.FatalError;
             }
