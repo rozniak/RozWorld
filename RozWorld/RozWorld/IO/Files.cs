@@ -31,7 +31,7 @@ namespace RozWorld.IO
         /// </summary>
         /// <param name="fileName">The filename of the file to get.</param>
         /// <returns>The file contents if it exists.</returns>
-        public static string[] GetTextFile(string fileName)
+        public static IList<string> GetTextFile(string fileName)
         {
             List<string> fileContents = new List<string>();
 
@@ -45,7 +45,7 @@ namespace RozWorld.IO
                     } while (r.Peek() > -1);
                 }
 
-                return fileContents.ToArray();
+                return fileContents.AsReadOnly();
             }
             
             return null;
@@ -57,7 +57,7 @@ namespace RozWorld.IO
         /// </summary>
         /// <param name="fileName">The filename of the file to get.</param>
         /// <returns>The file contents if it exists.</returns>
-        public static byte[] GetBinaryFile(string fileName)
+        public static IList<byte> GetBinaryFile(string fileName)
         {
             if (File.Exists(fileName))
             {
@@ -148,7 +148,7 @@ namespace RozWorld.IO
         /// <returns>A dictionary containing the variable names as keys, alongside their values.</returns>
         public static Dictionary<string, string> ReadINIToDictionary(string filePath)
         {
-            string[] iniFile = GetTextFile(filePath);
+            IList<string> iniFile = GetTextFile(filePath);
 
             if (iniFile != null)
             {

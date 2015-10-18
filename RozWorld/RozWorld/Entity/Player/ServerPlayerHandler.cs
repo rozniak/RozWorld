@@ -146,7 +146,7 @@ namespace RozWorld.Entity.Player
         /// </summary>
         private void LoadUserData()
         {
-            string[] userData = Files.GetTextFile(ParentServer.SaveDirectory + "\\players\\" + Nickname + ".dat");
+            IList<string> userData = Files.GetTextFile(ParentServer.SaveDirectory + "\\players\\" + Nickname + ".dat");
 
             // TODO: Finish this
         }

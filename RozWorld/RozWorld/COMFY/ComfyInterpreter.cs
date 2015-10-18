@@ -34,7 +34,7 @@ namespace RozWorld.COMFY
 
             foreach (string file in Directory.GetFiles(comfyDirectory))
             {
-                string[] fileContent = Files.GetTextFile(file);
+                IList<string> fileContent = Files.GetTextFile(file);
 
                 object currentDefinition = null;
                 DefinitionType currentDefType = DefinitionType.Unknown;

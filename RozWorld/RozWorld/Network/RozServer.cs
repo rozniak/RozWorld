@@ -182,9 +182,9 @@ namespace RozWorld.Network
         /// </summary>
         private void LoadConfigs()
         {
-            string[] configContents = Files.GetTextFile(Environment.CurrentDirectory + "\\server.conf");
+            IList<string> configContents = Files.GetTextFile(Environment.CurrentDirectory + "\\server.conf");
 
-            if (configContents.Length > 0)
+            if (configContents.Count > 0)
             {
                 foreach (string line in configContents)
                 {
