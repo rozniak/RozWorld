@@ -22,9 +22,11 @@ namespace RozWorld.IO
     {        
         public static readonly string ComfyDirectory = Environment.CurrentDirectory + @"\comfy";
         public static readonly string LanguagesDirectory = Environment.CurrentDirectory + @"\lang";
+        public static readonly string LinksDirectory = Environment.CurrentDirectory + @"\link";
+        public static readonly string ModsDirectory = Environment.CurrentDirectory + @"\mods";
         public static readonly string SoundsDirectory = Environment.CurrentDirectory + @"\sounds";
         public static readonly string TexturesDirectory = Environment.CurrentDirectory + @"\tex";
-        public static readonly string LinksDirectory = Environment.CurrentDirectory + @"\link";
+
 
         /// <summary>
         /// Gets a text file with the specified filename from the disk.
@@ -215,6 +217,7 @@ namespace RozWorld.IO
             finalReplaced = finalReplaced.Replace("%lang%", LanguagesDirectory);
             finalReplaced = finalReplaced.Replace("%comfy%", ComfyDirectory);
             finalReplaced = finalReplaced.Replace("%link%", LinksDirectory);
+            finalReplaced = finalReplaced.Replace("%mods%", ModsDirectory);
             return finalReplaced;
         }
         
@@ -224,20 +227,29 @@ namespace RozWorld.IO
         /// </summary>
         public static void SetupGameDirectories()
         {
+            // COMFY Directory
             if (!Directory.Exists(Files.ComfyDirectory))
                 Directory.CreateDirectory(Files.ComfyDirectory);
 
+            // Languages Directory
             if (!Directory.Exists(Files.LanguagesDirectory))
                 Directory.CreateDirectory(Files.LanguagesDirectory);
 
+            // Sounds Directory
             if (!Directory.Exists(Files.SoundsDirectory))
                 Directory.CreateDirectory(Files.SoundsDirectory);
 
+            // Textures Directory
             if (!Directory.Exists(Files.TexturesDirectory))
                 Directory.CreateDirectory(Files.TexturesDirectory);
 
+            // Links Directory
             if (!Directory.Exists(Files.LinksDirectory))
                 Directory.CreateDirectory(Files.LinksDirectory);
+
+            // Mods Directory
+            if (!Directory.Exists(Files.ModsDirectory))
+                Directory.CreateDirectory(Files.ModsDirectory);
         }
     }
 }

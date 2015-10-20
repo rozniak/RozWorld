@@ -121,7 +121,46 @@ namespace RozWorld.Graphics.UI.Geometry
                 // Clear old data from the collections
                 BuildKeys();
 
-                // TODO: Code this to read from GUIOMETRY.BIN according to the spec
+                // Read the GUIOMETRY file...
+                IList<byte> guiometryFile = Files.GetBinaryFile(guiometryLocation);
+                int currentIndex = 0; // The current index pointer
+
+                // Get the version before doing anything
+                byte version = guiometryFile[currentIndex++];
+
+                // Skip past the fast section of bytes as it is metadata for the editor (textures)
+                bool finishedMetadata = false;
+
+                do
+                {
+                    if (guiometryFile[currentIndex++] == 0) // End of metadata
+                    {
+                        finishedMetadata = true;
+                    }
+                    else
+                    {
+                        // Time to skip through the texture source string...
+                        bool endOfString = false;
+
+                        // Strings *should* be in UTF16 format, so two bytes per char, the exit condition
+                        // makes sure that there are at least two bytes left to read, or the string has
+                        // terminated...
+
+                        do
+                        {
+                            // Check if the next two bytes are null or not
+                            if (guiometryFile[currentIndex] == 0 &&
+                                guiometryFile[currentIndex + 1] == 0)
+                            {
+                                endOfString = true;
+                            }
+
+                            currentIndex += 2;
+                        } while (!endOfString || currentIndex <= guiometryFile.Count - 2);
+                    }
+                } while (!finishedMetadata || currentIndex <= guiometryFile.Count - 1);
+
+                // Read the main GUIOMETRY file from here onwards...
             }
 
             return false;
