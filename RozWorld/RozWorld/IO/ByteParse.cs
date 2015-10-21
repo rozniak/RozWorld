@@ -24,9 +24,27 @@ namespace RozWorld.IO
         /// <returns>Returns the next byte in the data as a boolean value.</returns>
         public static bool NextBool(IList<byte> data, ref int currentIndex)
         {
-            if (data[currentIndex++] == 1) return true;
+            if (currentIndex <= data.Count - 1 &&
+                data[currentIndex++] == 1) return true;
 
             return false; // Assume that it's 0, because if it isn't, then that's just silly
+        }
+
+
+        /// <summary>
+        /// (For stability) Reads the next byte into a byte value.
+        /// </summary>
+        /// <param name="data">The byte data to read from.</param>
+        /// <param name="currentIndex">The current index pointer.</param>
+        /// <returns>Returns the next byte in the data as a byte value.</returns>
+        public static byte NextByte(IList<byte> data, ref int currentIndex)
+        {
+            byte conversion = 0;
+
+            if (currentIndex <= currentIndex - 1)
+                conversion = data[currentIndex++];
+
+            return conversion;
         }
 
 
@@ -40,7 +58,7 @@ namespace RozWorld.IO
         {
             char conversion = '\0';
 
-            if (data.Count - 1 >= currentIndex + 1)
+            if (currentIndex <= data.Count - 2)
             {
                 conversion = UnicodeEncoding.Unicode.GetString(new byte[] { data[currentIndex], data[currentIndex + 1] })[0];
                 currentIndex += 2;
@@ -60,7 +78,7 @@ namespace RozWorld.IO
         {
             int conversion = 0;
 
-            if (data.Count - 1 >= currentIndex + 3)
+            if (currentIndex <= data.Count - 4)
             {
                 for (int i = 0; i <= 3; i++)
                 {
@@ -84,7 +102,7 @@ namespace RozWorld.IO
         {
             long conversion = 0;
 
-            if (data.Count - 1 >= currentIndex + 7)
+            if (currentIndex <= data.Count - 8)
             {
                 for (int i = 0; i <= 7; i++)
                 {
@@ -108,7 +126,7 @@ namespace RozWorld.IO
         {
             sbyte conversion = 0;
 
-            if (currentIndex + 1 <= data.Count - 1)
+            if (currentIndex <= data.Count - 1)
                 conversion = (sbyte)data[currentIndex++];
 
             return conversion;
@@ -125,7 +143,7 @@ namespace RozWorld.IO
         {
             short conversion = 0;
 
-            if (data.Count - 1 >= currentIndex + 1)
+            if (currentIndex <= data.Count - 2)
             {
                 conversion = (short)((data[currentIndex] << 8) + data[currentIndex + 2]);
                 currentIndex += 2;
@@ -180,7 +198,7 @@ namespace RozWorld.IO
         {
             uint conversion = 0;
 
-            if (data.Count - 1 >= currentIndex + 3)
+            if (currentIndex <= data.Count - 4)
             {
                 for (int i = 0; i <= 3; i++)
                 {
@@ -204,7 +222,7 @@ namespace RozWorld.IO
         {
             ulong conversion = 0;
 
-            if (data.Count - 1 >= currentIndex + 7)
+            if (currentIndex <= data.Count - 8)
             {
                 for (int i = 0; i <= 7; i++)
                 {
@@ -228,7 +246,7 @@ namespace RozWorld.IO
         {
             ushort conversion = 0;
 
-            if (data.Count - 1 >= currentIndex + 1)
+            if (currentIndex <= data.Count - 2)
             {
                 conversion = (ushort)((data[currentIndex] << 8) + data[currentIndex + 2]);
                 currentIndex += 2;

@@ -189,6 +189,10 @@ namespace RozWorld.Graphics.UI.Geometry
                 {
                     #region Version 1
 
+                    // This should be the fonts to look for (eg. ChatFont, SmallFont etc.) in the order they are
+                    // supposed to be according to the format
+                    string[] fonts = new string[] { "ChatFont", "SmallFont", "MediumFont", "HugeFont" };
+
                     // Keep track of the current character being read (out of the number in the font)
                     short currentChar = 1; // Make sure to reset this to 1 after reading a font or you will be shot
 
@@ -205,94 +209,25 @@ namespace RozWorld.Graphics.UI.Geometry
                     string[] elementParts;
 
 
-                    #region Chat Font Data
+                    #region Font Data
 
-                    charsInFont = ByteParse.NextShort(guiometryFile, ref currentIndex);
-
-                    do
+                    foreach (string font in fonts)
                     {
-                        char character = ByteParse.NextChar(guiometryFile, ref currentIndex);
+                        charsInFont = ByteParse.NextShort(guiometryFile, ref currentIndex);
 
-                        Fonts["ChatFont"].AddNewCharacter(character, 
-                            NextCharacter(guiometryFile, ref currentIndex));
-                    } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
+                        do
+                        {
+                            char character = ByteParse.NextChar(guiometryFile, ref currentIndex);
 
-                    if (currentIndex <= guiometryFile.Count - 2)
-                    {
-                        Fonts["ChatFont"].SpacingWidth = guiometryFile[currentIndex++];
-                        Fonts["ChatFont"].LineHeight = guiometryFile[currentIndex++];
+                            Fonts[font].AddNewCharacter(character,
+                                NextCharacter(guiometryFile, ref currentIndex));
+                        } while (currentChar <= charsInFont);
+
+                        Fonts[font].SpacingWidth = ByteParse.NextByte(guiometryFile, ref currentIndex);
+                        Fonts[font].LineHeight = ByteParse.NextByte(guiometryFile, ref currentIndex);
+
+                        currentChar = 1;
                     }
-
-                    currentChar = 1;
-
-                    #endregion
-
-
-                    #region Small Font Data
-
-                    charsInFont = ByteParse.NextShort(guiometryFile, ref currentIndex);
-
-                    do
-                    {
-                        char character = ByteParse.NextChar(guiometryFile, ref currentIndex);
-
-                        Fonts["SmallFont"].AddNewCharacter(character,
-                            NextCharacter(guiometryFile, ref currentIndex));
-                    } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
-
-                    if (currentIndex <= guiometryFile.Count - 2)
-                    {
-                        Fonts["SmallFont"].SpacingWidth = guiometryFile[currentIndex++];
-                        Fonts["SmallFont"].LineHeight = guiometryFile[currentIndex++];
-                    }
-
-                    currentChar = 1;
-
-                    #endregion
-
-
-                    #region Medium Font Data
-
-                    charsInFont = ByteParse.NextShort(guiometryFile, ref currentIndex);
-
-                    do
-                    {
-                        char character = ByteParse.NextChar(guiometryFile, ref currentIndex);
-
-                        Fonts["MediumFont"].AddNewCharacter(character,
-                            NextCharacter(guiometryFile, ref currentIndex));
-                    } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
-
-                    if (currentIndex <= guiometryFile.Count - 2)
-                    {
-                        Fonts["MediumFont"].SpacingWidth = guiometryFile[currentIndex++];
-                        Fonts["MediumFont"].LineHeight = guiometryFile[currentIndex++];
-                    }
-
-                    currentChar = 1;
-
-                    #endregion
-
-
-                    #region Huge Font Data
-
-                    charsInFont = ByteParse.NextShort(guiometryFile, ref currentIndex);
-
-                    do
-                    {
-                        char character = ByteParse.NextChar(guiometryFile, ref currentIndex);
-
-                        Fonts["HugeFont"].AddNewCharacter(character,
-                            NextCharacter(guiometryFile, ref currentIndex));
-                    } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
-
-                    if (currentIndex <= guiometryFile.Count - 2)
-                    {
-                        Fonts["HugeFont"].SpacingWidth = guiometryFile[currentIndex++];
-                        Fonts["HugeFont"].LineHeight = guiometryFile[currentIndex++];
-                    }
-
-                    currentChar = 1;
 
                     #endregion
 
@@ -362,13 +297,9 @@ namespace RozWorld.Graphics.UI.Geometry
             short blitDestinationY = ByteParse.NextShort(data, ref currentIndex);
             charInfo.BlitDestination = new Point(blitDestinationX, blitDestinationY);
 
-            // Check if the file has 3 more bytes left at least
-            if (currentIndex <= data.Count - 3)
-            {
-                charInfo.Before = (sbyte)data[currentIndex++];
-                charInfo.After = (sbyte)data[currentIndex++];
-                charInfo.YOffset = (sbyte)data[currentIndex++];
-            }
+            charInfo.Before = ByteParse.NextSByte(data, ref currentIndex);
+            charInfo.After = ByteParse.NextSByte(data, ref currentIndex);
+            charInfo.YOffset = ByteParse.NextSByte(data, ref currentIndex);
 
             return charInfo;
         }
