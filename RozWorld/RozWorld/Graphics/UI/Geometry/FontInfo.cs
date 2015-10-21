@@ -25,12 +25,13 @@ namespace RozWorld.Graphics.UI.Geometry
         /// Adds a new character into this font's character list.
         /// </summary>
         /// <param name="newChar">The character to add.</param>
+        /// <param name="charInfo">The character information of the character to add.</param>
         /// <returns>Whether the character was added, otherwise it is already present.</returns>
-        public bool AddNewCharacter(char newChar)
+        public bool AddNewCharacter(char newChar, CharacterInfo charInfo)
         {
             if (!Characters.ContainsKey(newChar))
             {
-                Characters.Add(newChar, new CharacterInfo());
+                Characters.Add(newChar, charInfo);
                 return true;
             }
 
