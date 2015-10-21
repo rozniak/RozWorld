@@ -196,6 +196,15 @@ namespace RozWorld.Graphics.UI.Geometry
                     short charsInFont;
 
 
+                    // This should be the elements to look for (eg. Button, Text etc.) in the order they are
+                    // supposed to be according to the format
+                    string[] elements = new string[] { "Button", "Text", "Check" };
+
+                    // This should be the 'parts' of the elements to look for (eg. Body, Top, Side etc.) in the
+                    // order they are supposed to be according to the format
+                    string[] elementParts;
+
+
                     #region Chat Font Data
 
                     charsInFont = ByteParse.NextShort(guiometryFile, ref currentIndex);
@@ -207,6 +216,12 @@ namespace RozWorld.Graphics.UI.Geometry
                         Fonts["ChatFont"].AddNewCharacter(character, 
                             NextCharacter(guiometryFile, ref currentIndex));
                     } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
+
+                    if (currentIndex <= guiometryFile.Count - 2)
+                    {
+                        Fonts["ChatFont"].SpacingWidth = guiometryFile[currentIndex++];
+                        Fonts["ChatFont"].LineHeight = guiometryFile[currentIndex++];
+                    }
 
                     currentChar = 1;
 
@@ -225,6 +240,12 @@ namespace RozWorld.Graphics.UI.Geometry
                             NextCharacter(guiometryFile, ref currentIndex));
                     } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
 
+                    if (currentIndex <= guiometryFile.Count - 2)
+                    {
+                        Fonts["SmallFont"].SpacingWidth = guiometryFile[currentIndex++];
+                        Fonts["SmallFont"].LineHeight = guiometryFile[currentIndex++];
+                    }
+
                     currentChar = 1;
 
                     #endregion
@@ -241,6 +262,12 @@ namespace RozWorld.Graphics.UI.Geometry
                         Fonts["MediumFont"].AddNewCharacter(character,
                             NextCharacter(guiometryFile, ref currentIndex));
                     } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
+
+                    if (currentIndex <= guiometryFile.Count - 2)
+                    {
+                        Fonts["MediumFont"].SpacingWidth = guiometryFile[currentIndex++];
+                        Fonts["MediumFont"].LineHeight = guiometryFile[currentIndex++];
+                    }
 
                     currentChar = 1;
 
@@ -259,11 +286,54 @@ namespace RozWorld.Graphics.UI.Geometry
                             NextCharacter(guiometryFile, ref currentIndex));
                     } while (currentChar++ < charsInFont && currentIndex <= guiometryFile.Count - 1);
 
+                    if (currentIndex <= guiometryFile.Count - 2)
+                    {
+                        Fonts["HugeFont"].SpacingWidth = guiometryFile[currentIndex++];
+                        Fonts["HugeFont"].LineHeight = guiometryFile[currentIndex++];
+                    }
+
                     currentChar = 1;
 
                     #endregion
 
-                    // TODO: Read element data from here and then test everything
+
+                    #region Element Data
+
+
+                    foreach (string element in elements)
+                    {
+                        // Set up the parts to look for...
+                        if (element == "Button" || element == "Text")
+                            elementParts = new string[] { "Top", "Side", "EdgeSE", "EdgeSW" };
+                        else // element == "CheckBox"
+                            elementParts = new string[] { "Top", "Side", "EdgeSE", "EdgeSW", "Tick" };
+
+                        foreach (string part in elementParts)
+                        {
+                            if (part == "Side" || part == "EdgeSE" || part == "EdgeSW" || part == "Tick")
+                                Elements[element + part].XOffset = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+
+                            if (part == "Top" || part == "EdgeSE" || part == "EdgeSW" || part == "Tick")
+                                Elements[element + part].YOffset = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                        }
+
+                        // Read the element details too
+                        if (element == "Button")
+                        {
+                            CentredTextButton = ByteParse.NextBool(guiometryFile, ref currentIndex);
+                            OffsetButtonTop = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                            OffsetButtonLeft = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                        }
+                        else if (element == "Text")
+                        {
+                            CentredTextText = ByteParse.NextBool(guiometryFile, ref currentIndex);
+                            OffsetTextTop = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                            OffsetTextLeft = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                        }
+                    }
+
+
+                    #endregion
 
 
                     #endregion
@@ -293,7 +363,7 @@ namespace RozWorld.Graphics.UI.Geometry
             charInfo.BlitDestination = new Point(blitDestinationX, blitDestinationY);
 
             // Check if the file has 3 more bytes left at least
-            if (currentIndex <= data.Count - 4)
+            if (currentIndex <= data.Count - 3)
             {
                 charInfo.Before = (sbyte)data[currentIndex++];
                 charInfo.After = (sbyte)data[currentIndex++];

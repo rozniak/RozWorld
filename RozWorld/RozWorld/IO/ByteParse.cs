@@ -99,6 +99,23 @@ namespace RozWorld.IO
 
 
         /// <summary>
+        /// Reads the next byte into a signed byte value.
+        /// </summary>
+        /// <param name="data">The byte data to read from.</param>
+        /// <param name="currentIndex">The current index pointer.</param>
+        /// <returns>Returns the next byte in the data as a signed byte value.</returns>
+        public static sbyte NextSByte(IList<byte> data, ref int currentIndex)
+        {
+            sbyte conversion = 0;
+
+            if (currentIndex + 1 <= data.Count - 1)
+                conversion = (sbyte)data[currentIndex++];
+
+            return conversion;
+        }
+
+
+        /// <summary>
         /// Reads the next 2 bytes into a signed 16-bit integer value.
         /// </summary>
         /// <param name="data">The byte data to read from.</param>
