@@ -9,13 +9,11 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RozWorld.IO;
 using System.Drawing;
 using System.IO;
+
+using RozWorld.IO;
 
 namespace RozWorld.Graphics.UI.Geometry
 {
@@ -149,7 +147,7 @@ namespace RozWorld.Graphics.UI.Geometry
                 // Get the version before doing anything
                 byte version = guiometryFile[currentIndex++];
 
-                // Skip past the fast section of bytes as it is metadata for the editor (textures)
+                // Skip past the first section of bytes as it is metadata for the editor (textures)
                 bool finishedMetadata = false;
 
                 do
@@ -234,7 +232,6 @@ namespace RozWorld.Graphics.UI.Geometry
 
                     #region Element Data
 
-
                     foreach (string element in elements)
                     {
                         // Set up the parts to look for...
@@ -267,14 +264,16 @@ namespace RozWorld.Graphics.UI.Geometry
                         }
                     }
 
-
                     #endregion
 
 
                     #endregion
+
+                    return true;
                 }
             }
 
+            // Unable to load for whatever reason
             return false;
         }
 
