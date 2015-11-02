@@ -41,7 +41,7 @@ namespace RozWorld.IO
         {
             byte conversion = 0;
 
-            if (currentIndex <= currentIndex - 1)
+            if (currentIndex <= data.Count - 1)
                 conversion = data[currentIndex++];
 
             return conversion;
@@ -182,7 +182,7 @@ namespace RozWorld.IO
                 }
 
                 currentIndex += 2;
-            } while (currentIndex < data.Count - 2 || endOfString);
+            } while (currentIndex < data.Count - 2 && !endOfString);
 
             return conversion;
         }

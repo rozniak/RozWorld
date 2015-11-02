@@ -22,13 +22,13 @@ namespace RozWorld.Graphics.UI.Geometry
         private Dictionary<string, FontInfo> Fonts = new Dictionary<string, FontInfo>();
         private Dictionary<string, ElementInfo> Elements = new Dictionary<string, ElementInfo>();
 
-        public bool CentredTextButton { get; private set; }
-        public sbyte OffsetButtonTop { get; private set; }
-        public sbyte OffsetButtonLeft { get; private set; }
+        public bool ButtonCentredText { get; private set; }
+        public sbyte ButtonOffsetTop { get; private set; }
+        public sbyte ButtonOffsetLeft { get; private set; }
 
-        public bool CentredTextText { get; private set; }
-        public sbyte OffsetTextTop { get; private set; }
-        public sbyte OffsetTextLeft { get; private set; }
+        public bool TextCentredText { get; private set; }
+        public sbyte TextOffsetTop { get; private set; }
+        public sbyte TextOffsetLeft { get; private set; }
 
 
         public GUIOMETRY()
@@ -252,15 +252,15 @@ namespace RozWorld.Graphics.UI.Geometry
                         // Read the element details too
                         if (element == "Button")
                         {
-                            CentredTextButton = ByteParse.NextBool(guiometryFile, ref currentIndex);
-                            OffsetButtonTop = ByteParse.NextSByte(guiometryFile, ref currentIndex);
-                            OffsetButtonLeft = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                            ButtonCentredText = ByteParse.NextBool(guiometryFile, ref currentIndex);
+                            ButtonOffsetTop = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                            ButtonOffsetLeft = ByteParse.NextSByte(guiometryFile, ref currentIndex);
                         }
                         else if (element == "Text")
                         {
-                            CentredTextText = ByteParse.NextBool(guiometryFile, ref currentIndex);
-                            OffsetTextTop = ByteParse.NextSByte(guiometryFile, ref currentIndex);
-                            OffsetTextLeft = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                            TextCentredText = ByteParse.NextBool(guiometryFile, ref currentIndex);
+                            TextOffsetTop = ByteParse.NextSByte(guiometryFile, ref currentIndex);
+                            TextOffsetLeft = ByteParse.NextSByte(guiometryFile, ref currentIndex);
                         }
                     }
 
