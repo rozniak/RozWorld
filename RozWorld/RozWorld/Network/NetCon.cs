@@ -13,6 +13,7 @@ using System;
 using System.Net;
 using System.Net.NetworkInformation;
 
+
 namespace RozWorld.Network
 {
     public static class NetCon

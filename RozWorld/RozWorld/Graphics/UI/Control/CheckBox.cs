@@ -10,7 +10,10 @@
  */
 
 using OpenGL;
+
 using System.Drawing;
+
+
 namespace RozWorld.Graphics.UI.Control
 {
     public class CheckBox : ControlSkeleton

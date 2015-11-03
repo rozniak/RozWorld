@@ -15,6 +15,12 @@
  * This code is subject to massive changes, do not expect a lot of the established code in here to remain as is!
  */
 
+using RozWorld.Entity;
+using RozWorld.Entity.Player;
+using RozWorld.Network.Chat;
+using RozWorld.IO;
+using RozWorld.World;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,11 +28,6 @@ using System.Timers;
 using System.Net;
 using System.Net.Sockets;
 
-using RozWorld.Entity;
-using RozWorld.Entity.Player;
-using RozWorld.Network.Chat;
-using RozWorld.IO;
-using RozWorld.World;
 
 namespace RozWorld.Network
 {

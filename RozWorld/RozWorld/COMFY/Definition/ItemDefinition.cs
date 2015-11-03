@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 
+
 namespace RozWorld.COMFY.Definition
 {
     public class ItemDefinition

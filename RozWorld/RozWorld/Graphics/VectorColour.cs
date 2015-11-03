@@ -11,6 +11,7 @@
 
 using OpenGL;
 
+
 namespace RozWorld.Graphics
 {
     public static class VectorColour

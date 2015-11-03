@@ -9,13 +9,14 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
+using RozWorld.IO;
+using RozWorld.COMFY.Definition;
+using RozWorld.Item;
+
 using System;
 using System.IO;
 using System.Collections.Generic;
 
-using RozWorld.IO;
-using RozWorld.COMFY.Definition;
-using RozWorld.Item;
 
 namespace RozWorld.COMFY
 {

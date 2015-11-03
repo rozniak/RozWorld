@@ -12,6 +12,7 @@
 using System;
 using System.Text;
 
+
 namespace RozWorld.IO
 {
     public static class RozEncoding

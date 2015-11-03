@@ -9,10 +9,12 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-using System.Drawing;
+using OpenGL;
 
 using RozWorld.IO;
-using OpenGL;
+
+using System.Drawing;
+
 
 namespace RozWorld.Graphics.UI
 {

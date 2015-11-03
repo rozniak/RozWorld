@@ -15,14 +15,15 @@
  * This code is subject to massive changes, do not expect a lot of the established code in here to remain as is!
  */
 
+using RozWorld.IO;
+
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Timers;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using System.Timers;
 
-using RozWorld.IO;
 
 namespace RozWorld.Network
 {

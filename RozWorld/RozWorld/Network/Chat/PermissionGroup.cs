@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 
+
 namespace RozWorld.Network.Chat
 {
     public class PermissionGroup

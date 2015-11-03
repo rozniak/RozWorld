@@ -12,6 +12,7 @@
 using System;
 using System.Drawing;
 
+
 namespace RozWorld.Graphics.UI.Geometry
 {
     public class CharacterInfo
