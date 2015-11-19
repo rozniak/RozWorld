@@ -109,6 +109,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Graphics\GameWindow.cs" />
+    <Compile Include="Graphics\IconMaker.cs" />
     <Compile Include="Graphics\Shaders.cs" />
     <Compile Include="Graphics\TextureManager.cs" />
     <Compile Include="Graphics\UI\ControlSystem.cs" />

@@ -50,6 +50,12 @@ namespace RozWorld.Graphics
         }
 
         /**
+         * Tell if the window has focus, this is for cooling down the rendering stuff when you're not
+         * looking at the game.
+         */
+        private bool HasFocus;
+
+        /**
          * GL relevant stuff.
          */
         private ShaderProgram GLProgram;
@@ -114,6 +120,11 @@ namespace RozWorld.Graphics
             get;
             private set;
         }
+
+        /**
+         * The game input and general update ticker.
+         */
+        private Timer GameTime;
 
         /**
          * FPS relevant stuff.
@@ -204,7 +215,11 @@ namespace RozWorld.Graphics
 
             GameInterface.ControlSystems["Splash"].Start();
 
-            //FloatPoint[] fp = DrawInstruction.CreateBlitCoordsForFont(FontType.SmallText, 'r'); test that the code works.
+            // Start the main game update timer
+            GameTime = new Timer(16); // About 60Hz
+            GameTime.Elapsed += new ElapsedEventHandler(Update);
+            GameTime.Enabled = true;
+            GameTime.Start();
 
             Gl.ClearColor(VectorColour.OpaqueWhite.x,
                 VectorColour.OpaqueWhite.y,
@@ -216,10 +231,27 @@ namespace RozWorld.Graphics
 
 
         /// <summary>
+        /// Routine called to perform the game updates (input etc.)
+        /// </summary>
+        private void Update(object sender, ElapsedEventArgs e)
+        {
+            // Update the window focus status
+            HasFocus = IconMaker.HasFocus();
+
+            // Set window icon if it's gone for some reason
+            if (!HasFocus)
+                IconMaker.SetRozWorldIcon();
+        }
+
+
+        /// <summary>
         /// Routine called when it is time to redraw the GL window and game screen.
         /// </summary>
         private void Draw()
         {
+            // Debugging purposes
+            int instructionsDrawn = 0;
+
             // FPS check system:
             FPSTimer.Stop();
             FPS = Math.Round(1000 / (double)FPSTimer.ElapsedMilliseconds);
@@ -272,6 +304,8 @@ namespace RozWorld.Graphics
                         TextureDrawVectors.Dispose();
                         TextureQuads.Dispose();
                         TextureBlitVectors.Dispose();
+
+                        instructionsDrawn++;
                     }
                 }
                 catch (Exception ex)
@@ -310,6 +344,7 @@ namespace RozWorld.Graphics
 
             GLProgram.Use();
         }
+
 
         private void OnDisplay()
         {
