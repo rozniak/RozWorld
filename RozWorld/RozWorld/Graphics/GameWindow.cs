@@ -199,14 +199,8 @@ namespace RozWorld.Graphics
             TextureManagement = new TextureManager();
             GameInterface = new UIHandler();
 
-            if (!TextureManagement.LoadTextures() || !GameInterface.Geometry.Load())
-            {
-                RozWorld.GameStatus = Status.FatalError;
-            }
-            else
-            {
-                RozWorld.GameStatus = Status.Splash;
-            }
+            TextureManagement.LoadTextures();
+            GameInterface.Geometry.Load();
 
             FPSTimer = Stopwatch.StartNew();
             LowestFPS = double.MaxValue;

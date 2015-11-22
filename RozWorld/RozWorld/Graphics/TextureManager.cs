@@ -16,6 +16,7 @@ using RozWorld.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using RozWorld.Graphics.UI;
 
 
 namespace RozWorld.Graphics
@@ -29,7 +30,7 @@ namespace RozWorld.Graphics
         /// Loads a fresh batch of textures from the loaded game content definitions.
         /// </summary>
         /// <returns>Whether the game succesfully loaded all textures and required textures.</returns>
-        public bool LoadTextures()
+        public void LoadTextures()
         {
             // If there are textures already loaded, make sure they are disposed.
             DumpAllTextures();
@@ -55,10 +56,8 @@ namespace RozWorld.Graphics
             // Check if the missing texture placeholder is loaded.
             if (!LoadedTextures.ContainsKey("Missing") || LoadedTextures["Missing"].Size.Width != 32 || LoadedTextures["Missing"].Size.Height != 32)
             {
-                return false;
+                UIHandler.CriticalError(Error.MISSING_CRITICAL_FILES, "No default texture provided (\"Missing\"), or default texture has invalid dimensions (must be 32x32).");
             }
-
-            return true;
         }
 
 

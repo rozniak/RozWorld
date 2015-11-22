@@ -146,7 +146,7 @@ namespace RozWorld.IO
 
             if (currentIndex <= data.Count - 2)
             {
-                conversion = (short)((data[currentIndex] << 8) + data[currentIndex + 2]);
+                conversion = (short)((data[currentIndex] << 8) + data[currentIndex + 1]);
                 currentIndex += 2;
             }
 
@@ -169,7 +169,7 @@ namespace RozWorld.IO
             do
             {
                 char nextChar = UnicodeEncoding.Unicode.GetString(new byte[] { data[currentIndex], data[currentIndex + 1] })[0];
-                
+
                 if (nextChar == '\0')
                 {
                     if (includeNullCharacter)
@@ -235,7 +235,7 @@ namespace RozWorld.IO
 
             return conversion;
         }
-        
+
 
         /// <summary>
         /// Reads the next 2 bytes into an unsigned 16-bit integer value.
