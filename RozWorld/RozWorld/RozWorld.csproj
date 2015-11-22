@@ -135,6 +135,8 @@
     <Compile Include="Graphics\UI\InGame\VideoSettingsMenu.cs" />
     <Compile Include="Graphics\UI\KeyboardState.cs" />
     <Compile Include="Graphics\UI\MouseState.cs" />
+    <Compile Include="Graphics\UI\Strings\Language.cs" />
+    <Compile Include="Graphics\UI\Strings\LanguageSystem.cs" />
     <Compile Include="Graphics\UI\UIHandler.cs" />
     <Compile Include="Graphics\VectorColour.cs" />
     <Compile Include="IO\ByteParse.cs" />

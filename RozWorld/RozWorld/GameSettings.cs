@@ -138,7 +138,9 @@ namespace RozWorld
                 "WindowHeight:" + WindowResolution.Height.ToString(),
                 "TextureDirectory:" + TexturePackDirectory,
                 "AeroOffsets:" + AeroOffsets.ToString(),
-                "MinimumSizeIsPreferred:" + MinimumSizeIsPreferred.ToString()
+                "MinimumSizeIsPreferred:" + MinimumSizeIsPreferred.ToString(),
+                "# -",
+                "# [Language]"
             };
 
             if (settingsPath == "")

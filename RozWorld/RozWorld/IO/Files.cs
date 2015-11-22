@@ -20,9 +20,12 @@ using System.Security.Cryptography;
 namespace RozWorld.IO
 {
     public static class Files
-    {        
+    {
         public static readonly string ComfyDirectory = Environment.CurrentDirectory + @"\comfy";
+
         public static readonly string LanguagesDirectory = Environment.CurrentDirectory + @"\lang";
+        public static readonly string LanguagesFile = Environment.CurrentDirectory + @"\link\langs.ini";
+
         public static readonly string LinksDirectory = Environment.CurrentDirectory + @"\link";
         public static readonly string ModsDirectory = Environment.CurrentDirectory + @"\mods";
         public static readonly string SoundsDirectory = Environment.CurrentDirectory + @"\sounds";

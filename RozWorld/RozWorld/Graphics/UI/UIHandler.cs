@@ -10,6 +10,7 @@
  */
 
 using RozWorld.Graphics.UI.Geometry;
+using RozWorld.Graphics.UI.Strings;
 
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace RozWorld.Graphics.UI
         public Dictionary<string, ControlSystem> ControlSystems = new Dictionary<string, ControlSystem>();
 
         public GUIOMETRY Geometry = new GUIOMETRY();
+        public LanguageSystem Language = new LanguageSystem();
 
 
         /// <summary>
