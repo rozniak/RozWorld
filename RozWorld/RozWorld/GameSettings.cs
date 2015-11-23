@@ -83,6 +83,14 @@ namespace RozWorld
             private set;
         }
 
+
+        /**
+         * The nice-name of the language that the user picked, or whatever the
+         * default language is. British English basically, because I made the
+         * game.
+         */
+        public string LanguageSource;
+
         
         /// <summary>
         /// Load or reload the settings for RozWorld, specifying a file to load if necessary.
@@ -140,7 +148,8 @@ namespace RozWorld
                 "AeroOffsets:" + AeroOffsets.ToString(),
                 "MinimumSizeIsPreferred:" + MinimumSizeIsPreferred.ToString(),
                 "# -",
-                "# [Language]"
+                "# [Language]",
+                "LanguageSelected:" + LanguageSource
             };
 
             if (settingsPath == "")
@@ -169,7 +178,10 @@ namespace RozWorld
                 "WindowHeight:600",
                 "TextureDirectory:roz",
                 "AeroOffsets:false",
-                "MinimumSizeIsPreferred:true"
+                "MinimumSizeIsPreferred:true",
+                "# -",
+                "# [Language]",
+                "LanguageSelected:British English"
             };
 
             if (asMainSettings)
@@ -184,11 +196,11 @@ namespace RozWorld
 
 
         /// <summary>
-        /// 
+        /// Updates the video settings in the game settings.
         /// </summary>
-        /// <param name="windowResolution"></param>
-        /// <param name="aeroOffsets"></param>
-        /// <param name="minimumSizeIsPreferred"></param>
+        /// <param name="windowResolution">The game's window resolution.</param>
+        /// <param name="aeroOffsets">The status of the aero offsets options.</param>
+        /// <param name="minimumSizeIsPreferred">The status of the minimum size is preferred option.</param>
         public void UpdateVideoSettings(Size windowResolution, bool aeroOffsets, bool minimumSizeIsPreferred)
         {
             if (windowResolution.Width >= 800 && windowResolution.Height >= 600)

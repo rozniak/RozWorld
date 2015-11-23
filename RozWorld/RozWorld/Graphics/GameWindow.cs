@@ -200,7 +200,7 @@ namespace RozWorld.Graphics
             GameInterface = new UIHandler();
 
             TextureManagement.LoadTextures();
-            GameInterface.Geometry.Load();
+            GameInterface.Language.Load(RozWorld.Settings.LanguageSource);
 
             FPSTimer = Stopwatch.StartNew();
             LowestFPS = double.MaxValue;

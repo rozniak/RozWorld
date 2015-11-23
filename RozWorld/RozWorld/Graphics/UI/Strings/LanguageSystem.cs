@@ -19,7 +19,7 @@ namespace RozWorld.Graphics.UI.Strings
 {
     public class LanguageSystem
     {
-        private Dictionary<string, Language> AvailableLanguages;
+        private Dictionary<string, Language> AvailableLanguages = new Dictionary<string,Language>();
 
         private string _SelectedLanguage;
         private string SelectedLanguage
@@ -27,7 +27,9 @@ namespace RozWorld.Graphics.UI.Strings
             get { return this._SelectedLanguage; }
             set
             {
-                AvailableLanguages[this._SelectedLanguage].Unload();
+                if(!string.IsNullOrEmpty(this._SelectedLanguage))
+                    AvailableLanguages[this._SelectedLanguage].Unload();
+
                 AvailableLanguages[value].Load();
                 this._SelectedLanguage = value;
             }
@@ -54,6 +56,11 @@ namespace RozWorld.Graphics.UI.Strings
         /// <param name="initialLanguage">The name of the language to try and select once loading is complete.</param>
         public void Load(string initialLanguage = "")
         {
+            // If value is null, set it to an empty string
+            initialLanguage = string.IsNullOrEmpty(initialLanguage) ?
+                "" :
+                initialLanguage;
+
             if (File.Exists(Files.LanguagesFile))
             {
                 // languageFiles.Keys = The *nice-names* of the languages eg. British English
@@ -64,6 +71,17 @@ namespace RozWorld.Graphics.UI.Strings
                 {
                     if (File.Exists(Files.LanguagesDirectory + "\\" + languageFile.Value))
                         AvailableLanguages.Add(languageFile.Key, new Language(languageFile.Value));
+                }
+
+                if (AvailableLanguages.ContainsKey(initialLanguage))
+                    SelectedLanguage = initialLanguage;
+                else if (AvailableLanguages.Count > 0)
+                {
+                    foreach (var firstKey in AvailableLanguages.Keys)
+                    {
+                        SelectedLanguage = firstKey;
+                        break;
+                    }
                 }
             }
         }

@@ -149,10 +149,10 @@ public enum Status
 public enum FontType
 {
     SmallText, // To be removed
-    Huge,
-    Standard,
-    Small,
-    Tiny
+    ChatFont,
+    SmallFont,
+    MediumFont,
+    HugeFont
 }
 
 

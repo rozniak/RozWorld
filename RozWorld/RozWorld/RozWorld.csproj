@@ -117,10 +117,12 @@
     <Compile Include="Graphics\UI\Control\CheckBox.cs" />
     <Compile Include="Graphics\UI\Control\ControlSkeleton.cs" />
     <Compile Include="Graphics\UI\Control\Image.cs" />
+    <Compile Include="Graphics\UI\Control\ZetaLabel.cs" />
     <Compile Include="Graphics\UI\Control\Label.cs" />
     <Compile Include="Graphics\UI\Control\TextBox.cs" />
     <Compile Include="Graphics\UI\DrawInstruction.cs" />
     <Compile Include="Graphics\UI\Error.cs" />
+    <Compile Include="Graphics\UI\FontProvider.cs" />
     <Compile Include="Graphics\UI\Geometry\CharacterInfo.cs" />
     <Compile Include="Graphics\UI\Geometry\ElementInfo.cs" />
     <Compile Include="Graphics\UI\Geometry\FontInfo.cs" />
@@ -190,6 +192,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
