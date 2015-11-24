@@ -19,10 +19,5 @@ namespace RozWorld.Graphics.UI.Control
     public class ZetaLabel
     {
         // This will be coded up later on
-
-        public static IList<DrawInstruction> MakeString(string text, FontType fontType)
-        {
-            return null;
-        }
     }
 }
