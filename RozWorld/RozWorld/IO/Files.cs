@@ -27,9 +27,29 @@ namespace RozWorld.IO
         public static readonly string LanguagesFile = Environment.CurrentDirectory + @"\link\langs.ini";
 
         public static readonly string LinksDirectory = Environment.CurrentDirectory + @"\link";
+        public static readonly string FontsFile = Environment.CurrentDirectory + @"\link\fonts.ini";
+
         public static readonly string ModsDirectory = Environment.CurrentDirectory + @"\mods";
         public static readonly string SoundsDirectory = Environment.CurrentDirectory + @"\sounds";
         public static readonly string TexturesDirectory = Environment.CurrentDirectory + @"\tex";
+
+
+        private static string _TexturePackSubFolder;
+        public static string TexturePackSubFolder
+        {
+            get { return _TexturePackSubFolder; }
+            set
+            {
+                if (Directory.Exists(TexturesDirectory + "\\" + value))
+                    _TexturePackSubFolder = value;
+            }
+        }
+
+
+        public static string LiveTextureDirectory
+        {
+            get { return TexturesDirectory + "\\" + TexturePackSubFolder; }
+        }
 
 
         /// <summary>

@@ -16,6 +16,7 @@ namespace RozWorld.Graphics.UI
         public const short UNKNOWN_ERROR = 0;
         public const short MISSING_CRITICAL_FILES = 1;
         public const short BROKEN_GUIOMETRY_FILE = 2;
+        public const short BROKEN_FONT_LINK_FILE = 3;
         public const short INVALID_GUI_DICTIONARY_KEY = 10;
         public const short MISSING_INI_DICTIONARY_KEY = 11;
     }

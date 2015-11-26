@@ -195,6 +195,11 @@ namespace RozWorld.Graphics.UI
                         "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
 
+                case Error.BROKEN_FONT_LINK_FILE:
+                    MessageBox.Show("RozWorld failed to load \\link\\fonts.ini. Check it is present, and either reinstate a fresh copy of this file or make sure that you edited the file correctly." + detailsProvided + "\n\nRozWorld will now exit.",
+                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+
                 case Error.INVALID_GUI_DICTIONARY_KEY:
                     MessageBox.Show("A reference was made to a non-existent GUI control or control system. " + detailsProvided + "\n\nRozWorld will now exit.",
                         "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
