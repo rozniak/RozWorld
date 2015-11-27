@@ -2,7 +2,7 @@
  * RozWorld.Graphics.UI.Control.Label -- RozWorld UI Label Control
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
- * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *

@@ -2,7 +2,7 @@
  * RozWorld.Graphics.UI.Geometry.FontInfo -- RozWorld UI Font Information
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
- * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *

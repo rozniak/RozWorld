@@ -2,7 +2,7 @@
  * RozWorld.Graphics.UI.Control.ZetaLabel -- RozWorld UI Label Control Updated
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
- * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *
@@ -10,11 +10,6 @@
  */
 
 using OpenGL;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace RozWorld.Graphics.UI.Control
@@ -72,6 +67,15 @@ namespace RozWorld.Graphics.UI.Control
             this._Font = FontType.ChatFont;
             this._Text = "";
             this.ZIndex = 1;
+        }
+
+
+        /// <summary>
+        /// Implementation of the base texture reference loading method.
+        /// </summary>
+        protected override void LoadReferences()
+        {
+            // For now, this does nothing
         }
 
 

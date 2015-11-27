@@ -2,7 +2,7 @@
  * RozWorld.Graphics.UI.Error -- RozWorld Error Code Constants
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
- * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *
@@ -19,5 +19,6 @@ namespace RozWorld.Graphics.UI
         public const short BROKEN_FONT_LINK_FILE = 3;
         public const short INVALID_GUI_DICTIONARY_KEY = 10;
         public const short MISSING_INI_DICTIONARY_KEY = 11;
+        public const short MISSING_FONT_DICTIONARY_KEY = 12;
     }
 }

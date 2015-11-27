@@ -2,7 +2,7 @@
  * RozWorld.Network.RozClient -- RozWorld Client
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
- * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *

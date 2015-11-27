@@ -2,7 +2,7 @@
  * RozWorld.Graphics.TextureManager -- RozWorld Texture Manager
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
- * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *
@@ -11,12 +11,12 @@
 
 using OpenGL;
 
+using RozWorld.Graphics.UI;
 using RozWorld.IO;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-using RozWorld.Graphics.UI;
 
 
 namespace RozWorld.Graphics
@@ -42,6 +42,20 @@ namespace RozWorld.Graphics
 
 
         /// <summary>
+        /// Gets a font source with the specified name from the loaded font sources.
+        /// </summary>
+        /// <param name="fontName">The name of the font's source to get.</param>
+        /// <returns>The font's source if it exists, an empty string otherwise.</returns>
+        public string GetFontSource(string fontName)
+        {
+            if (FontSources.ContainsKey(fontName))
+                return FontSources[fontName];
+
+            return string.Empty;
+        }
+
+
+        /// <summary>
         /// Gets a texture with the specified name from the loaded texture content.
         /// </summary>
         /// <param name="textureName">The name of the texture to get.</param>
@@ -49,9 +63,7 @@ namespace RozWorld.Graphics
         public Texture GetTexture(string textureName)
         {
             if (LoadedTextures.ContainsKey(textureName))
-            {
                 return LoadedTextures[textureName];
-            }
 
             return null;
         }
@@ -71,7 +83,7 @@ namespace RozWorld.Graphics
 
                 foreach (var fontSource in fontFile)
                 {
-                    if (File.Exists(Files.LiveTextureDirectory + "\\gui\\fonts\\" + fontSource.Value))
+                    if (File.Exists(Files.LiveTextureDirectory + fontSource.Value))
                         FontSources.Add(fontSource.Key, fontSource.Value);
                 }
 
@@ -97,15 +109,11 @@ namespace RozWorld.Graphics
                 string textureLocation = Files.ReplaceSpecialDirectories(dictionaryItem.Value);
 
                 if (!File.Exists(textureLocation))
-                {
                     continue;
-                }
 
                 // If a texture of the name already exists then dispose the old texture first.
                 if (LoadedTextures.ContainsKey(dictionaryItem.Key))
-                {
                     LoadedTextures[dictionaryItem.Key].Dispose();
-                }
 
                 LoadedTextures[dictionaryItem.Key] = new Texture(textureLocation);
             }

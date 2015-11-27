@@ -2,7 +2,7 @@
  * RozWorld.Graphics.GameWindow -- RozWorld Game Window
  *
  * This source-code is part of the RozWorld project by rozza of Oddmatics:
- * <<http://www.oddmatics.co.uk>>
+ * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *
@@ -13,6 +13,7 @@ using OpenGL;
 
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.InGame;
+using RozWorld.IO;
 
 using System;
 using System.Collections.Generic;
@@ -162,7 +163,9 @@ namespace RozWorld.Graphics
 
         public GameWindow()
         {
+            // Set up settings
             WindowScale = RozWorld.Settings.WindowResolution;
+            Files.TexturePackSubFolder = RozWorld.Settings.TexturePackDirectory;
 
             // Set up mouse input delay timer...
             MouseInputDelay = new Timer(1);
@@ -199,9 +202,11 @@ namespace RozWorld.Graphics
             TextureManagement = new TextureManager();
             GameInterface = new UIHandler();
 
+            TextureManagement.LoadFontSources();
             TextureManagement.LoadTextures();
             GameInterface.Geometry.Load();
             GameInterface.Language.Load(RozWorld.Settings.LanguageSource);
+            FontProvider.Load(TextureManagement, GameInterface.Geometry);
 
             FPSTimer = Stopwatch.StartNew();
             LowestFPS = double.MaxValue;
@@ -231,11 +236,11 @@ namespace RozWorld.Graphics
         private void Update(object sender, ElapsedEventArgs e)
         {
             // Update the window focus status
-            HasFocus = IconMaker.HasFocus();
+            HasFocus = Windows.GameHasFocus();
 
             // Set window icon if it's gone for some reason
             if (!HasFocus)
-                IconMaker.SetRozWorldIcon();
+                Windows.SetRozWorldIcon();
         }
 
 
@@ -341,6 +346,9 @@ namespace RozWorld.Graphics
         }
 
 
+        /// <summary>
+        /// Routine called when the GL window is redisplayed.
+        /// </summary>
         private void OnDisplay()
         {
             // Make sure the screen stays at least at the minimal resolution
