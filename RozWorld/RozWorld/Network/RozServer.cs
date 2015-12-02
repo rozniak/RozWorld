@@ -72,7 +72,7 @@ namespace RozWorld.Network
                     {
                         foreach (string line in serverOptions)
                         {
-                            LoadConfigFromStrings(Files.SplitFirstInstance(": ", line));
+                            LoadConfigFromStrings(StringFunction.SplitFirstInstance(": ", line));
                         }
                     }
                     else
@@ -130,7 +130,7 @@ namespace RozWorld.Network
                     {
                         foreach (string line in serverOptions)
                         {
-                            LoadConfigFromStrings(Files.SplitFirstInstance(": ", line));
+                            LoadConfigFromStrings(StringFunction.SplitFirstInstance(": ", line));
                         }
                     }
                     else
@@ -189,7 +189,7 @@ namespace RozWorld.Network
             {
                 foreach (string line in configContents)
                 {
-                    LoadConfigFromStrings(Files.SplitFirstInstance(": ", line));
+                    LoadConfigFromStrings(StringFunction.SplitFirstInstance(": ", line));
                 }
             }
             else

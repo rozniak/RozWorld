@@ -374,7 +374,7 @@ namespace RozWorld.COMFY
                                         // 'LOAD' definition (usage: 'load: LanguageName Source'):
                                         if (firstWord == "load:" && parsedContent[1].Item1 == ParsedObjectType.String && parsedContent[2].Item1 == ParsedObjectType.String)
                                         {
-                                            comfyContent.LanguageDefinitions[(string)parsedContent[1].Item2] = Files.ReplaceSpecialDirectories((string)parsedContent[2].Item2);
+                                            comfyContent.LanguageDefinitions[(string)parsedContent[1].Item2] = StringFunction.ReplaceSpecialDirectories((string)parsedContent[2].Item2);
                                         }
                                         else
                                         {
@@ -593,7 +593,7 @@ namespace RozWorld.COMFY
                                         // 'SRC' definition (usage: 'src: Source')
                                         if (firstWord == "src:" && parsedContent[1].Item1 == ParsedObjectType.String)
                                         {
-                                            ((SoundDefinition)currentDefinition).Source = Files.ReplaceSpecialDirectories((string)parsedContent[1].Item2);
+                                            ((SoundDefinition)currentDefinition).Source = StringFunction.ReplaceSpecialDirectories((string)parsedContent[1].Item2);
                                         }
                                         else
                                         {
@@ -636,7 +636,7 @@ namespace RozWorld.COMFY
                                         // 'LOAD' definition (usage: 'load: TextureName Source'):
                                         if (firstWord == "load:" && parsedContent[1].Item1 == ParsedObjectType.String && parsedContent[2].Item1 == ParsedObjectType.String)
                                         {
-                                            comfyContent.Textures[(string)parsedContent[1].Item2] = Files.ReplaceSpecialDirectories((string)parsedContent[2].Item2);
+                                            comfyContent.Textures[(string)parsedContent[1].Item2] = StringFunction.ReplaceSpecialDirectories((string)parsedContent[2].Item2);
                                         }
                                         else
                                         {

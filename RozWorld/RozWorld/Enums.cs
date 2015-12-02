@@ -111,7 +111,7 @@ public enum ParsedObjectType
 }
 
 
-/**
+/** [FOR REMOVAL/REPLACEMENT]
  * The types of definitions used in COMFY files, this mainly for the interpreter. 
  */
 public enum DefinitionType
@@ -144,17 +144,12 @@ public enum Status
 }
 
 
-/** [TO BE CHANGED (?)]
- * Representation of the available fonts to the game.
+
+/**
+ * 
+ * CONTROL ENUMERATIONS
+ * 
  */
-public enum FontType
-{
-    SmallText, // To be removed
-    ChatFont,
-    SmallFont,
-    MediumFont,
-    HugeFont
-}
 
 
 /**
@@ -181,4 +176,34 @@ public enum ImageSizeMode
 {
     Default,
     Tile
+}
+
+
+
+/**
+ * 
+ * FONT/STRING ENUMERATIONS
+ * 
+ */
+
+
+/** [TO BE UPDATED]
+ * Representation of the available fonts to the game.
+ */
+public enum FontType
+{
+    SmallText, // To be removed
+    ChatFont,
+    SmallFont,
+    MediumFont,
+    HugeFont
+}
+
+
+public enum FormattingStripMode
+{
+    None,
+    Colours,
+    LineBreaks,
+    Both
 }

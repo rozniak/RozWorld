@@ -106,7 +106,7 @@ namespace RozWorld.Graphics
 
             foreach (var dictionaryItem in RozWorld.Content.Textures)
             {
-                string textureLocation = Files.ReplaceSpecialDirectories(dictionaryItem.Value);
+                string textureLocation = StringFunction.ReplaceSpecialDirectories(dictionaryItem.Value);
 
                 if (!File.Exists(textureLocation))
                     continue;

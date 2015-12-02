@@ -184,7 +184,7 @@ namespace RozWorld.IO
                 {
                     if (!line.StartsWith("#")) // Ignore comments
                     {
-                        string[] resultingSplit = SplitFirstInstance(":", line);
+                        string[] resultingSplit = StringFunction.SplitFirstInstance(":", line);
 
                         if (resultingSplit[0] != "" && resultingSplit[1] != "") // Check that this line is a valid property
                         {
@@ -204,45 +204,6 @@ namespace RozWorld.IO
             }
 
             return null;
-        }
-
-
-        /// <summary>
-        /// Attempts to split a string by a pattern on its first occurrence.
-        /// </summary>
-        /// <param name="pattern">The pattern to split the string by.</param>
-        /// <param name="text">The string to split.</param>
-        /// <returns>The split string at the first occurrence of the pattern, if pattern doesn't exit, returns two empty strings.</returns>
-        public static string[] SplitFirstInstance(string pattern, string text)
-        {
-            string[] resultingSplit = new string[] { "", "" };
-
-            if (text.Contains(pattern))
-            {
-                int splitIndex = text.IndexOf(pattern, 0, text.Length, StringComparison.CurrentCulture);
-
-                resultingSplit[0] = text.Substring(0, splitIndex);
-                resultingSplit[1] = text.Substring(splitIndex + pattern.Length, text.Length - (pattern.Length + splitIndex));
-            }
-
-            return resultingSplit;
-        }
-
-
-        /// <summary>
-        /// Replaces special directory identifiers with their corresponding paths.
-        /// </summary>
-        /// <param name="line">The string data to replace identifiers in.</param>
-        /// <returns>The string with the identifiers replaced with the special directory paths.</returns>
-        public static string ReplaceSpecialDirectories(string line)
-        {
-            string finalReplaced = line.Replace("%sounds%", SoundsDirectory);
-            finalReplaced = finalReplaced.Replace("%tex%", TexturesDirectory);
-            finalReplaced = finalReplaced.Replace("%lang%", LanguagesDirectory);
-            finalReplaced = finalReplaced.Replace("%comfy%", ComfyDirectory);
-            finalReplaced = finalReplaced.Replace("%link%", LinksDirectory);
-            finalReplaced = finalReplaced.Replace("%mods%", ModsDirectory);
-            return finalReplaced;
         }
         
         

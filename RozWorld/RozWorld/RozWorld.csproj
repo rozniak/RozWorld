@@ -145,6 +145,8 @@
     <Compile Include="IO\ByteParse.cs" />
     <Compile Include="IO\Files.cs" />
     <Compile Include="IO\RozEncoding.cs" />
+    <Compile Include="IO\StringFunction.cs" />
+    <Compile Include="IO\TextSpecial.cs" />
     <Compile Include="Item\Inventory.cs" />
     <Compile Include="Item\Item.cs" />
     <Compile Include="Item\ItemStack.cs" />

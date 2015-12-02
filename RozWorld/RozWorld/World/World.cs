@@ -46,7 +46,7 @@ namespace RozWorld.World
         public World(RozServer parentServer, string name)
         {
             ParentServer = parentServer;
-            Name = RozEncoding.StripSpecialCharacters(name, StripType.Both);
+            Name = StringFunction.StripSpecialCharacters(name, StripType.Both);
 
             // Check if the world exists on the server or not.
 

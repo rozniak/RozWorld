@@ -30,6 +30,11 @@ namespace RozWorld.Graphics.UI
 
         private static Dictionary<string, Bitmap> Fonts = new Dictionary<string, Bitmap>();
 
+        public static bool Loaded
+        {
+            get { return GameGUIOMETRY != null && GameTextureManager != null && Fonts.Count > 0; }
+        }
+
 
         /// <summary>
         /// Construct the texture and draw instructions for a specified string.
@@ -37,12 +42,35 @@ namespace RozWorld.Graphics.UI
         /// <param name="fontType">The type of font to use.</param>
         /// <param name="text">The text to make a texture of.</param>
         /// <param name="drawInstructions">The draw instructions to build.</param>
+        /// <param name="formatStripMode">Whether to strip any formatting from the string.</param>
         /// <returns>The string in its new texture and updated draw instructions if all was successful.</returns>
-        public static Texture BuildString(FontType fontType, string text, out List<DrawInstruction> drawInstructions)
+        public static Texture BuildString(FontType fontType, string text, out List<DrawInstruction> drawInstructions,
+            FormattingStripMode formatStripMode)
         {
-            // TODO: Actually make this work
             drawInstructions = new List<DrawInstruction>();
+
+            if (Loaded)
+            {
+                using (Image stringImage = new Bitmap(800, 600))
+                using (System.Drawing.Graphics GFX = System.Drawing.Graphics.FromImage(stringImage))
+                {
+
+                }
+            }
+
             return null;
+        }
+
+
+        /// <summary>
+        /// Disposes all font bitmaps that are loaded.
+        /// </summary>
+        private static void DisposeFonts()
+        {
+            foreach (var font in Fonts)
+                font.Value.Dispose(); // Bin all the fonts
+
+            Fonts.Clear();
         }
 
 
@@ -73,6 +101,8 @@ namespace RozWorld.Graphics.UI
             GameTextureManager = gameTextureManager;
             GameGUIOMETRY = gameGUIOMETRY;
 
+            DisposeFonts();
+
             string[] fontsToLoad = new string[] { "ChatFont", "SmallFont", "MediumFont", "HugeFont" };
 
             foreach (string font in fontsToLoad)
@@ -93,10 +123,16 @@ namespace RozWorld.Graphics.UI
         /// </summary>
         /// <param name="fontType">The type of font to use.</param>
         /// <param name="text">The text to measure.</param>
+        /// <param name="formatStripMode">Whether to strip any formatting from the string.</param>
         /// <returns>The size of the text in the specified font if measuring was successful, an empty size otherwise.</returns>
-        public static Size MeasureString(FontType fontType, string text)
+        public static Size MeasureString(FontType fontType, string text, FormattingStripMode formatStrip)
         {
-            return Size.Empty; // TODO: Make this measure strings whatever
+            if (Loaded)
+            {
+                
+            }
+
+            return Size.Empty;
         }
     }
 }
