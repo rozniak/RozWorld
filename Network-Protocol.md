@@ -13,6 +13,64 @@ Where the client sends them as whole numbers, the server divides them appropriat
 
 For example, if the player moved, and the client sent a *Local Chunk X* value of `13260`, the server would then store that value as `13.26`.
 
+###Log-In Response Codes
+<table>
+    <tr>
+        <th>Response Code</th>
+        <th>Meaning</th>
+    </tr>
+
+    <tr>
+        <td>0x00</td>
+        <td>General Success</td>
+    </tr>
+
+    <tr>
+        <td>0x01</td>
+        <td>Invalid Credentials</td>
+    </tr>
+
+    <tr>
+        <td>0x02</td>
+        <td>Invalid Server Password</td>
+    </tr>
+
+    <tr>
+        <td>0x03</td>
+        <td>Banned</td>
+    </tr>
+
+    <tr>
+        <td>0x04</td>
+        <td>Not on Whitelist</td>
+    </tr>
+
+    <tr>
+        <td>0x05</td>
+        <td>Compatibility Mismatch (Implementation)</td>
+    </tr>
+
+    <tr>
+        <td>0x06</td>
+        <td>Compatibility Mismatch (Client Version)</td>
+    </tr>
+
+    <tr>
+        <td>0x07</td>
+        <td>Server Maintenance</td>
+    </tr>
+
+    <tr>
+        <td>0x08</td>
+        <td>Server Full</td>
+    </tr>
+
+    <tr>
+        <td>0xFF</td>
+        <td>Unspecified Denial</td>
+    </tr>
+</table>
+
 ##Client to Server Packets
 
 <table>
@@ -39,11 +97,15 @@ For example, if the player moved, and the client sent a *Local Chunk X* value of
 
 
     <tr>
-        <td>0x0001</td>
-        <td>Request Server Info</td>
+        <td rowspan=2>0x0001</td>
+        <td rowspan=2>Request Server Info</td>
         <td>Packet ID</td>
         <td>UShort</td>
-        <td>Sent by broadcast (for finding LAN games) or directly (for WAN games) for getting server information.</td>
+        <td rowspan=2>Sent by broadcast (for finding LAN games) or directly (for WAN games) for getting server information.<br><br>Client implementation should be `0xFF` for vanilla, if it's anything else, a string value may be sent after this byte for further identification.</td>
+    </tr>
+    <tr>
+        <td>Client Implementation</td>
+        <td>Byte</td>
     </tr>
 
 
@@ -83,7 +145,7 @@ For example, if the player moved, and the client sent a *Local Chunk X* value of
 
     <tr>
         <td rowspan=2>0x0004</td>
-        <td rowspan=2>Request Mod Info</td>
+        <td rowspan=2>Request Mod Verification</td>
         <td>Packet ID</td>
         <td>UShort</td>
         <td rowspan=2>Sent when the client is verifying mods, each mod it checks it will send this packet asking the server for the next mod's information.</td>
@@ -122,7 +184,7 @@ For example, if the player moved, and the client sent a *Local Chunk X* value of
 
     <tr>
         <td rowspan>0x0007</td>
-        <td rowspan>Request Player Position</td>
+        <td rowspan>Request Player Information</td>
         <td>Packet ID</td>
         <td>UShort</td>
         <td>Sent when the client is joining, in order to tell where the player is.</td>
@@ -332,7 +394,7 @@ For example, if the player moved, and the client sent a *Local Chunk X* value of
     </tr>
 
 
-<tr>
+    <tr>
         <td rowspan=6>0x0014</td>
         <td rowspan=6>Set Tile (Absolute)</td>
         <td>Packet ID</td>
@@ -424,6 +486,219 @@ For example, if the player moved, and the client sent a *Local Chunk X* value of
     </tr>
     <tr>
         <td>Message</td>
+        <td>String</td>
+    </tr>
+    
+    
+    <tr>
+        <td>0x0018</td>
+        <td>Abandon Pet</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td>Sent whenever the player decides to abandon their current pet.</td>
+    </tr>
+    
+    
+    <tr>
+        <td rowspan=3>0x0019</td>
+        <td rowspan=3>Set Pet Entity Target</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=3>Sent whenever the player sets a target on an entity for their pet to attack.</td>
+    </tr>
+    <tr>
+        <td>Entity Instance ID</td>
+        <td>UShort</td>
+    </tr>
+    <tr>
+        <td>Generated Verify ID</td>
+        <td>UShort</td>
+    </tr>
+
+
+    <tr>
+        <td rowspan=2>0xFFFF</td>
+        <td rowspan=2>Verify Important Packet</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=2>Sent whenever an important packet is recieved in order to ensure that the server knows it was recieved.</td>
+    </tr>
+    <tr>
+        <td>Confirm Verify ID</td>
+        <td>UShort</td>
+    </tr>
+</table>
+
+##Server to Client Packets
+
+<table>
+    <tr>
+        <th>Packet ID</th>
+        <th>Purpose</th>
+        <th>Verifies?</th>
+        <th>Drop on Update?</th>
+        <th>Field Description</th>
+        <th>Field Type</th>
+        <th>Notes</th>
+    </tr>
+
+
+    <tr>
+        <td rowspan=2>0x0000</td>
+        <td rowspan=2>Pong</td>
+        <td rowspan=2>No</td>
+        <td rowspan=2>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=2>Response to client ping to keep the connection alive.</td>
+    </tr>
+    <tr>
+        <td>Pong Datetime</td>
+        <td>String</td>
+    </tr>
+    
+    
+    <tr>
+        <td rowspan=7>0x0001</td>
+        <td rowspan=7>Respond Server Info</td>
+        <td rowspan=7>No</td>
+        <td rowspan=7>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=7>Response to client for the server's information.<br><br>Server implementation should be `0xFF` for vanilla, if it's anything else, a string value may be sent after this byte for further identification.<br><br>Restriction type is `0x00` for `no restriction`, `0x01` for `whitelist`, `0x02` for `password`, and `0x03` for `password and whitelist`.</td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>Current Players</td>
+        <td>Byte</td>
+    </tr>
+    <tr>
+        <td>Max Players</td>
+        <td>Byte</td>
+    </tr>
+    <tr>
+        <td>Server Implementation</td>
+        <td>Byte</td>
+    </tr>
+    <tr>
+        <td>Vanilla Compatible Version</td>
+        <td>Byte</td>
+    </tr>
+    <tr>
+        <td>Restriction Type</td>
+        <td>Byte</td>
+    </tr>
+    
+    
+    <tr>
+        <td rowspan=2>0x0002</td>
+        <td rowspan=2>Respond Player Log In</td>
+        <td rowspan=2>Sort of (Client can request a resend)</td>
+        <td rowspan=2>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=2>Response to the client's attempt at logging in, returning the status of success or reason for failure of the attempt.<br><br>Refer to the <i>Log-In Reponse Codes</i> section of the Notes above.</td>
+    </tr>
+    <tr>
+        <td>Response Code</td>
+        <td>Byte</td>
+    </tr>
+
+
+    <tr>
+        <td rowspan=2>0x0003</td>
+        <td rowspan=2>Respond Mod Status/Count</td>
+        <td rowspan=2>Sort of (Client can resend)</td>
+        <td rowspan=2>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=2>Response to the client's request for the loaded mod count (if any).</td>
+    </tr>
+    <tr>
+        <td>Mod Count</td>
+        <td>UShort</td>
+    </tr>
+
+
+    <tr>
+        <td rowspan=3>0x0004</td>
+        <td rowspan=3>Respond Mod Verification</td>
+        <td rowspan=3>Sort of (Client can resend)</td>
+        <td rowspan=3>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=3>Response to the client's request for a mod's verifiable details.</td>
+    </tr>
+    <tr>
+        <td>Mod Number</td>
+        <td>UShort</td>
+    </tr>
+    <tr>
+        <td>Mod File Hash</td>
+        <td>String</td>
+    </tr>
+
+
+    <tr>
+        <td rowspan=4>0x0005</td>
+        <td rowspan=4>Respond Mod Details</td>
+        <td rowspan=4>Sort of (Client can resend)</td>
+        <td rowspan=4>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=4>Response to the client's request for a mod's information.</td>
+    </tr>
+    <tr>
+        <td>Mod Number</td>
+        <td>UShort</td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>URL</td>
+        <td>String</td>
+    </tr>
+
+
+    <tr>
+        <td rowspan=3>0x0006</td>
+        <td rowspan=3>Respond Item ID Update</td>
+        <td rowspan=3>Sort of (Client can resend)</td>
+        <td rowspan=3>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=3>Response to the client's request to sync up item ids.</td>
+    </tr>
+    <tr>
+        <td>Item Name</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>Item ID</td>
+        <td>UShort</td>
+    </tr>
+
+
+    <tr>
+        <td rowspan=3>0x0007</td>
+        <td rowspan=3>Respond Player Information</td>
+        <td rowspan=3>Yes</td>
+        <td rowspan=3>No</td>
+        <td>Packet ID</td>
+        <td>UShort</td>
+        <td rowspan=3>Response to the client's request for a mod's verifiable details.</td>
+    </tr>
+    <tr>
+        <td>Player ID</td>
+        <td>Byte</td>
+    </tr>
+    <tr>
+        <td>Local</td>
         <td>String</td>
     </tr>
 </table>
