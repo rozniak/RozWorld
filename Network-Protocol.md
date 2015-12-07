@@ -101,7 +101,7 @@ For example, if the player moved, and the client sent a *Local Chunk X* value of
         <td rowspan=2>Request Server Info</td>
         <td>Packet ID</td>
         <td>UShort</td>
-        <td rowspan=2>Sent by broadcast (for finding LAN games) or directly (for WAN games) for getting server information.<br><br>Client implementation should be `0xFF` for vanilla, if it's anything else, a string value may be sent after this byte for further identification.</td>
+        <td rowspan=2>Sent by broadcast (for finding LAN games) or directly (for WAN games) for getting server information.<br><br>Client implementation should be <code>0xFF</code> for vanilla, if it's anything else, a string value may be sent after this byte for further identification.</td>
     </tr>
     <tr>
         <td>Client Implementation</td>
@@ -565,7 +565,7 @@ For example, if the player moved, and the client sent a *Local Chunk X* value of
         <td rowspan=7>No</td>
         <td>Packet ID</td>
         <td>UShort</td>
-        <td rowspan=7>Response to client for the server's information.<br><br>Server implementation should be `0xFF` for vanilla, if it's anything else, a string value may be sent after this byte for further identification.<br><br>Restriction type is `0x00` for `no restriction`, `0x01` for `whitelist`, `0x02` for `password`, and `0x03` for `password and whitelist`.</td>
+        <td rowspan=7>Response to client for the server's information.<br><br>Server implementation should be <code>0xFF</code> for vanilla, if it's anything else, a string value may be sent after this byte for further identification.<br><br>Restriction type is <code>0x00</code> for <code>no restriction</code>, <code>0x01</code> for <code>whitelist</code>, <code>0x02</code> for <code>password</code>, and <code>0x03</code> for <code>password and whitelist</code>.</td>
     </tr>
     <tr>
         <td>Name</td>
