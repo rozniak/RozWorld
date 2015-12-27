@@ -64,12 +64,12 @@ namespace RozWorld.Graphics.UI.Strings
             if (File.Exists(Files.LanguagesFile))
             {
                 // languageFiles.Keys = The *nice-names* of the languages eg. British English
-                // languageFiles.Values = The filenames of the languages eg. en_brit.ini
+                // languageFiles.Values = The directory names containing language files eg en_brit
                 var languageFiles = Files.ReadINIToDictionary(Files.LanguagesFile);
 
                 foreach (var languageFile in languageFiles)
                 {
-                    if (File.Exists(Files.LanguagesDirectory + "\\" + languageFile.Value))
+                    if (Directory.Exists(Files.LanguagesDirectory + "\\" + languageFile.Value))
                         AvailableLanguages.Add(languageFile.Key, new Language(languageFile.Value));
                 }
 

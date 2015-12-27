@@ -53,9 +53,20 @@ namespace RozWorld.Graphics.UI.Strings
         {
             Unload();
 
-            if (File.Exists(Files.LanguagesDirectory + "\\" + Source))
+            if (Directory.Exists(Files.LanguagesDirectory + "\\" + Source))
             {
-                AvailableStrings = Files.ReadINIToDictionary(Source);
+                foreach (string languageFile in Directory.GetFiles(Files.LanguagesDirectory + "\\" + Source))
+                {
+                    if (languageFile.EndsWith(".ini"))
+                    {
+                        // Add all the strings from the file to the dictionary
+                        foreach (var item in Files.ReadINIToDictionary(languageFile))
+                        {
+                            AvailableStrings.Add(item.Key, item.Value);
+                        }
+                    }
+                }
+
                 Loaded = true;
             }
         }

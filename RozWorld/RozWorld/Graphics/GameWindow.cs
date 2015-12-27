@@ -168,6 +168,7 @@ namespace RozWorld.Graphics
             
             // Initialise GL stuff...
             Glut.glutInit();
+            Gl.ReloadFunctions();
 
             // Create GL window...
             Glut.glutInitWindowSize(WindowScale.Width, WindowScale.Height);

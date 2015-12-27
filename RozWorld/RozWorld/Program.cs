@@ -12,6 +12,8 @@
 using RozWorld.COMFY;
 using RozWorld.Graphics;
 using RozWorld.Graphics.UI;
+using RozWorld.Graphics.UI.Geometry;
+using RozWorld.Graphics.UI.Strings;
 using RozWorld.IO;
 using RozWorld.Network;
 
@@ -39,7 +41,9 @@ namespace RozWorld
             RozWorld.Textures.LoadTextures();
 
             // Set up other resources
+            RozWorld.InterfaceGeometry = new GUIOMETRY();
             RozWorld.InterfaceGeometry.Load();
+            RozWorld.Languages = new LanguageSystem();
             RozWorld.Languages.Load(RozWorld.Settings.LanguageSource);
             FontProvider.Load(RozWorld.Textures, RozWorld.InterfaceGeometry);
 
