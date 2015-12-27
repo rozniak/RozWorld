@@ -3,6 +3,9 @@
 *.application
 *.manifest
 *.pdb
-/RozWorld/RozWorld/obj
-/RozWorld/RozWorld.suo
+RozWorld/RozWorld/obj
+RozWorld/RozWorld.suo
+RozWorld/RozWorld/bin/Release/
+RozWorld/RozWorld Server
+RozWorld/RozClient Test
 *.suo
