@@ -121,12 +121,12 @@ namespace RozWorld.Graphics.UI.Control
         /// </summary>
         protected override void LoadReferences()
         {
-            CheckBoxBorderCornerRight = ParentWindow.TextureManagement.GetTexture("CheckBoxBorderCornerRight");
-            CheckBoxBorderCornerLeft = ParentWindow.TextureManagement.GetTexture("CheckBoxBorderCornerLeft");
-            CheckBoxBorderSide = ParentWindow.TextureManagement.GetTexture("CheckBoxBorderSide");
-            CheckBoxBorderTop = ParentWindow.TextureManagement.GetTexture("CheckBoxBorderTop");
-            CheckBoxBody = ParentWindow.TextureManagement.GetTexture("CheckBoxBody");
-            CheckBoxTick = ParentWindow.TextureManagement.GetTexture("CheckBoxTick");
+            CheckBoxBorderCornerRight = RozWorld.Textures.GetTexture("CheckBoxBorderCornerRight");
+            CheckBoxBorderCornerLeft = RozWorld.Textures.GetTexture("CheckBoxBorderCornerLeft");
+            CheckBoxBorderSide = RozWorld.Textures.GetTexture("CheckBoxBorderSide");
+            CheckBoxBorderTop = RozWorld.Textures.GetTexture("CheckBoxBorderTop");
+            CheckBoxBody = RozWorld.Textures.GetTexture("CheckBoxBody");
+            CheckBoxTick = RozWorld.Textures.GetTexture("CheckBoxTick");
         }
 
 

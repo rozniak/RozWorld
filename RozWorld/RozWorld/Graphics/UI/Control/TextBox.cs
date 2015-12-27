@@ -107,12 +107,12 @@ namespace RozWorld.Graphics.UI.Control
         /// </summary>
         protected override void LoadReferences()
         {
-            TextBoxBorderCornerRight = ParentWindow.TextureManagement.GetTexture("TextBoxBorderCornerRight");
-            TextBoxBorderCornerLeft = ParentWindow.TextureManagement.GetTexture("TextBoxBorderCornerLeft");
-            TextBoxBorderSide = ParentWindow.TextureManagement.GetTexture("TextBoxBorderSide");
-            TextBoxBorderTop = ParentWindow.TextureManagement.GetTexture("TextBoxBorderTop");
-            TextBoxBody = ParentWindow.TextureManagement.GetTexture("TextBoxBody");
-            SmallFont = ParentWindow.TextureManagement.GetTexture("SmallFont");
+            TextBoxBorderCornerRight = RozWorld.Textures.GetTexture("TextBoxBorderCornerRight");
+            TextBoxBorderCornerLeft = RozWorld.Textures.GetTexture("TextBoxBorderCornerLeft");
+            TextBoxBorderSide = RozWorld.Textures.GetTexture("TextBoxBorderSide");
+            TextBoxBorderTop = RozWorld.Textures.GetTexture("TextBoxBorderTop");
+            TextBoxBody = RozWorld.Textures.GetTexture("TextBoxBody");
+            SmallFont = RozWorld.Textures.GetTexture("SmallFont");
         }
 
 

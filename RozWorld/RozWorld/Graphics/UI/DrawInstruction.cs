@@ -36,7 +36,7 @@ namespace RozWorld.Graphics.UI
 
             if (texture == null)
             {
-                texture = ParentWindow.TextureManagement.GetTexture("Missing");
+                texture = RozWorld.Textures.GetTexture("Missing");
             }
             else
             {
@@ -61,7 +61,7 @@ namespace RozWorld.Graphics.UI
 
             if (texture == null)
             {
-                texture = ParentWindow.TextureManagement.GetTexture("Missing");
+                texture = RozWorld.Textures.GetTexture("Missing");
             }
             else
             {
@@ -93,7 +93,7 @@ namespace RozWorld.Graphics.UI
 
             if (texture == null)
             {
-                TextureReference = ParentWindow.TextureManagement.GetTexture("Missing");
+                TextureReference = RozWorld.Textures.GetTexture("Missing");
             }
             else
             {

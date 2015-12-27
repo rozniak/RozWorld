@@ -30,9 +30,6 @@ namespace RozWorld.Graphics.UI
         public Dictionary<string, ControlSkeleton> Controls = new Dictionary<string, ControlSkeleton>();
         public Dictionary<string, ControlSystem> ControlSystems = new Dictionary<string, ControlSystem>();
 
-        public GUIOMETRY Geometry = new GUIOMETRY();
-        public LanguageSystem Language = new LanguageSystem();
-
 
         /// <summary>
         /// Perform a sort to arrange controls in order of Z-Index.

@@ -53,11 +53,11 @@ namespace RozWorld.Graphics.UI.Control
                     this._TextureName = "Missing";
                 }
 
-                this.ImageTexture = ParentWindow.TextureManagement.GetTexture(this._TextureName);
+                this.ImageTexture = RozWorld.Textures.GetTexture(this._TextureName);
 
                 this.BlitFrom = new Vector2(0, 0);
-                this.BlitTo = new Vector2(ImageTexture.Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
-                this.Dimensions = new Size(ImageTexture.Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
+                this.BlitTo = new Vector2(ImageTexture.Size.Width, RozWorld.Textures.GetTexture(this._TextureName).Size.Height);
+                this.Dimensions = new Size(ImageTexture.Size.Width, RozWorld.Textures.GetTexture(this._TextureName).Size.Height);
                 UpdateDrawInstruction("texture");
             }
         }
@@ -98,8 +98,8 @@ namespace RozWorld.Graphics.UI.Control
             set
             {
                 if (value.x >= 0 && value.y >= 0 &&
-                    value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width &&
-                    value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
+                    value.x <= RozWorld.Textures.GetTexture(TextureName).Size.Width &&
+                    value.y <= RozWorld.Textures.GetTexture(TextureName).Size.Height)
                 {
                     this._BlitFrom = value;
                     UpdateDrawInstruction("texture");
@@ -118,8 +118,8 @@ namespace RozWorld.Graphics.UI.Control
             set
             {
                 if (value.x >= 0 && value.y >= 0 &&
-                    value.x <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width &&
-                    value.y <= ParentWindow.TextureManagement.GetTexture(TextureName).Size.Height)
+                    value.x <= RozWorld.Textures.GetTexture(TextureName).Size.Width &&
+                    value.y <= RozWorld.Textures.GetTexture(TextureName).Size.Height)
                 {
                     this._BlitTo = value;
                     UpdateDrawInstruction("texture");
@@ -151,9 +151,9 @@ namespace RozWorld.Graphics.UI.Control
             this.TextureName = "Missing";
             this._TintColour = VectorColour.NoTint;
             this.Position = new Vector2(0, 0);            
-            this.Dimensions = ParentWindow.TextureManagement.GetTexture(TextureName).Size;
+            this.Dimensions = RozWorld.Textures.GetTexture(TextureName).Size;
             this.BlitFrom = new Vector2(0, 0);
-            this.BlitTo = new Vector2(ParentWindow.TextureManagement.GetTexture(TextureName).Size.Width, ParentWindow.TextureManagement.GetTexture(this._TextureName).Size.Height);
+            this.BlitTo = new Vector2(RozWorld.Textures.GetTexture(TextureName).Size.Width, RozWorld.Textures.GetTexture(this._TextureName).Size.Height);
             this.ZIndex = 1;
         }
 
@@ -239,7 +239,7 @@ namespace RozWorld.Graphics.UI.Control
         /// </summary>
         protected override void LoadReferences()
         {
-            this.ImageTexture = ParentWindow.TextureManagement.GetTexture("Missing");
+            this.ImageTexture = RozWorld.Textures.GetTexture("Missing");
         }
 
 

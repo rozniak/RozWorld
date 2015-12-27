@@ -78,7 +78,7 @@ namespace RozWorld.Graphics.UI.Control
 
                 if (this._Font == FontType.SmallText)
                 {
-                    SpriteFont = ParentWindow.TextureManagement.GetTexture("SmallFont");
+                    SpriteFont = RozWorld.Textures.GetTexture("SmallFont");
                 }
 
                 UpdateDrawInstruction("control");
@@ -217,12 +217,12 @@ namespace RozWorld.Graphics.UI.Control
         /// </summary>
         protected override void LoadReferences()
         {
-            this.ButtonBorderCornerRight = ParentWindow.TextureManagement.GetTexture("ButtonBorderCornerRight");
-            this.ButtonBorderCornerLeft = ParentWindow.TextureManagement.GetTexture("ButtonBorderCornerLeft");
-            this.ButtonBorderTop = ParentWindow.TextureManagement.GetTexture("ButtonBorderTop");
-            this.ButtonBorderSide = ParentWindow.TextureManagement.GetTexture("ButtonBorderSide");
-            this.ButtonBody = ParentWindow.TextureManagement.GetTexture("ButtonBody");
-            this.SpriteFont = ParentWindow.TextureManagement.GetTexture("SmallFont");
+            this.ButtonBorderCornerRight = RozWorld.Textures.GetTexture("ButtonBorderCornerRight");
+            this.ButtonBorderCornerLeft = RozWorld.Textures.GetTexture("ButtonBorderCornerLeft");
+            this.ButtonBorderTop = RozWorld.Textures.GetTexture("ButtonBorderTop");
+            this.ButtonBorderSide = RozWorld.Textures.GetTexture("ButtonBorderSide");
+            this.ButtonBody = RozWorld.Textures.GetTexture("ButtonBody");
+            this.SpriteFont = RozWorld.Textures.GetTexture("SmallFont");
         }
 
 

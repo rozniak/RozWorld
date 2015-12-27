@@ -176,7 +176,7 @@ namespace RozWorld.Graphics.UI.Control
         /// </summary>
         protected override void LoadReferences()
         {
-            this.SmallFont = ParentWindow.TextureManagement.GetTexture("SmallFont");
+            this.SmallFont = RozWorld.Textures.GetTexture("SmallFont");
         }
 
 

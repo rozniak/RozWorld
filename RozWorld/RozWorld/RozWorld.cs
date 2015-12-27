@@ -11,6 +11,8 @@
 
 using RozWorld.COMFY;
 using RozWorld.Graphics;
+using RozWorld.Graphics.UI.Geometry;
+using RozWorld.Graphics.UI.Strings;
 using RozWorld.Network;
 
 
@@ -26,6 +28,11 @@ namespace RozWorld
         public static GameWindow MainWindow;
         public static ComfyContent Content;
         public static GameSettings Settings;
+
+        public static TextureManager Textures;
+        public static GUIOMETRY InterfaceGeometry;
+
+        public static LanguageSystem Languages;
 
         private static Status _GameStatus;
         public static Status GameStatus

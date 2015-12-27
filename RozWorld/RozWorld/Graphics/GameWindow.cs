@@ -61,12 +61,6 @@ namespace RozWorld.Graphics
          */
         private ShaderProgram GLProgram;
 
-        public TextureManager TextureManagement
-        {
-            get;
-            private set;
-        }
-
         /**
          * RozWorld engine's GUI handler.
          */
@@ -199,14 +193,7 @@ namespace RozWorld.Graphics
             GLProgram.Use();
 
             // Load texture content...
-            TextureManagement = new TextureManager();
             GameInterface = new UIHandler();
-
-            TextureManagement.LoadFontSources();
-            TextureManagement.LoadTextures();
-            GameInterface.Geometry.Load();
-            GameInterface.Language.Load(RozWorld.Settings.LanguageSource);
-            FontProvider.Load(TextureManagement, GameInterface.Geometry);
 
             FPSTimer = Stopwatch.StartNew();
             LowestFPS = double.MaxValue;
