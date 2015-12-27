@@ -35,18 +35,6 @@ namespace RozWorld
             RozWorld.Content = ComfyInterpreter.Load();
             RozWorld.Settings.Load();
 
-            // Set up the texture manager
-            RozWorld.Textures = new TextureManager();
-            RozWorld.Textures.LoadFontSources();
-            RozWorld.Textures.LoadTextures();
-
-            // Set up other resources
-            RozWorld.InterfaceGeometry = new GUIOMETRY();
-            RozWorld.InterfaceGeometry.Load();
-            RozWorld.Languages = new LanguageSystem();
-            RozWorld.Languages.Load(RozWorld.Settings.LanguageSource);
-            FontProvider.Load(RozWorld.Textures, RozWorld.InterfaceGeometry);
-
             // Start the game, events will stem from this window
             RozWorld.MainWindow = new GameWindow();
         }

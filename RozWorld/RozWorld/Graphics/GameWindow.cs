@@ -168,7 +168,6 @@ namespace RozWorld.Graphics
             
             // Initialise GL stuff...
             Glut.glutInit();
-            Gl.ReloadFunctions();
 
             // Create GL window...
             Glut.glutInitWindowSize(WindowScale.Width, WindowScale.Height);
@@ -190,11 +189,20 @@ namespace RozWorld.Graphics
             Gl.Enable(EnableCap.Blend);
 
             // Starting the GL window...
-            GLProgram = new ShaderProgram(Shaders.VertexShader, Shaders.FragmentShader);
+            try
+            {
+                GLProgram = new ShaderProgram(Shaders.VertexShader, Shaders.FragmentShader);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                UIHandler.CriticalError(Error.SHADERS_UNSUPPORTED);
+            }
+            
             GLProgram.Use();
 
             // Load texture content...
             GameInterface = new UIHandler();
+            RozWorld.LoadResources();
 
             FPSTimer = Stopwatch.StartNew();
             LowestFPS = double.MaxValue;

@@ -11,6 +11,7 @@
 
 using RozWorld.COMFY;
 using RozWorld.Graphics;
+using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Geometry;
 using RozWorld.Graphics.UI.Strings;
 using RozWorld.Network;
@@ -31,8 +32,8 @@ namespace RozWorld
 
         public static TextureManager Textures;
         public static GUIOMETRY InterfaceGeometry;
-
         public static LanguageSystem Languages;
+        private static bool LoadedResources;
 
         private static Status _GameStatus;
         public static Status GameStatus
@@ -47,6 +48,30 @@ namespace RozWorld
                 // Call to client plugins for status change
 
                 _GameStatus = value;
+            }
+        }
+
+
+        /// <summary>
+        /// Loads RozWorld's resources if they haven't already been loaded.
+        /// </summary>
+        public static void LoadResources()
+        {
+            if (!LoadedResources)
+            {
+                // Set up the texture manager
+                RozWorld.Textures = new TextureManager();
+                RozWorld.Textures.LoadFontSources();
+                RozWorld.Textures.LoadTextures();
+
+                // Set up other resources
+                RozWorld.InterfaceGeometry = new GUIOMETRY();
+                RozWorld.InterfaceGeometry.Load();
+                RozWorld.Languages = new LanguageSystem();
+                RozWorld.Languages.Load(RozWorld.Settings.LanguageSource);
+                FontProvider.Load(RozWorld.Textures, RozWorld.InterfaceGeometry);
+
+                LoadedResources = true;
             }
         }
 

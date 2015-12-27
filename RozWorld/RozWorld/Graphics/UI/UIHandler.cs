@@ -209,6 +209,12 @@ namespace RozWorld.Graphics.UI
 
                     break;
 
+                case Error.SHADERS_UNSUPPORTED:
+                    MessageBox.Show("The game window failed to open due to programmable shaders being unsupported on your graphics device. You may need an updated driver or possibly your card is out of date." + detailsProvided + "\n\nRozWorld will now exit.",
+                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    break;
+
                 default:
                 case Error.UNKNOWN_ERROR:
                     MessageBox.Show("An unknown critical error occurred. " + detailsProvided + "\n\nRozWorld will now exit.",

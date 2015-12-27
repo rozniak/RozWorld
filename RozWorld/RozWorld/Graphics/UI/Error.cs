@@ -20,5 +20,6 @@ namespace RozWorld.Graphics.UI
         public const short INVALID_GUI_DICTIONARY_KEY = 10;
         public const short MISSING_INI_DICTIONARY_KEY = 11;
         public const short MISSING_FONT_DICTIONARY_KEY = 12;
+        public const short SHADERS_UNSUPPORTED = 20;
     }
 }
