@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 
 namespace RozWorld.Graphics.UI
@@ -45,17 +46,13 @@ namespace RozWorld.Graphics.UI
         /// <param name="formatStripMode">Whether to strip any formatting from the string.</param>
         /// <returns>The string in its new texture and updated draw instructions if all was successful.</returns>
         public static Texture BuildString(FontType fontType, string text, out List<DrawInstruction> drawInstructions,
-            FormattingStripMode formatStripMode)
+            StringFormatting stringFormat)
         {
             drawInstructions = new List<DrawInstruction>();
 
             if (Loaded)
             {
-                using (Image stringImage = new Bitmap(800, 600))
-                using (System.Drawing.Graphics GFX = System.Drawing.Graphics.FromImage(stringImage))
-                {
-
-                }
+                
             }
 
             return null;
@@ -125,11 +122,69 @@ namespace RozWorld.Graphics.UI
         /// <param name="text">The text to measure.</param>
         /// <param name="formatStripMode">Whether to strip any formatting from the string.</param>
         /// <returns>The size of the text in the specified font if measuring was successful, an empty size otherwise.</returns>
-        public static Size MeasureString(FontType fontType, string text, FormattingStripMode formatStrip)
+        public static Size MeasureString(FontType fontType, string text, StringFormatting stringFormat)
         {
-            if (Loaded)
+            // Implement this later
+
+            return Size.Empty;
+        }
+
+
+        /// <summary>
+        /// Gets the size of the bounding Bitmap that will contain the string image.
+        /// </summary>
+        /// <param name="fontType">The type of font to use.</param>
+        /// <param name="text">The text to measure.</param>
+        /// <param name="stripMode">Whether to strip any formatting from the string.</param>
+        /// <returns>The size of the bitmap that will contain the string image if measuring was successful, an empty size otherwise.</returns>
+        private static Size GetStringBitmapSize(FontType fontType, string text, StringFormatting stringFormat)
+        {
+            // The final bitmap size height will be = singleFontSize.Height * coloursPresent
+            Size singleFontSize = Size.Empty;
+            byte coloursPresent = 0;
+
+            uint currentX = 0;
+            uint highestX = 0;
+            uint currentY = 0;
+
+            FontInfo fontInfo = RozWorld.InterfaceGeometry.GetFont(GetFontInternalName(fontType));
+            bool formatCodeActive = false;
+
+            foreach (char character in text)
             {
-                
+                // Check whether to look for formatting in this string
+                if (stringFormat != StringFormatting.None)
+                {
+                    // Check if this should trigger a format code
+                    if (character == '&' && !formatCodeActive)
+                    {
+                        formatCodeActive = true;
+                        continue;
+                    }
+
+                    if (formatCodeActive)
+                    {
+                        if ((stringFormat == StringFormatting.Colours ||
+                            stringFormat == StringFormatting.Both) &&
+                            character.IsHexChar()) // It's a colour code
+                        {
+                            coloursPresent++; // Increase colour count
+                            continue;
+                        }
+                        else if ((stringFormat == StringFormatting.LineBreaks ||
+                            stringFormat == StringFormatting.Both) &&
+                            character.EqualsIgnoreCase('n')) // It's a newline code
+                        {
+                            currentY += fontInfo.LineHeight;
+                            highestX = currentX;
+                            currentX = 0;
+                            continue;
+                        }
+                    }
+                }
+
+                // If the code continues to here, then calculate the character metrics
+
             }
 
             return Size.Empty;

@@ -117,18 +117,18 @@ namespace RozWorld.IO
         /// </summary>
         /// <param name="formatStripMode">The formatting specials to strip.</param>
         /// <returns>The stripped string.</returns>
-        public static string StripStringFormatting(FormattingStripMode formatStripMode, string text)
+        public static string StripStringFormatting(StringFormatting formatStripMode, string text)
         {
             string strippedText = text;
 
-            if (formatStripMode == FormattingStripMode.Colours ||
-                formatStripMode == FormattingStripMode.Both)
+            if (formatStripMode == StringFormatting.Colours ||
+                formatStripMode == StringFormatting.Both)
             {
                 
             }
 
-            if (formatStripMode == FormattingStripMode.LineBreaks ||
-                formatStripMode == FormattingStripMode.Both)
+            if (formatStripMode == StringFormatting.LineBreaks ||
+                formatStripMode == StringFormatting.Both)
             {
                 
             }

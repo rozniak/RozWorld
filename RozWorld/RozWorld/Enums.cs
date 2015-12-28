@@ -6,7 +6,7 @@
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
  *
- * Sharing, editing and general licence term information can be found inside of the "sup.txt" file that should be located in the root of this project's directory structure.
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
 
@@ -200,7 +200,7 @@ public enum FontType
 }
 
 
-public enum FormattingStripMode
+public enum StringFormatting
 {
     None,
     Colours,
