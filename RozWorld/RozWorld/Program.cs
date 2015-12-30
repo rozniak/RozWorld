@@ -9,7 +9,6 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-using RozWorld.COMFY;
 using RozWorld.Graphics;
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Geometry;
@@ -32,7 +31,6 @@ namespace RozWorld
             RozWorld.GameStatus = Status.StartingUp;
 
             Files.SetupGameDirectories();
-            RozWorld.Content = ComfyInterpreter.Load();
             RozWorld.Settings.Load();
 
             // Start the game, events will stem from this window

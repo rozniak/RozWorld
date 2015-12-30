@@ -28,7 +28,6 @@ namespace RozWorld.IO
             string finalReplaced = line.Replace("%sounds%", Files.SoundsDirectory);
             finalReplaced = finalReplaced.Replace("%tex%", Files.TexturesDirectory);
             finalReplaced = finalReplaced.Replace("%lang%", Files.LanguagesDirectory);
-            finalReplaced = finalReplaced.Replace("%comfy%", Files.ComfyDirectory);
             finalReplaced = finalReplaced.Replace("%link%", Files.LinksDirectory);
             finalReplaced = finalReplaced.Replace("%mods%", Files.ModsDirectory);
             return finalReplaced;

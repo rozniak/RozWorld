@@ -70,6 +70,17 @@ namespace RozWorld.Graphics
 
 
         /// <summary>
+        /// Gets whether a texture with the specified name is loaded currently or not.
+        /// </summary>
+        /// <param name="textureName">The name of the texture to check.</param>
+        /// <returns>Whether the texture with the specified name is loaded or not.</returns>
+        public bool TextureExists(string textureName)
+        {
+            return LoadedTextures.ContainsKey(textureName);
+        }
+
+
+        /// <summary>
         /// Loads the game's font sources from the font link file.
         /// </summary>
         public void LoadFontSources()
@@ -104,18 +115,26 @@ namespace RozWorld.Graphics
             // If there are textures already loaded, make sure they are disposed.
             DumpAllTextures();
 
-            foreach (var dictionaryItem in RozWorld.Content.Textures)
+            // Retrieve texture mapping files (they should be all .ini files with "texmap_" at the start)
+            IList<string> textureMapFiles = Files.GetFilesByPrefix(Files.LinksDirectory, "texmap_", ".ini");
+
+            foreach (string file in textureMapFiles)
             {
-                string textureLocation = StringFunction.ReplaceSpecialDirectories(dictionaryItem.Value);
+                Dictionary<string, string> textureMapDirs = Files.ReadINIToDictionary(file);
 
-                if (!File.Exists(textureLocation))
-                    continue;
+                foreach (var texMap in textureMapDirs)
+                {
+                    string textureLocation = Files.LiveTextureDirectory + "\\" + texMap.Value;
 
-                // If a texture of the name already exists then dispose the old texture first.
-                if (LoadedTextures.ContainsKey(dictionaryItem.Key))
-                    LoadedTextures[dictionaryItem.Key].Dispose();
+                    if (!File.Exists(textureLocation))
+                        continue;
 
-                LoadedTextures[dictionaryItem.Key] = new Texture(textureLocation);
+                    // If a texture of the name already exists then dispose the old texture first.
+                    if (LoadedTextures.ContainsKey(texMap.Key))
+                        LoadedTextures[texMap.Key].Dispose();
+
+                    LoadedTextures[texMap.Key] = new Texture(textureLocation);
+                }
             }
 
             // Check if the missing texture placeholder is loaded.

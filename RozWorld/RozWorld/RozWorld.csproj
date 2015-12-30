@@ -86,25 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicObject\BasicCreature.cs" />
-    <Compile Include="BasicObject\BasicFloor.cs" />
-    <Compile Include="BasicObject\BasicPet.cs" />
-    <Compile Include="BasicObject\BasicWall.cs" />
-    <Compile Include="BasicObject\ServerPlugin.cs" />
-    <Compile Include="BasicObject\WorldGenerator.cs" />
-    <Compile Include="COMFY\ComfyContent.cs" />
-    <Compile Include="COMFY\ComfyInterpreter.cs" />
-    <Compile Include="COMFY\Definition\InformationDefinition.cs" />
-    <Compile Include="COMFY\Definition\ItemDefinition.cs" />
-    <Compile Include="COMFY\Definition\LanguageDefinition.cs" />
-    <Compile Include="COMFY\Definition\PetDefinition.cs" />
-    <Compile Include="COMFY\Definition\PlayerPawnDefinition.cs" />
-    <Compile Include="COMFY\Definition\SoundDefinition.cs" />
-    <Compile Include="COMFY\Definition\ThingDefinition.cs" />
-    <Compile Include="COMFY\Definition\TileFloorDefinition.cs" />
-    <Compile Include="COMFY\Definition\TileWallDefinition.cs" />
     <Compile Include="Delegates.cs" />
-    <Compile Include="BasicObject\BasicItem.cs" />
     <Compile Include="Entity\Player\ServerPlayerHandler.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ExtensionMethods.cs" />
@@ -204,7 +186,7 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>xcopy $(ProjectDir)Game_Content\* $(ProjectDir)$(OutDir) /s /e</PreBuildEvent>
+    <PreBuildEvent>xcopy $(ProjectDir)Game_Content\* $(ProjectDir)$(OutDir) /s /e /y</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

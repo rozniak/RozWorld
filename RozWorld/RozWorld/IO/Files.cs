@@ -9,8 +9,6 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-using RozWorld.COMFY;
-
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -21,8 +19,6 @@ namespace RozWorld.IO
 {
     public static class Files
     {
-        public static readonly string ComfyDirectory = Environment.CurrentDirectory + @"\comfy";
-
         public static readonly string LanguagesDirectory = Environment.CurrentDirectory + @"\lang";
         public static readonly string LanguagesFile = Environment.CurrentDirectory + @"\link\langs.ini";
 
@@ -212,10 +208,6 @@ namespace RozWorld.IO
         /// </summary>
         public static void SetupGameDirectories()
         {
-            // COMFY Directory
-            if (!Directory.Exists(Files.ComfyDirectory))
-                Directory.CreateDirectory(Files.ComfyDirectory);
-
             // Languages Directory
             if (!Directory.Exists(Files.LanguagesDirectory))
                 Directory.CreateDirectory(Files.LanguagesDirectory);
@@ -235,6 +227,35 @@ namespace RozWorld.IO
             // Mods Directory
             if (!Directory.Exists(Files.ModsDirectory))
                 Directory.CreateDirectory(Files.ModsDirectory);
+        }
+
+
+        /// <summary>
+        /// Gets all the file names from a given directory which start with the specified prefix.
+        /// </summary>
+        /// <param name="directory">The directory to search.</param>
+        /// <param name="prefix">The prefix to match.</param>
+        /// <param name="fileType">The filetype to restrict to.</param>
+        /// <returns>All the files discovered from the specified directory that matched the given prefix.</returns>
+        public static IList<string> GetFilesByPrefix(string directory, string prefix, string fileType = "")
+        {
+            var matchedFiles = new List<string>();
+
+            if (Directory.Exists(directory))
+            {
+                string[] filesDiscovered = Directory.GetFiles(directory);
+
+                foreach (string file in filesDiscovered)
+                {
+                    string fileName = Path.GetFileName(file);
+
+                    if (fileName.StartsWith(prefix) &&
+                        (fileType == "" || Path.GetExtension(file) == fileType))
+                        matchedFiles.Add(file);
+                }
+            }
+
+            return matchedFiles.AsReadOnly();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace RozWorld.Graphics.UI.Control
 
             set
             {
-                if (RozWorld.Content.Textures.ContainsKey(value))
+                if (RozWorld.Textures.TextureExists(value))
                 {
                     this._TextureName = value;
                 }

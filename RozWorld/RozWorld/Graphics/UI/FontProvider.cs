@@ -184,7 +184,11 @@ namespace RozWorld.Graphics.UI
                 }
 
                 // If the code continues to here, then calculate the character metrics
-
+                if (character == ' ')
+                {
+                    currentX += fontInfo.SpacingWidth;
+                }
+                // TODO: Complete this
             }
 
             return Size.Empty;
