@@ -52,7 +52,13 @@ namespace RozWorld.Graphics.UI
 
             if (Loaded)
             {
-                
+                Size bitmapSize = GetStringBitmapSize(fontType, text, stringFormat);
+
+                using(Bitmap stringBitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height))
+                using (System.Drawing.Graphics GFX = System.Drawing.Graphics.FromImage(stringBitmap))
+                {
+                    // TODO: Build the string here
+                }
             }
 
             return null;
@@ -141,10 +147,10 @@ namespace RozWorld.Graphics.UI
         {
             // The final bitmap size height will be = singleFontSize.Height * coloursPresent
             Size singleFontSize = Size.Empty;
-            byte coloursPresent = 0;
+            byte coloursPresent = 1;
 
-            uint currentX = 0;
-            uint highestX = 0;
+            int currentX = 0;
+            int highestX = 0;
             uint currentY = 0;
 
             FontInfo fontInfo = RozWorld.InterfaceGeometry.GetFont(GetFontInternalName(fontType));
@@ -176,7 +182,12 @@ namespace RozWorld.Graphics.UI
                             character.EqualsIgnoreCase('n')) // It's a newline code
                         {
                             currentY += fontInfo.LineHeight;
-                            highestX = currentX;
+
+                            // If the current x is greater than the highest x so far, set the new highest
+                            highestX = currentX > highestX ?
+                                currentX :
+                                highestX;
+
                             currentX = 0;
                             continue;
                         }
@@ -188,10 +199,26 @@ namespace RozWorld.Graphics.UI
                 {
                     currentX += fontInfo.SpacingWidth;
                 }
-                // TODO: Complete this
+                else
+                {
+                    CharacterInfo charInfo = fontInfo.GetCharacter(character);
+
+                    if (charInfo != null)
+                    {
+                        Rectangle charRectangle = charInfo.GetBlitRectangle();
+                        currentX += charRectangle.Width + charInfo.Before + charInfo.After;
+                        currentX.BumpLowerThan(0);
+
+                        // Calculate whether this character is too tall, if it is, shift the Y down
+                        if (currentY - (charRectangle.Height + charInfo.YOffset) < 0)
+                        {
+                            currentY = (uint)(charRectangle.Height + charInfo.YOffset);
+                        }
+                    }
+                }
             }
 
-            return Size.Empty;
+            return new Size(singleFontSize.Width, singleFontSize.Height * coloursPresent);
         }
     }
 }

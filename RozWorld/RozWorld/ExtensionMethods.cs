@@ -45,5 +45,16 @@ namespace RozWorld
             Regex hexRule = new Regex("^[a-fA-F0-9_]*$");
             return hexRule.Match(subject.ToString()).Success;
         }
+
+
+        /// <summary>
+        /// If the value of this integer is below the limit, it will be bumped to the limit.
+        /// </summary>
+        /// <param name="limit">The limit value to bump towards.</param>
+        public static void BumpLowerThan(this int subject, int limit)
+        {
+            if (subject < limit)
+                subject = limit;
+        }
     }
 }
