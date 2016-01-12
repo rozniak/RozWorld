@@ -197,7 +197,7 @@ namespace RozWorld.Graphics
             {
                 UIHandler.CriticalError(Error.SHADERS_UNSUPPORTED);
             }
-            
+                        
             GLProgram.Use();
 
             // Load texture content...
@@ -221,8 +221,17 @@ namespace RozWorld.Graphics
                 VectorColour.OpaqueWhite.y,
                 VectorColour.OpaqueWhite.z,
                 VectorColour.OpaqueWhite.w);
-            
+
+
+            // THIS IS TEST CODE ONLY!
+            List<DrawInstruction> test;
+            FontProvider.BuildString(FontType.HugeFont, "this is a test", out test, StringFormatting.Both);
+            // // // // // // // // //
+
+
             Glut.glutMainLoop();
+
+            
         }
 
 
@@ -396,24 +405,7 @@ namespace RozWorld.Graphics
         /// </summary>
         private void OnKeyDown(byte key, int x, int y)
         {
-            LastKeyStates = CurrentKeyStates;
-            CurrentKeyStates.KeyDown(key);
-
-            LastSystemAmount = GameInterface.ControlSystems.Count;
-            
-            try
-            {
-                foreach (var item in GameInterface.ControlSystems)
-                {
-                    if (LastSystemAmount != GameInterface.ControlSystems.Count)
-                    {
-                        continue;
-                    }
-
-                    item.Value.TriggerKeyboard(true, key);
-                }
-            }
-            catch { } // Most likely transitioning from control systems
+            Glut.glutSetWindowTitle(WINDOW_TITLE + " " + key.ToString());
         }
 
 

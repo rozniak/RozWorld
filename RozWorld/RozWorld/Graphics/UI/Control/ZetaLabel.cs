@@ -10,23 +10,13 @@
  */
 
 using OpenGL;
+using System.Collections.Generic;
 
 
 namespace RozWorld.Graphics.UI.Control
 {
     public class ZetaLabel : ControlSkeleton
     {
-        private Vector4 _DefaultColour;
-        public Vector4 DefaultColour
-        {
-            get { return this._DefaultColour; }
-            set
-            {
-                this._DefaultColour = value;
-                UpdateDrawInstruction("colour");
-            }
-        }
-
         private string _Text;
         public string Text
         {
@@ -51,6 +41,16 @@ namespace RozWorld.Graphics.UI.Control
         }
 
 
+        private List<DrawInstruction> _DrawInstructions;
+        public override List<DrawInstruction> DrawInstructions
+        {
+            get { return _DrawInstructions; }
+            protected set { _DrawInstructions = value; }
+        }
+
+        private Texture StringTexture;
+
+
         public event KeyEventHandler OnKeyDown;
         public event KeyEventHandler OnKeyUp;
         public event SenderEventHandler OnMouseDown;
@@ -62,7 +62,6 @@ namespace RozWorld.Graphics.UI.Control
         public ZetaLabel(GameWindow parentWindow)
         {
             this.ParentWindow = parentWindow;
-            this._DefaultColour = VectorColour.OpaqueWhite;
             this.Position = new Vector2(0, 0);
             this._Font = FontType.ChatFont;
             this._Text = "";
@@ -92,12 +91,16 @@ namespace RozWorld.Graphics.UI.Control
                     break;
 
                 case "text":
+                    if (StringTexture != null)
+                        StringTexture.Dispose();
+                    StringTexture = FontProvider.BuildString(Font, Text, out _DrawInstructions, StringFormatting.Both);
                     break;
 
                 case "visible":
                     break;
 
                 case "colour":
+                default:
                     break;
             }
         }

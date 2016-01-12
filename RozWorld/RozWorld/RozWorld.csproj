@@ -87,7 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Delegates.cs" />
-    <Compile Include="Entity\Player\ServerPlayerHandler.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="GameSettings.cs" />
@@ -130,29 +129,13 @@
     <Compile Include="IO\RozEncoding.cs" />
     <Compile Include="IO\StringFunction.cs" />
     <Compile Include="IO\TextSpecial.cs" />
-    <Compile Include="Item\Inventory.cs" />
-    <Compile Include="Item\Item.cs" />
-    <Compile Include="Item\ItemStack.cs" />
-    <Compile Include="Network\Chat\ChatColour.cs" />
-    <Compile Include="Network\Chat\ChatFormatting.cs" />
-    <Compile Include="Network\Chat\PermissionGroup.cs" />
-    <Compile Include="Network\JoiningClient.cs" />
     <Compile Include="Network\NetCon.cs" />
-    <Compile Include="Network\Packets.cs" />
-    <Compile Include="Network\RozClient.cs" />
-    <Compile Include="Network\RozServer.cs" />
-    <Compile Include="Network\ServerOptions.cs" />
-    <Compile Include="Network\ServerPacketHandler.cs" />
     <Compile Include="Network\Web.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RozWorld.cs" />
     <Compile Include="Windows.cs" />
     <Compile Include="WorldPoint.cs" />
-    <Compile Include="World\Chunk.cs" />
-    <Compile Include="World\Position.cs" />
-    <Compile Include="World\Tile.cs" />
-    <Compile Include="World\World.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="game large icon.ico" />

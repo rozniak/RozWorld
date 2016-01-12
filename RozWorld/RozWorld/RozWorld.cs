@@ -24,8 +24,6 @@ namespace RozWorld
         public const bool SHOW_VERSION_STRING = true;
         public const string VERSION_STRING = "RozWorld Progress Build";
 
-        public static RozClient Client;
-        public static RozServer Server;
         public static GameWindow MainWindow;
         public static GameSettings Settings;
 
@@ -69,7 +67,7 @@ namespace RozWorld
                 InterfaceGeometry.Load();
                 Languages = new LanguageSystem();
                 Languages.Load(RozWorld.Settings.LanguageSource);
-                FontProvider.Load(RozWorld.Textures, RozWorld.InterfaceGeometry);
+                FontProvider.Load();
 
                 LoadedResources = true;
             }

@@ -10,6 +10,7 @@
  */
 
 using System.Text.RegularExpressions;
+
 namespace RozWorld
 {
     public static class ExtensionMethods
@@ -51,10 +52,56 @@ namespace RozWorld
         /// If the value of this integer is below the limit, it will be bumped to the limit.
         /// </summary>
         /// <param name="limit">The limit value to bump towards.</param>
-        public static void BumpLowerThan(this int subject, int limit)
+        //public static void BumpLowerThan(this int subject, int limit)
+        //{
+        //    if (subject < limit)
+        //        subject = limit;
+        //}
+
+
+        /// <summary>
+        /// Compares the subject to a value to see which is the lowest.
+        /// </summary>
+        /// <param name="comparison">The value to test against.</param>
+        /// <returns>The lowest of the two values.</returns>
+        public static int CompareLowest(this int subject, int comparison)
         {
-            if (subject < limit)
-                subject = limit;
+            if (comparison < subject)
+                return comparison;
+            return subject;
+        }
+
+
+        /// <summary>
+        /// Compares the subject to a value to see which is the highest.
+        /// </summary>
+        /// <param name="comparsion">The value to test against.</param>
+        /// <returns>The highest of the two values.</returns>
+        public static int CompareHighest(this int subject, int comparison)
+        {
+            if (comparison > subject)
+                return comparison;
+            return subject;
+        }
+
+
+        /// <summary>
+        /// Returns a copy of this character coverted to lowercase.
+        /// </summary>
+        /// <returns>A copy of the character in lowercase.</returns>
+        public static char ToLower(this char subject)
+        {
+            return subject.ToString().ToLower()[0];
+        }
+
+
+        /// <summary>
+        /// Returns a copy of this character converted to uppercase.
+        /// </summary>
+        /// <returns>A copy of the character in uppercase</returns>
+        public static char ToUpper(this char subject)
+        {
+            return subject.ToString().ToUpper()[0];
         }
     }
 }

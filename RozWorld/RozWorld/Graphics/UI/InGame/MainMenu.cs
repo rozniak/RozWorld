@@ -53,6 +53,15 @@ namespace RozWorld.Graphics.UI.InGame
         /// </summary>
         public override void Start()
         {
+        //    // Test ZetaLabel
+        //    ZetaLabel testLabel = new ZetaLabel(this.ParentWindow);
+
+        //    testLabel.Text = "Hello World!";
+        //    testLabel.Font = FontType.ChatFont;
+        //    testLabel.Position = new Vector2(64, 64);
+
+        //    ParentWindow.GameInterface.Controls.Add("TestLabel", testLabel);
+
             // RozWorld logo
             Image title = new Image(this.ParentWindow);
 

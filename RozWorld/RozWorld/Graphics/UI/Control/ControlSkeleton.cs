@@ -132,10 +132,10 @@ namespace RozWorld.Graphics.UI
         /**
          * Other details...
          */
-        public List<DrawInstruction> DrawInstructions
+        public virtual List<DrawInstruction> DrawInstructions
         {
             get;
-            private set;
+            protected set;
         }
 
         protected int _DialogKey;
