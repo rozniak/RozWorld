@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 
 namespace RozWorld.Graphics.UI
 {
-    public static class FontProvider
+    internal static class FontProvider
     {
         private static Dictionary<string, Bitmap> Fonts = new Dictionary<string, Bitmap>();
 

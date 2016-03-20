@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace RozWorld_Client.Input
+namespace RozWorld.Input
 {
     /// <summary>
     /// Represents a susbsystem for managing keyboard input.

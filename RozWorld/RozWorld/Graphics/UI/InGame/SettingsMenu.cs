@@ -17,7 +17,7 @@ using RozWorld.Graphics.UI.InGame.Generic;
 
 namespace RozWorld.Graphics.UI.InGame
 {
-    public class SettingsMenu : ControlSystem
+    internal class SettingsMenu : ControlSystem
     {
         public SettingsMenu(GameWindow parentWindow)
         {

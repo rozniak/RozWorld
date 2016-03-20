@@ -16,12 +16,14 @@ using OpenGL;
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.InGame;
 using RozWorld.IO;
+using RozWorld.Input;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Timers;
+using System.Windows.Forms;
 
 
 namespace RozWorld.Graphics
@@ -29,7 +31,7 @@ namespace RozWorld.Graphics
     /// <summary>
     /// Represents the game window of RozWorld.
     /// </summary>
-    public class GameWindow
+    internal class GameWindow
     {
         /// <summary>
         /// The window title of GameWindow instances.
@@ -47,9 +49,30 @@ namespace RozWorld.Graphics
         /// </summary>
         public bool HasFocus { get; private set; }
 
+        /// <summary>
+        /// Gets the GLFW pointer for this GameWindow.
+        /// </summary>
         public GlfwWindowPtr GlfwPtr { get; private set; }
 
+        /// <summary>
+        /// Gets the Win32 window handle for this GameWindow.
+        /// </summary>
         public IntPtr HwndPtr { get; private set; }
+
+        /// <summary>
+        /// Gets the user interface management subsystem for this GameWindow.
+        /// </summary>
+        public UIHandler GameInterface { get; private set; }
+
+        /// <summary>
+        /// Gets the keyboard input subsystem for this GameWindow.
+        /// </summary>
+        public Keyboard Keyboard { get; private set; }
+
+        /// <summary>
+        /// Gets the mouse input subsystem for this GameWindow.
+        /// </summary>
+        public Mouse Mouse { get; private set; }
 
 
         /// <summary>
@@ -57,11 +80,6 @@ namespace RozWorld.Graphics
         /// </summary>
         private ShaderProgram GLProgram;
 
-        /// <summary>
-        /// The user interface management system for this GameWindow.
-        /// </summary>
-        public UIHandler GameInterface { get; private set; }
-        
         /// <summary>
         /// The amount of controls in the last draw, when this changes between draws, SortControlZIndexes() should be called.
         /// </summary>
@@ -83,7 +101,6 @@ namespace RozWorld.Graphics
             Glfw.WindowHint(WindowHint.OpenGLProfile, (int)OpenGLProfile.Core);
 
 
-
             GlfwPtr = Glfw.CreateWindow(WindowScale.Width, WindowScale.Height,
                 WINDOW_TITLE, GlfwMonitorPtr.Null, GlfwWindowPtr.Null);
 
@@ -93,13 +110,19 @@ namespace RozWorld.Graphics
             // Retrieve the Win32 window handle for this window
             HwndPtr = Process.GetCurrentProcess().MainWindowHandle;
 
+            Windows.SetRozWorldIcon(); // Set the icon
+
+            // Initialise input control subsystems
+            Keyboard = new Keyboard(this);
+            Mouse = new Mouse();
+
             // Set up GLFW functions...
             Glfw.SetWindowCloseCallback(GlfwPtr, OnClose);
-            Glfw.SetKeyCallback(GlfwPtr, OnKey);
             Glfw.SetMouseButtonCallback(GlfwPtr, OnMouseChanged);
             Glfw.SetCursorPosCallback(GlfwPtr, OnMouseMove);
             Glfw.SetWindowRefreshCallback(GlfwPtr, OnDisplay);
             Glfw.SetWindowSizeCallback(GlfwPtr, OnReshape);
+            Glfw.SetScrollCallback(GlfwPtr, OnScroll);
 
             // Set up (shadow) blending...
             Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
@@ -148,32 +171,28 @@ namespace RozWorld.Graphics
 
                 Glfw.PollEvents();
 
+                Update(deltaTime);
                 Draw(deltaTime);
 
                 Glfw.SwapBuffers(GlfwPtr);
             }
-
-
         }
 
 
         /// <summary>
         /// Routine called to perform the game updates (input etc.)
         /// </summary>
-        private void Update(object sender, ElapsedEventArgs e)
+        /// <param name="deltaTime">The time difference since the last game loop completed.</param>
+        private void Update(double deltaTime)
         {
-            // Update the window focus status
-            HasFocus = Windows.GameHasFocus();
-
-            // Set window icon if it's gone for some reason
-            if (!HasFocus)
-                Windows.SetRozWorldIcon();
+            // TODO: Call systems updates here
         }
 
 
         /// <summary>
         /// Routine called when it is time to redraw the GL window and game screen.
         /// </summary>
+        /// <param name="deltaTime">The time difference since the last game loop completed.</param>
         private void Draw(double deltaTime)
         {
             // Debugging purposes
@@ -250,7 +269,20 @@ namespace RozWorld.Graphics
         /// </summary>
         private void OnError(GlfwError code, string desc)
         {
-            string t = "";
+            switch (code)
+            {
+                case GlfwError.VersionUnavailable:
+                    MessageBox.Show("Required OpenGL version (3.2) is unsupported by your graphics card, updating your video adapter drivers may help. If you're on Intel integrated, you're most likely out of luck entirely, sorry!",
+                        "RozWorld: GLFW Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+
+                default:
+                    MessageBox.Show("RozWorld encountered an error with GLFW (OpenGL context/window system), the error encountered was: " + code.ToString() + ".",
+                        "RozWorld: GLFW Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
+
+            Environment.Exit(1);
         }
 
 
@@ -303,20 +335,16 @@ namespace RozWorld.Graphics
 
 
         /// <summary>
-        /// Routine called when a key's state changes.
-        /// </summary>
-        private void OnKey(GlfwWindowPtr wnd, Key key, int scanCode, KeyAction action, KeyModifiers mods)
-        {
-            // TODO: Code this
-        }
-
-
-        /// <summary>
         /// Routine called when a mouse button changes state.
         /// </summary>
         private void OnMouseChanged(GlfwWindowPtr wnd, MouseButton btn, KeyAction action)
         {
-            // TODO: Code this
+            var mouseButton = Mouse.EnumerateMouseButtons(btn, true);
+
+            if (action == KeyAction.Press)
+                mouseButton.Pressed = true;
+            else
+                mouseButton.Pressed = false;
         }
 
 
@@ -325,7 +353,16 @@ namespace RozWorld.Graphics
         /// </summary>
         private void OnMouseMove(GlfwWindowPtr wnd, double x, double y)
         {
-            // TODO: Code this
+            Mouse.ActiveMouseStates.Position = new Vector2(x, y);
+        }
+
+
+        /// <summary>
+        /// Routine called when scrolling with the mouse.
+        /// </summary>
+        private void OnScroll(GlfwWindowPtr wnd, double xoffset, double yoffset)
+        {
+            Mouse.ActiveMouseStates.ScrollAmount = yoffset;
         }
     }
 }

@@ -17,7 +17,7 @@ using System.Drawing;
 
 namespace RozWorld.Graphics.UI.Control
 {
-    public class TextBox : ControlSkeleton
+    internal class TextBox : ControlSkeleton
     {
         private Vector4 _ForeColour;
         public Vector4 ForeColour

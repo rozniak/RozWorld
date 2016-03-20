@@ -19,7 +19,7 @@ using System.Drawing;
 
 namespace RozWorld.Graphics.UI.InGame
 {
-    public class VideoSettingsMenu : ControlSystem
+    internal class VideoSettingsMenu : ControlSystem
     {
         private Size WindowResolution;
         private Size[] StandardResolutions = new Size[]{

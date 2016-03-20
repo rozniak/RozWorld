@@ -21,7 +21,7 @@ using System.Timers;
 
 namespace RozWorld.Graphics.UI.InGame
 {
-    public class MainMenu : ControlSystem
+    internal class MainMenu : ControlSystem
     {
         /**
          * Temporary backdrop animation code, will be moved to a separate control system

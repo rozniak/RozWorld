@@ -22,7 +22,7 @@ namespace RozWorld
     /// <summary>
     /// Provides game globals for RozWorld.
     /// </summary>
-    public static class RozWorld
+    internal static class RozWorld
     {
         /// <summary>
         /// The state of whether debug related information should be shown or not.

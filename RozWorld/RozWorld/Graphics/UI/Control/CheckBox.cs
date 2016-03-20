@@ -16,7 +16,7 @@ using System.Drawing;
 
 namespace RozWorld.Graphics.UI.Control
 {
-    public class CheckBox : ControlSkeleton
+    internal class CheckBox : ControlSkeleton
     {
         public bool _Checked;
         public bool Checked

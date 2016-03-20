@@ -19,7 +19,7 @@ using System.Timers;
 
 namespace RozWorld.Graphics.UI.InGame
 {
-    public class Splash : ControlSystem
+    internal class Splash : ControlSystem
     {
         Timer SplashTimer;
 

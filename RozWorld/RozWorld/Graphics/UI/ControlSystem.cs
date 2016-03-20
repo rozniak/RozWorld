@@ -11,7 +11,7 @@
 
 namespace RozWorld.Graphics.UI
 {
-    public abstract class ControlSystem
+    internal abstract class ControlSystem
     {
         protected int _DialogKey;
         public int DialogKey

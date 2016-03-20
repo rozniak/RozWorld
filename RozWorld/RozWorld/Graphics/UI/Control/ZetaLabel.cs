@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace RozWorld.Graphics.UI.Control
 {
-    public class ZetaLabel : ControlSkeleton
+    internal class ZetaLabel : ControlSkeleton
     {
         private string _Text;
         public string Text

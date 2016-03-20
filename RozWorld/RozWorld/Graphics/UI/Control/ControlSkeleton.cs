@@ -17,7 +17,7 @@ using System.Drawing;
 
 namespace RozWorld.Graphics.UI
 {
-    public abstract class ControlSkeleton
+    internal abstract class ControlSkeleton
     {
         protected int _ZIndex;
         public int ZIndex

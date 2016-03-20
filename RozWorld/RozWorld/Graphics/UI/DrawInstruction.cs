@@ -18,7 +18,7 @@ using System.Drawing;
 
 namespace RozWorld.Graphics.UI
 {
-    public class DrawInstruction
+    internal class DrawInstruction
     {
         public Vector2[] DrawPoints = new Vector2[4];
         public Vector2[] BlitPoints = new Vector2[4];

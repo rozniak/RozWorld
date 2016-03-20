@@ -18,7 +18,7 @@ using RozWorld.Graphics.UI.InGame.Generic;
 
 namespace RozWorld.Graphics.UI.InGame
 {
-    public class NewWorldMenu : ControlSystem
+    internal class NewWorldMenu : ControlSystem
     {
         public NewWorldMenu(GameWindow parentWindow)
         {

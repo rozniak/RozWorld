@@ -17,7 +17,7 @@ using System.Drawing;
 
 namespace RozWorld.Graphics.UI.Control
 {
-    public class Label : ControlSkeleton
+    internal class Label : ControlSkeleton
     {
         private Vector4 _ForeColour;
         public Vector4 ForeColour

@@ -17,7 +17,7 @@ using System.Drawing;
 
 namespace RozWorld.Graphics.UI.Control
 {
-    public class Image : ControlSkeleton
+    internal class Image : ControlSkeleton
     {
         private Vector4 _TintColour;
         public Vector4 TintColour

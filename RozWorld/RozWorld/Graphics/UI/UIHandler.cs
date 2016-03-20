@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace RozWorld.Graphics.UI
 {
-    public class UIHandler
+    internal class UIHandler
     {
         public Tuple<string, int>[] ControlZMap
         {
