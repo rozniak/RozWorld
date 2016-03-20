@@ -92,10 +92,10 @@ namespace RozWorld.Graphics.UI.InGame
             playGame.Position = new Vector2(0, 178);
             playGame.Anchor = AnchorType.TopCentre;
             playGame.DialogKey = this.DialogKey;
-            playGame.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            playGame.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            playGame.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            playGame.OnMouseUp += new SenderEventHandler(playGame_OnMouseUp);
+            //playGame.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //playGame.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //playGame.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //playGame.OnMouseUp += new SenderEventHandler(playGame_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("PlayGameButton", playGame);
 
@@ -107,10 +107,10 @@ namespace RozWorld.Graphics.UI.InGame
             multiplayer.Position = new Vector2(0, 218);
             multiplayer.Anchor = AnchorType.TopCentre;
             multiplayer.DialogKey = this.DialogKey;
-            multiplayer.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            multiplayer.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            multiplayer.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            multiplayer.OnMouseUp += new SenderEventHandler(multiplayer_OnMouseUp);
+            //multiplayer.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //multiplayer.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //multiplayer.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //multiplayer.OnMouseUp += new SenderEventHandler(multiplayer_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("MultiplayerButton", multiplayer);
 
@@ -122,10 +122,10 @@ namespace RozWorld.Graphics.UI.InGame
             settings.Position = new Vector2(0, 258);
             settings.Anchor = AnchorType.TopCentre;
             settings.DialogKey = this.DialogKey;
-            settings.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            settings.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            settings.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            settings.OnMouseUp += new SenderEventHandler(settings_OnMouseUp);
+            //settings.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //settings.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //settings.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //settings.OnMouseUp += new SenderEventHandler(settings_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("SettingsButton", settings);
 
@@ -137,32 +137,16 @@ namespace RozWorld.Graphics.UI.InGame
             exitGame.Position = new Vector2(0, 298);
             exitGame.Anchor = AnchorType.TopCentre;
             exitGame.DialogKey = this.DialogKey;
-            exitGame.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            exitGame.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            exitGame.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            exitGame.OnMouseUp += new SenderEventHandler(exitGame_OnMouseUp);
+            //exitGame.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //exitGame.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //exitGame.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //exitGame.OnMouseUp += new SenderEventHandler(exitGame_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ExitGameButton", exitGame);
 
             // Back drop animator timer
             BackDropAnimator.Elapsed += new ElapsedEventHandler(BackDropAnimator_Elapsed);
             BackDropAnimator.Start();
-
-            SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// Implementation of the base subscriber setup method.
-        /// </summary>
-        public override void SetupSubscribers()
-        {
-            MouseSubscribers = new ControlSkeleton[] {
-                ParentWindow.GameInterface.Controls["PlayGameButton"],
-                ParentWindow.GameInterface.Controls["MultiplayerButton"],
-                ParentWindow.GameInterface.Controls["SettingsButton"],
-                ParentWindow.GameInterface.Controls["ExitGameButton"]
-            };
         }
 
 

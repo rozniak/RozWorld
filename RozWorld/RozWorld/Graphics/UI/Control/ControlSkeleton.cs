@@ -167,33 +167,11 @@ namespace RozWorld.Graphics.UI
             {
                 this._Visible = value;
 
-                if (!value) // If this isn't visible, the control shouldn't accept input (unless told to).
-                {
-                    this.AcceptInputKeyboard = false;
-                    this.AcceptInputMouse = false;
-                }
-
                 UpdateDrawInstruction("visible");
             }
         }
 
-        /**
-         * Keep track of whether mouse/keyboard input should be accepted by this control.
-         */
-        public bool AcceptInputMouse;
-        public bool AcceptInputKeyboard;
-
         protected GameWindow ParentWindow;
-
-        /**
-         * Keep track of whether the mouse was pressed inside the control, or whether it was already pressed and simply moved inside the control.
-         */
-        protected bool MouseDownOnControl;
-
-        /**
-         * Keep track of whether the mouse has already entered the control, to prevent firing OnMouseEnter too many times.
-         */
-        protected bool MouseEntered;
 
 
         public ControlSkeleton()

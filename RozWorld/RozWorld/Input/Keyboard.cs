@@ -1,64 +1,115 @@
-﻿using System;
+﻿/**
+ * RozWorld.Input.Keyboard -- RozWorld Keyboard Raw Input
+ *
+ * This source-code is part of the RozWorld project by rozza of Oddmatics:
+ * <<http://www.oddmatics.uk>>
+ * <<http://roz.world>>
+ * <<http://github.com/rozniak/RozWorld>>
+ *
+ * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
+ */
+
+using RawInput;
+
+using RozWorld.Graphics;
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace RozWorld.Input.Keyboard
+
+namespace RozWorld_Client.Input
 {
-    public struct Keyboard
+    /// <summary>
+    /// Represents a susbsystem for managing keyboard input.
+    /// </summary>
+    internal class Keyboard
     {
-        private IList<char> LastKeyStates;
-        private IList<char> CurrentKeyStates;
+        /// <summary>
+        /// The RawInput instance used to manage the keyboard(s).
+        /// </summary>
+        private RawInput.RawInput RawInput;
+
+        /// <summary>
+        /// The parent Engine instance of this Keyboard system.
+        /// </summary>
+        private GameWindow ParentWindow;
+
+        /// <summary>
+        /// The currently live key states.
+        /// </summary>
+        private List<string> ActiveKeyStates = new List<string>();
+
+        /// <summary>
+        /// The key states of the last update.
+        /// </summary>
+        private List<string> UpdateLastKeyStates = new List<string>();
+
+        /// <summary>
+        /// The key states of the most current update.
+        /// </summary>
+        private List<string> UpdateCurrentKeyStates = new List<string>();
 
 
-        public Keyboard(IList<char> lastKeyStates, IList<char> currentKeyStates)
+        /// <summary>
+        /// Initialises a new instance of the Keyboard class with a specified parent Engine.
+        /// </summary>
+        /// <param name="parentEngine">The parent Engine instance.</param>
+        public Keyboard(GameWindow parentWindow)
         {
-            LastKeyStates = lastKeyStates;
-            CurrentKeyStates = currentKeyStates;
+            if (parentWindow != null && parentWindow.HwndPtr != IntPtr.Zero)
+            {
+                ParentWindow = parentWindow;
+
+                // Attach raw input to the window handle of the game client and only watch input when the window is in focus
+                RawInput = new RawInput.RawInput(ParentWindow.HwndPtr, true);
+                RawInput.AddMessageFilter();
+                RawInput.KeyPressed += RawInput_KeyPressed;
+            }
         }
 
 
         /// <summary>
-        /// Checks whether a key is in a pressed state.
+        /// Updates the key states monitored by this subsystem.
+        /// </summary>
+        public void Update()
+        {
+            UpdateLastKeyStates = UpdateCurrentKeyStates;
+            UpdateCurrentKeyStates = new List<string>(ActiveKeyStates);
+        }
+
+
+        /// <summary>
+        /// Checks if the specified key has been pressed or not.
+        /// </summary>
+        /// <param name="key">The key to check.</param>
+        /// <returns>Whether the specified key has been pressed or not.</returns>
+        public bool IsPressed(string key)
+        {
+            return UpdateLastKeyStates.Contains(key) &&
+                    !UpdateCurrentKeyStates.Contains(key);
+        }
+
+        /// <summary>
+        /// Checks if the specified key is pressed or not.
         /// </summary>
         /// <param name="key">The key to check.</param>
         /// <returns>Whether the key is pressed or not.</returns>
-        public bool KeyDown(char key)
+        public bool IsDown(string key)
         {
-            return false; // TODO: Implement this
+            return UpdateCurrentKeyStates.Contains(key);
         }
 
 
         /// <summary>
-        /// Checks whether a key has had a single press within the last update.
+        /// [RawInput Event | KeyPressed] Key pressed.
         /// </summary>
-        /// <param name="key">The key to check.</param>
-        /// <returns>Whether the key has had a single press within the last update.</returns>
-        public bool KeyPress(char key)
+        private void RawInput_KeyPressed(object sender, RawInputEventArg e)
         {
-            return false; // TODO: Implement this
-        }
+            if (e.KeyPressEvent.KeyPressState == "MAKE")
+                ActiveKeyStates.Add(e.KeyPressEvent.VKeyName);
+            else // KeyPressState == "BREAK"
+                ActiveKeyStates.Remove(e.KeyPressEvent.VKeyName);
 
-
-        /// <summary>
-        /// Checks whether a key is in an unpressed state.
-        /// </summary>
-        /// <param name="key">The key to check.</param>
-        /// <returns>Whether the key is unpressed or not.</returns>
-        public bool KeyUp(char key)
-        {
-            return false; // TODO: Implement this
-        }
-
-
-        /// <summary>
-        /// Gets a char from the latest key pressed.
-        /// </summary>
-        /// <param name="key">The key to check.</param>
-        /// <returns>The char of the latest key pressed.</returns>
-        public char GetChar(char key)
-        {
-            return '\0'; // TODO: Implement this
         }
     }
 }

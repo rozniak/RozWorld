@@ -87,10 +87,10 @@ namespace RozWorld.Graphics.UI.InGame
             resolutionButton.Position = new Vector2(-50, 180);
             resolutionButton.Anchor = AnchorType.TopCentre;
             resolutionButton.DialogKey = this.DialogKey;
-            resolutionButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            resolutionButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            resolutionButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            resolutionButton.OnMouseUp += new SenderEventHandler(resolutionButton_OnMouseUp);
+            //resolutionButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //resolutionButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //resolutionButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //resolutionButton.OnMouseUp += new SenderEventHandler(resolutionButton_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ResolutionButton", resolutionButton);
 
@@ -113,10 +113,10 @@ namespace RozWorld.Graphics.UI.InGame
             minimumSizeButton.Position = new Vector2(-50, 220);
             minimumSizeButton.Anchor = AnchorType.TopCentre;
             minimumSizeButton.DialogKey = this.DialogKey;
-            minimumSizeButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            minimumSizeButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            minimumSizeButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            minimumSizeButton.OnMouseUp += new SenderEventHandler(minimumSizeButton_OnMouseUp);
+            //minimumSizeButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //minimumSizeButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //minimumSizeButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //minimumSizeButton.OnMouseUp += new SenderEventHandler(minimumSizeButton_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("MinimumSizeButton", minimumSizeButton);
 
@@ -139,10 +139,10 @@ namespace RozWorld.Graphics.UI.InGame
             aeroOffsetsButton.Position = new Vector2(-50, 260);
             aeroOffsetsButton.Anchor = AnchorType.TopCentre;
             aeroOffsetsButton.DialogKey = this.DialogKey;
-            aeroOffsetsButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            aeroOffsetsButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            aeroOffsetsButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            aeroOffsetsButton.OnMouseUp += new SenderEventHandler(aeroOffsetsButton_OnMouseUp);
+            //aeroOffsetsButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //aeroOffsetsButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //aeroOffsetsButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //aeroOffsetsButton.OnMouseUp += new SenderEventHandler(aeroOffsetsButton_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("AeroOffsetsButton", aeroOffsetsButton);
 
@@ -154,10 +154,10 @@ namespace RozWorld.Graphics.UI.InGame
             texturePackButton.Position = new Vector2(150, 180);
             texturePackButton.Anchor = AnchorType.TopCentre;
             texturePackButton.DialogKey = this.DialogKey;
-            texturePackButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            texturePackButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            texturePackButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            texturePackButton.OnMouseUp += new SenderEventHandler(texturePackButton_OnMouseUp);
+            //texturePackButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //texturePackButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //texturePackButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //texturePackButton.OnMouseUp += new SenderEventHandler(texturePackButton_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("TexturePackButton", texturePackButton);
 
@@ -169,29 +169,12 @@ namespace RozWorld.Graphics.UI.InGame
             returnButton.Position = new Vector2(0, 500);
             returnButton.Anchor = AnchorType.TopCentre;
             returnButton.DialogKey = this.DialogKey;
-            returnButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            returnButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            returnButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            returnButton.OnMouseUp += new SenderEventHandler(returnButton_OnMouseUp);
+            //returnButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //returnButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //returnButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //returnButton.OnMouseUp += new SenderEventHandler(returnButton_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ReturnVSMenuButton", returnButton);
-
-            SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// Implementation of the base subscriber setup method.
-        /// </summary>
-        public override void SetupSubscribers()
-        {
-            this.MouseSubscribers = new ControlSkeleton[] {
-                ParentWindow.GameInterface.Controls["ReturnVSMenuButton"],
-                ParentWindow.GameInterface.Controls["ResolutionButton"],
-                ParentWindow.GameInterface.Controls["MinimumSizeButton"],
-                ParentWindow.GameInterface.Controls["AeroOffsetsButton"],
-                ParentWindow.GameInterface.Controls["TexturePackButton"]
-            };
         }
 
 

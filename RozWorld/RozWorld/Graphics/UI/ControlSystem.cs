@@ -32,10 +32,6 @@ namespace RozWorld.Graphics.UI
 
         protected GameWindow ParentWindow;
 
-        protected ControlSkeleton[] MouseSubscribers = new ControlSkeleton[] { };
-        protected ControlSkeleton[] KeyboardSubscribers = new ControlSkeleton[] { };
-
-
         /**
          * Methods for starting and closing the control system.
          */
@@ -44,40 +40,8 @@ namespace RozWorld.Graphics.UI
 
 
         /// <summary>
-        /// Base method for setting up mouse and keyboard subscribers.
-        /// </summary>
-        public virtual void SetupSubscribers() { }
-
-
-        /// <summary>
         /// Base method for calling all control position updating routines.
         /// </summary>
         public virtual void UpdateControlPositions() { }
-
-
-        /// <summary>
-        /// Triggers mouse checks on each of the subscribed controls.
-        /// </summary>
-        public void TriggerMouse()
-        {
-            foreach (ControlSkeleton control in MouseSubscribers)
-            {
-                control.CheckMouse();
-            }
-        }
-
-
-        /// <summary>
-        /// Triggers keyboard checks on each of the subscribed controls.
-        /// </summary>
-        /// <param name="down">Whether the event state is a key down or up.</param>
-        /// <param name="key">The key changing state.</param>
-        public void TriggerKeyboard(bool down, byte key)
-        {
-            foreach (ControlSkeleton control in KeyboardSubscribers)
-            {
-                control.CheckKeyboard(down, key);
-            }
-        }
     }
 }

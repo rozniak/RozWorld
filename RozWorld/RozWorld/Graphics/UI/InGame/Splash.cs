@@ -35,30 +35,6 @@ namespace RozWorld.Graphics.UI.InGame
         /// </summary>
         public override void Start()
         {
-            // Version string in upper left corner
-            if (RozWorld.SHOW_VERSION_STRING)
-            {
-                // Version string
-                Label versionString = new Label(this.ParentWindow);
-
-                versionString.Text = RozWorld.VERSION_STRING;
-                versionString.Position = new Vector2(10, 10);
-                versionString.ForeColour = VectorColour.OpaqueBlack;
-                versionString.ZIndex = 9000;
-
-                ParentWindow.GameInterface.Controls.Add("VersionString", versionString);
-
-                // FPS counter
-                Label fpsCounter = new Label(this.ParentWindow);
-
-                fpsCounter.Text = "FPS: 0";
-                fpsCounter.Position = new Vector2(10, 26);
-                fpsCounter.ForeColour = VectorColour.OpaqueBlack;
-                fpsCounter.ZIndex = 9000;
-
-                ParentWindow.GameInterface.Controls.Add("FPSCounter", fpsCounter);
-            }
-
             // Splash screen image
             Image splashScreen = new Image(this.ParentWindow);
 
@@ -75,8 +51,6 @@ namespace RozWorld.Graphics.UI.InGame
 
             SplashTimer.Elapsed += new ElapsedEventHandler(SplashTimer_Elapsed);
             SplashTimer.Start();
-
-            SetupSubscribers();
         }
 
 

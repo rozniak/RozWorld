@@ -108,16 +108,6 @@ namespace RozWorld.Graphics.UI.Control
         private Texture ButtonBody;
         private Texture SpriteFont;
 
-        /**
-         * Events for this control.
-         */
-        public event KeyEventHandler OnKeyDown;
-        public event KeyEventHandler OnKeyUp;
-        public event SenderEventHandler OnMouseDown;
-        public event SenderEventHandler OnMouseEnter;
-        public event SenderEventHandler OnMouseLeave;
-        public event SenderEventHandler OnMouseUp;
-
 
         public Button(GameWindow parentWindow)
         {
@@ -129,86 +119,6 @@ namespace RozWorld.Graphics.UI.Control
             this._Text = "";
             this.Position = new Vector2(0, 0);
             this.ZIndex = 1;
-        }
-
-
-        /// <summary>
-        /// Implementation of the base mouse checking method.
-        /// </summary>
-        public override void CheckMouse()
-        {
-            if (this.Visible)
-            {
-                if (ParentWindow.MouseX >= this.Position.x &&
-                ParentWindow.MouseX < this.Position.x + this.Width + 6 &&
-                ParentWindow.MouseY >= this.Position.y &&
-                ParentWindow.MouseY < this.Position.y + 28 &&
-                !this.MouseEntered)
-                {
-                    this.MouseEntered = true;
-
-                    if (OnMouseEnter != null)
-                    {
-                        OnMouseEnter(this);
-                    }
-                }
-                else if (!(ParentWindow.MouseX >= this.Position.x &&
-                    ParentWindow.MouseX < this.Position.x + this.Width + 6 &&
-                    ParentWindow.MouseY >= this.Position.y &&
-                    ParentWindow.MouseY < this.Position.y + 28) &&
-                    this.MouseEntered)
-                {
-                    this.MouseEntered = false;
-
-                    if (OnMouseLeave != null)
-                    {
-                        OnMouseLeave(this);
-                    }
-                }
-
-                if (((ParentWindow.CurrentMouseStates.Left && !ParentWindow.LastMouseStates.Left) ||
-                    (ParentWindow.CurrentMouseStates.Middle && !ParentWindow.LastMouseStates.Middle) ||
-                    (ParentWindow.CurrentMouseStates.Right && !ParentWindow.LastMouseStates.Right)) && this.MouseEntered)
-                {
-                    if (OnMouseDown != null)
-                    {
-                        OnMouseDown(this);
-                    }
-                }
-
-
-                if (((!ParentWindow.CurrentMouseStates.Left && ParentWindow.LastMouseStates.Left) ||
-                    (!ParentWindow.CurrentMouseStates.Middle && ParentWindow.LastMouseStates.Middle) ||
-                    (!ParentWindow.CurrentMouseStates.Right && ParentWindow.LastMouseStates.Right)) && this.MouseEntered)
-                {
-                    if (OnMouseUp != null)
-                    {
-                        this.ParentWindow.DelayMouse(); // Prevent ghosting of the mouse
-                        OnMouseUp(this);
-                    }
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Implementation of the base keyboard checking method.
-        /// </summary>
-        /// <param name="down">Whether the event state is a key down or up.</param>
-        /// <param name="key">The key changing state.</param>
-        public override void CheckKeyboard(bool down, byte key)
-        {
-            if (this.Visible)
-            {
-                if (down && OnKeyDown != null)
-                {
-                    OnKeyDown(this, key);
-                }
-                else if (!down && OnKeyUp != null)
-                {
-                    OnKeyUp(this, key);
-                }
-            }
         }
 
 

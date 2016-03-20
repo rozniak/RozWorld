@@ -61,10 +61,10 @@ namespace RozWorld.Graphics.UI.InGame
             videoSettings.Position = new Vector2(-110, 180);
             videoSettings.Anchor = AnchorType.TopCentre;
             videoSettings.DialogKey = this.DialogKey;
-            videoSettings.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            videoSettings.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            videoSettings.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            videoSettings.OnMouseUp += new SenderEventHandler(videoSettings_OnMouseUp);
+            //videoSettings.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //videoSettings.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //videoSettings.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //videoSettings.OnMouseUp += new SenderEventHandler(videoSettings_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("VideoSettingsButton", videoSettings);
 
@@ -76,26 +76,12 @@ namespace RozWorld.Graphics.UI.InGame
             returnMenu.Position = new Vector2(0, 500);
             returnMenu.Anchor = AnchorType.TopCentre;
             returnMenu.DialogKey = this.DialogKey;
-            returnMenu.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            returnMenu.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            returnMenu.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            returnMenu.OnMouseUp += new SenderEventHandler(returnMenu_OnMouseUp);
+            //returnMenu.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //returnMenu.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //returnMenu.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //returnMenu.OnMouseUp += new SenderEventHandler(returnMenu_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ReturnSTMenuButton", returnMenu);
-
-            SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// Implementation of the base subscriber setup method.
-        /// </summary>
-        public override void SetupSubscribers()
-        {
-            this.MouseSubscribers = new ControlSkeleton[] {
-                ParentWindow.GameInterface.Controls["ReturnSTMenuButton"],
-                ParentWindow.GameInterface.Controls["VideoSettingsButton"]
-            };
         }
 
 

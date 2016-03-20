@@ -73,10 +73,10 @@ namespace RozWorld.Graphics.UI.InGame
             playWorld.Position = new Vector2(0, 288);
             playWorld.Anchor = AnchorType.TopCentre;
             playWorld.DialogKey = this.DialogKey;
-            playWorld.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            playWorld.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            playWorld.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            playWorld.OnMouseUp += new SenderEventHandler(playWorld_OnMouseUp);
+            //playWorld.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //playWorld.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //playWorld.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //playWorld.OnMouseUp += new SenderEventHandler(playWorld_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("PlayWorldButton", playWorld);
 
@@ -88,26 +88,12 @@ namespace RozWorld.Graphics.UI.InGame
             returnMenu.Position = new Vector2(0, 328);
             returnMenu.Anchor = AnchorType.TopCentre;
             returnMenu.DialogKey = this.DialogKey;
-            returnMenu.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            returnMenu.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            returnMenu.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            returnMenu.OnMouseUp += new SenderEventHandler(returnMenu_OnMouseUp);
+            //returnMenu.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //returnMenu.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //returnMenu.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //returnMenu.OnMouseUp += new SenderEventHandler(returnMenu_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ReturnNWMenuButton", returnMenu);
-
-            SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// Implementation of the base subscriber setup method.
-        /// </summary>
-        public override void SetupSubscribers()
-        {
-            MouseSubscribers = new ControlSkeleton[] {
-                ParentWindow.GameInterface.Controls["PlayWorldButton"],
-                ParentWindow.GameInterface.Controls["ReturnNWMenuButton"]
-            };
         }
 
 

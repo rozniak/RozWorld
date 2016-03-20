@@ -9,6 +9,9 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
+using OpenGL;
+
+using System.Drawing;
 using System.Text.RegularExpressions;
 
 namespace RozWorld
@@ -34,6 +37,18 @@ namespace RozWorld
         public static bool EqualsIgnoreCase(this string subject, string comparison)
         {
             return subject.ToLower() == comparison.ToLower();
+        }
+
+
+        /// <summary>
+        /// Checks if this Rectangle contains the specified vertex.
+        /// </summary>
+        /// <param name="comparison">The Vector2 representing the vertex.</param>
+        /// <returns>Whether or not the vertex is inside of this Rectangle.</returns>
+        public static bool Contains(this Rectangle subject, Vector2 comparison)
+        {
+            return comparison.x >= subject.X && comparison.x <= subject.X + subject.Width &&
+                comparison.y >= subject.Y && comparison.y <= subject.Y + subject.Height;
         }
 
 

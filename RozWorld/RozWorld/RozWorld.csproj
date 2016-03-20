@@ -11,7 +11,8 @@
     <RootNamespace>RozWorld</RootNamespace>
     <AssemblyName>RozWorld</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -46,6 +47,9 @@
     <Reference Include="Pencil.Gaming">
       <HintPath>Libs\Pencil.Gaming.dll</HintPath>
     </Reference>
+    <Reference Include="RawInput">
+      <HintPath>Libs\RawInput.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -55,6 +59,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="XInputDotNetPure">
+      <HintPath>Libs\XInputDotNetPure.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Delegates.cs" />
@@ -95,6 +102,8 @@
     <Compile Include="Graphics\VectorColour.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\Mouse.cs" />
+    <Compile Include="Input\MouseButtonState.cs" />
+    <Compile Include="Input\MouseInfo.cs" />
     <Compile Include="IO\ByteParse.cs" />
     <Compile Include="IO\Files.cs" />
     <Compile Include="IO\RozEncoding.cs" />
@@ -110,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

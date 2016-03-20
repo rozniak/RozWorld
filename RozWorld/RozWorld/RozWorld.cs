@@ -19,10 +19,15 @@ using RozWorld.IO;
 
 namespace RozWorld
 {
+    /// <summary>
+    /// Provides game globals for RozWorld.
+    /// </summary>
     public static class RozWorld
     {
-        public const bool SHOW_VERSION_STRING = true;
-        public const string VERSION_STRING = "RozWorld Progress Build";
+        /// <summary>
+        /// The state of whether debug related information should be shown or not.
+        /// </summary>
+        public const bool DEBUG_STUFF = false;
 
         public static GameWindow MainWindow;
         public static GameSettings Settings;

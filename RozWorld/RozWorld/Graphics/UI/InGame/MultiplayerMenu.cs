@@ -60,10 +60,10 @@ namespace RozWorld.Graphics.UI.InGame
             connectButton.Width = 100;
             connectButton.Position = new Vector2(218, 288);
             connectButton.DialogKey = this.DialogKey;
-            connectButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            connectButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            connectButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
-            connectButton.OnMouseUp += new SenderEventHandler(connectButton_OnMouseUp);
+            //connectButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //connectButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //connectButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //connectButton.OnMouseUp += new SenderEventHandler(connectButton_OnMouseUp);
 
             ParentWindow.GameInterface.Controls.Add("ConnectButton", connectButton);
 
@@ -74,25 +74,11 @@ namespace RozWorld.Graphics.UI.InGame
             specifyButton.Width = 100;
             specifyButton.Position = new Vector2(218, 328);
             specifyButton.DialogKey = this.DialogKey;
-            specifyButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
-            specifyButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
-            specifyButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
+            //specifyButton.OnMouseDown += new SenderEventHandler(ButtonEvent.OnMouseDown);
+            //specifyButton.OnMouseEnter += new SenderEventHandler(ButtonEvent.OnMouseEnter);
+            //specifyButton.OnMouseLeave += new SenderEventHandler(ButtonEvent.OnMouseLeave);
 
             ParentWindow.GameInterface.Controls.Add("SpecifyButton", specifyButton);
-
-            SetupSubscribers();
-        }
-
-
-        /// <summary>
-        /// Implementation of the base subscriber setup method.
-        /// </summary>
-        public override void SetupSubscribers()
-        {
-            MouseSubscribers = new ControlSkeleton[] {
-                ParentWindow.GameInterface.Controls["ConnectButton"],
-                ParentWindow.GameInterface.Controls["SpecifyButton"]
-            };
         }
 
 
