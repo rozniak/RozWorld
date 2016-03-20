@@ -33,7 +33,7 @@ namespace RozWorld.Graphics.UI.Control
                 UpdateDrawInstruction("colour");
             }
         }
-        
+
         private string _TextureName;
         public string TextureName
         {
@@ -150,7 +150,7 @@ namespace RozWorld.Graphics.UI.Control
 
             this.TextureName = "Missing";
             this._TintColour = VectorColour.NoTint;
-            this.Position = new Vector2(0, 0);            
+            this.Position = new Vector2(0, 0);
             this.Dimensions = RozWorld.Textures.GetTexture(TextureName).Size;
             this.BlitFrom = new Vector2(0, 0);
             this.BlitTo = new Vector2(RozWorld.Textures.GetTexture(TextureName).Size.Width, RozWorld.Textures.GetTexture(this._TextureName).Size.Height);

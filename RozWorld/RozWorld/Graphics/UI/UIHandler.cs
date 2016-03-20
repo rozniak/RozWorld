@@ -175,7 +175,7 @@ namespace RozWorld.Graphics.UI
         {
             string detailsProvided = String.Empty;
 
-            if(details != null)
+            if (details != null)
             {
                 detailsProvided = "\n\nDetails provided:\n" + details;
             }
@@ -205,7 +205,7 @@ namespace RozWorld.Graphics.UI
 
                 case Error.MISSING_INI_DICTIONARY_KEY:
                     MessageBox.Show("A reference was made to a missing INI variable. " + detailsProvided + "\n\nRozWorld will now exit.",
-                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                        "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     break;
 

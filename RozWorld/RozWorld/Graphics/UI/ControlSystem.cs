@@ -58,7 +58,7 @@ namespace RozWorld.Graphics.UI
         /// <summary>
         /// Triggers mouse checks on each of the subscribed controls.
         /// </summary>
-        public void TriggerMouse() 
+        public void TriggerMouse()
         {
             foreach (ControlSkeleton control in MouseSubscribers)
             {
@@ -72,7 +72,7 @@ namespace RozWorld.Graphics.UI
         /// </summary>
         /// <param name="down">Whether the event state is a key down or up.</param>
         /// <param name="key">The key changing state.</param>
-        public void TriggerKeyboard(bool down, byte key) 
+        public void TriggerKeyboard(bool down, byte key)
         {
             foreach (ControlSkeleton control in KeyboardSubscribers)
             {

@@ -112,7 +112,7 @@ namespace RozWorld.Graphics.UI.InGame
             ParentWindow.GameInterface.Controls["PlayGameButton"].Visible = true;
             ParentWindow.GameInterface.Controls["MultiplayerButton"].Visible = true;
             ParentWindow.GameInterface.Controls["SettingsButton"].Visible = true;
-            ParentWindow.GameInterface.Controls["ExitGameButton"].Visible = true;    
+            ParentWindow.GameInterface.Controls["ExitGameButton"].Visible = true;
         }
 
 

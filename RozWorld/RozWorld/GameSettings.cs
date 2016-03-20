@@ -91,7 +91,7 @@ namespace RozWorld
          */
         public string LanguageSource;
 
-        
+
         /// <summary>
         /// Load or reload the settings for RozWorld, specifying a file to load if necessary.
         /// </summary>

@@ -17,7 +17,7 @@ namespace RozWorld.Graphics.UI
     public struct KeyboardState
     {
         private List<byte> ActiveKeys;
-        
+
 
         /// <summary>
         /// Sets the key to active within the keyboard state.

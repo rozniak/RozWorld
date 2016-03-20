@@ -9,6 +9,8 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
+using Pencil.Gaming;
+
 using OpenGL;
 
 using RozWorld.Graphics.UI;
@@ -20,8 +22,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Timers;
-
-using Tao.FreeGlut;
 
 
 namespace RozWorld.Graphics
@@ -73,13 +73,13 @@ namespace RozWorld.Graphics
         /**
          * Mouse relevant stuff.
          */
-        public MouseState LastMouseStates
+        public UI.MouseState LastMouseStates
         {
             get;
             private set;
         }
 
-        public MouseState CurrentMouseStates
+        public UI.MouseState CurrentMouseStates
         {
             get;
             private set;
@@ -104,13 +104,13 @@ namespace RozWorld.Graphics
         /**
          * Keyboard relevant stuff.
          */
-        public KeyboardState LastKeyStates
+        public UI.KeyboardState LastKeyStates
         {
             get;
             private set;
         }
 
-        public KeyboardState CurrentKeyStates
+        public UI.KeyboardState CurrentKeyStates
         {
             get;
             private set;
@@ -155,6 +155,12 @@ namespace RozWorld.Graphics
         private int LastSystemAmount;
 
 
+        /**
+         * Pointer for the GLFW window stuff
+         */
+        public GlfwWindowPtr GlfwPtr { get; private set; }
+
+
         public GameWindow()
         {
             // Set up settings
@@ -165,24 +171,29 @@ namespace RozWorld.Graphics
             MouseInputDelay = new Timer(1);
             MouseInputDelay.Elapsed += new ElapsedEventHandler(MouseInputDelay_Elapsed);
             CheckMouseInput = true;
-            
-            // Initialise GL stuff...
-            Glut.glutInit();
 
-            // Create GL window...
-            Glut.glutInitWindowSize(WindowScale.Width, WindowScale.Height);
-            Glut.glutCreateWindow(WINDOW_TITLE);
+            Glfw.SetErrorCallback(OnError);
 
-            // Set up GL functions...
-            Glut.glutIdleFunc(Draw);
-            Glut.glutCloseFunc(OnClose);
-            Glut.glutKeyboardFunc(OnKeyDown);
-            Glut.glutKeyboardUpFunc(OnKeyUp);
-            Glut.glutMouseFunc(OnMouseChanged);
-            Glut.glutPassiveMotionFunc(OnMouseMove);
-            Glut.glutMotionFunc(OnMouseMove);
-            Glut.glutDisplayFunc(OnDisplay);
-            Glut.glutReshapeFunc(OnReshape);
+            // Create GLFW window...
+            Glfw.WindowHint(WindowHint.ContextVersionMajor, 3);
+            Glfw.WindowHint(WindowHint.ContextVersionMinor, 2);
+            Glfw.WindowHint(WindowHint.OpenGLForwardCompat, 1);
+            Glfw.WindowHint(WindowHint.OpenGLProfile, (int)OpenGLProfile.Core);
+
+
+
+            GlfwPtr = Glfw.CreateWindow(WindowScale.Width, WindowScale.Height,
+                WINDOW_TITLE, GlfwMonitorPtr.Null, GlfwWindowPtr.Null);
+
+            Glfw.MakeContextCurrent(GlfwPtr);
+
+            // Set up GLFW functions...
+            Glfw.SetWindowCloseCallback(GlfwPtr, OnClose);
+            Glfw.SetKeyCallback(GlfwPtr, OnKey);
+            Glfw.SetMouseButtonCallback(GlfwPtr, OnMouseChanged);
+            Glfw.SetCursorPosCallback(GlfwPtr, OnMouseMove);
+            Glfw.SetWindowRefreshCallback(GlfwPtr, OnDisplay);
+            Glfw.SetWindowSizeCallback(GlfwPtr, OnReshape);
 
             // Set up (shadow) blending...
             Gl.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
@@ -197,8 +208,11 @@ namespace RozWorld.Graphics
             {
                 UIHandler.CriticalError(Error.SHADERS_UNSUPPORTED);
             }
-                        
+
             GLProgram.Use();
+
+            uint vao = Gl.GenVertexArray();
+            Gl.BindVertexArray(vao);
 
             // Load texture content...
             GameInterface = new UIHandler();
@@ -225,13 +239,23 @@ namespace RozWorld.Graphics
 
             // THIS IS TEST CODE ONLY!
             List<DrawInstruction> test;
-            FontProvider.BuildString(FontType.HugeFont, "this is a test", out test, StringFormatting.Both);
+            //FontProvider.BuildString(FontType.HugeFont, "RIG sucks", out test, StringFormatting.Both);
             // // // // // // // // //
 
-
-            Glut.glutMainLoop();
-
             
+
+
+
+            while (!Glfw.WindowShouldClose(GlfwPtr))
+            {
+                Glfw.PollEvents();
+
+                Draw();
+
+                Glfw.SwapBuffers(GlfwPtr);
+            }
+
+
         }
 
 
@@ -292,8 +316,10 @@ namespace RozWorld.Graphics
                     {
                         VBO<Vector3> TextureDrawVectors = new VBO<Vector3>(new Vector3[] { new Vector3(instruction.DrawPoints[0].x, instruction.DrawPoints[0].y, 0), new Vector3(instruction.DrawPoints[1].x, instruction.DrawPoints[1].y, 0), new Vector3(instruction.DrawPoints[2].x, instruction.DrawPoints[2].y, 0), new Vector3(instruction.DrawPoints[3].x, instruction.DrawPoints[3].y, 0) });
                         VBO<int> TextureQuads = new VBO<int>(new int[] { 0, 1, 2, 3 }, BufferTarget.ElementArrayBuffer);
-
+                        
+                        Gl.ActiveTexture(TextureUnit.Texture0);
                         Gl.BindTexture(instruction.TextureReference);
+                        Gl.Uniform1f(Gl.GetUniformLocation(GLProgram.ProgramID, "texture"), 0);
 
                         VBO<Vector2> TextureBlitVectors = new VBO<Vector2>(new Vector2[] { new Vector2(instruction.BlitPoints[0].x, instruction.BlitPoints[0].y), new Vector2(instruction.BlitPoints[1].x, instruction.BlitPoints[1].y), new Vector2(instruction.BlitPoints[2].x, instruction.BlitPoints[2].y), new Vector2(instruction.BlitPoints[3].x, instruction.BlitPoints[3].y) });
 
@@ -303,8 +329,8 @@ namespace RozWorld.Graphics
                         Gl.BindBufferToShaderAttribute(TextureBlitVectors, GLProgram, "vertexUV");
 
                         Gl.BindBuffer(TextureQuads);
-
                         Gl.DrawElements(BeginMode.TriangleFan, TextureQuads.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
+                        
 
                         TextureDrawVectors.Dispose();
                         TextureQuads.Dispose();
@@ -318,7 +344,7 @@ namespace RozWorld.Graphics
                     GameInterface.SortControlZIndexes(); // ControlZMap contains keys not present in the Controls dictionary.
                 }
             }
-            
+
             // Remember to flush!
             Gl.Flush();
         }
@@ -327,10 +353,19 @@ namespace RozWorld.Graphics
         /// <summary>
         /// Routine called when the GL window is closed.
         /// </summary>
-        private void OnClose()
+        private void OnClose(GlfwWindowPtr wnd)
         {
             GLProgram.DisposeChildren = true;
             GLProgram.Dispose();
+        }
+
+
+        /// <summary>
+        /// Routine called when an error occurs in GLFW.
+        /// </summary>
+        private void OnError(GlfwError code, string desc)
+        {
+            string t = "";
         }
 
 
@@ -339,12 +374,12 @@ namespace RozWorld.Graphics
         /// </summary>
         /// <param name="width">New width of the window.</param>
         /// <param name="height">New height of the window.</param>
-        private void OnReshape(int width, int height)
+        private void OnReshape(GlfwWindowPtr wnd, int width, int height)
         {
             WindowScale = new Size(width, height);
 
             // Make sure the screen updates, so you don't get the solitaire effect
-            OnDisplay();
+            OnDisplay(GlfwPtr);
             Draw();
 
             GLProgram.Use();
@@ -354,7 +389,7 @@ namespace RozWorld.Graphics
         /// <summary>
         /// Routine called when the GL window is redisplayed.
         /// </summary>
-        private void OnDisplay()
+        private void OnDisplay(GlfwWindowPtr wnd)
         {
             // Make sure the screen stays at least at the minimal resolution
             if (RozWorld.Settings.MinimumSizeIsPreferred)
@@ -362,7 +397,7 @@ namespace RozWorld.Graphics
                 if (WindowScale.Width < RozWorld.Settings.WindowResolution.Width ||
                     WindowScale.Height < RozWorld.Settings.WindowResolution.Height)
                 {
-                    Glut.glutReshapeWindow(RozWorld.Settings.WindowResolution.Width,
+                    Glfw.SetWindowSize(GlfwPtr, RozWorld.Settings.WindowResolution.Width,
                         RozWorld.Settings.WindowResolution.Height);
                 }
             }
@@ -370,7 +405,7 @@ namespace RozWorld.Graphics
             {
                 if (WindowScale.Width < 800 || WindowScale.Height < 600)
                 {
-                    Glut.glutReshapeWindow(800, 600);
+                    Glfw.SetWindowSize(GlfwPtr, 800, 600);
                 }
             }
 
@@ -401,115 +436,29 @@ namespace RozWorld.Graphics
 
 
         /// <summary>
-        /// Routine called when a key is pressed.
+        /// Routine called when a key's state changes.
         /// </summary>
-        private void OnKeyDown(byte key, int x, int y)
+        private void OnKey(GlfwWindowPtr wnd, Key key, int scanCode, KeyAction action, KeyModifiers mods)
         {
-            Glut.glutSetWindowTitle(WINDOW_TITLE + " " + key.ToString());
-        }
-
-
-        /// <summary>
-        /// Routine called when a key is lifted.
-        /// </summary>
-        private void OnKeyUp(byte key, int x, int y)
-        {
-            LastKeyStates = CurrentKeyStates;
-            CurrentKeyStates.KeyUp(key);
-
-            LastSystemAmount = GameInterface.ControlSystems.Count;
-
-            try
-            {
-                foreach (var item in GameInterface.ControlSystems)
-                {
-                    if (LastSystemAmount != GameInterface.ControlSystems.Count)
-                    {
-                        continue;
-                    }
-
-                    item.Value.TriggerKeyboard(false, key);
-                }
-            }
-            catch { } // Most likely transitioning from control systems
+            // TODO: Code this
         }
 
 
         /// <summary>
         /// Routine called when a mouse button changes state.
         /// </summary>
-        private void OnMouseChanged(int button, int state, int x, int y)
+        private void OnMouseChanged(GlfwWindowPtr wnd, MouseButton btn, KeyAction action)
         {
-            MouseState newMouseStates;
-            newMouseStates.Left = button == Glut.GLUT_LEFT_BUTTON && state == Glut.GLUT_DOWN;
-            newMouseStates.Middle = button == Glut.GLUT_MIDDLE_BUTTON && state == Glut.GLUT_DOWN;
-            newMouseStates.Right = button == Glut.GLUT_RIGHT_BUTTON && state == Glut.GLUT_DOWN;
-
-            LastMouseStates = CurrentMouseStates;
-            CurrentMouseStates = newMouseStates;
-
-            LastSystemAmount = GameInterface.ControlSystems.Count;
-
-            // Make sure we actually want to activate any mouse events right now
-            if (CheckMouseInput)
-            {
-                try
-                {
-                    foreach (var item in GameInterface.ControlSystems)
-                    {
-                        if (LastSystemAmount != GameInterface.ControlSystems.Count)
-                        {
-                            continue;
-                        }
-
-                        item.Value.TriggerMouse();
-                    }
-                }
-                catch
-                {
-                    /**
-                     * Most likely transitioning from control systems, start mouse
-                     * delay to prevent it leaking to other controls.
-                     */
-                    DelayMouse();
-                }
-            }
+            // TODO: Code this
         }
 
 
         /// <summary>
         /// Routine called when the mouse moves.
         /// </summary>
-        private void OnMouseMove(int x, int y)
+        private void OnMouseMove(GlfwWindowPtr wnd, double x, double y)
         {
-            MouseX = x;
-            MouseY = y;
-
-            LastSystemAmount = GameInterface.ControlSystems.Count;
-
-            if (CheckMouseInput)
-            {
-                try
-                {
-                    foreach (var item in GameInterface.ControlSystems)
-                    {
-                        if (LastSystemAmount != GameInterface.ControlSystems.Count)
-                        {
-                            continue;
-                        }
-
-                        item.Value.TriggerMouse();
-                    }
-                }
-                catch
-                {
-                    /**
-                     * Most likely transitioning from control systems, start mouse
-                     * delay to prevent it leaking to other controls.
-                     */
-                    DelayMouse();
-                }
-            }
+            // TODO: Code this
         }
 
 

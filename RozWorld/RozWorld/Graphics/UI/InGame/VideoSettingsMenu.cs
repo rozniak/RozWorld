@@ -67,7 +67,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             // Set up the resolution button
             FindClosestResolution();
-        
+
             // Window resolution label
             Label resolutionLabel = new Label(this.ParentWindow);
 

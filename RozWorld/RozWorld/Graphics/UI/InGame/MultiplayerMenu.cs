@@ -80,7 +80,7 @@ namespace RozWorld.Graphics.UI.InGame
 
             ParentWindow.GameInterface.Controls.Add("SpecifyButton", specifyButton);
 
-            SetupSubscribers();            
+            SetupSubscribers();
         }
 
 
@@ -93,7 +93,7 @@ namespace RozWorld.Graphics.UI.InGame
                 ParentWindow.GameInterface.Controls["ConnectButton"],
                 ParentWindow.GameInterface.Controls["SpecifyButton"]
             };
-        } 
+        }
 
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace RozWorld.Graphics.UI.InGame
         /// </summary>
         public override void UpdateControlPositions()
         {
-            
+
         }
 
 

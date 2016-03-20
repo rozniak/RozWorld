@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RozWorld")]
-[assembly: AssemblyDescription("RozWorld Adventure Game")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Oddmatics")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RozWorld")]
-[assembly: AssemblyCopyright("Copyright Oddmatics ©  2014")]
+[assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a15cd9ee-37a8-49da-bfc8-c8dec63337ac")]
+[assembly: Guid("7199c85a-8042-4508-8a36-27bd63b4d145")]
 
 // Version information for an assembly consists of the following four values:
 //

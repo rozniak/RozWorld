@@ -143,7 +143,7 @@ namespace RozWorld.Graphics.UI.Geometry
                         ByteParse.NextString(guiometryFile, ref currentIndex); // Read the next string to nothing
                 }
 
-                
+
                 // Actual reading of the GUIOMETRY data starts here, version by version!
                 // Versions split into #region blocks just because they're so nice (and I'm so nice too!)
 

@@ -117,7 +117,7 @@ namespace RozWorld.Graphics.UI.Control
         public event SenderEventHandler OnMouseEnter;
         public event SenderEventHandler OnMouseLeave;
         public event SenderEventHandler OnMouseUp;
-        
+
 
         public Button(GameWindow parentWindow)
         {
@@ -127,7 +127,7 @@ namespace RozWorld.Graphics.UI.Control
             this._ForeColour = VectorColour.OpaqueWhite;
             this._TintColour = VectorColour.NoTint;
             this._Text = "";
-            this.Position = new Vector2(0, 0);            
+            this.Position = new Vector2(0, 0);
             this.ZIndex = 1;
         }
 
@@ -187,7 +187,7 @@ namespace RozWorld.Graphics.UI.Control
                         OnMouseUp(this);
                     }
                 }
-            }            
+            }
         }
 
 
@@ -208,7 +208,7 @@ namespace RozWorld.Graphics.UI.Control
                 {
                     OnKeyUp(this, key);
                 }
-            }            
+            }
         }
 
 

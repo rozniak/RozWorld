@@ -146,7 +146,7 @@ namespace RozWorld.Graphics.UI.Control
                         OnMouseUp(this);
                     }
                 }
-            }            
+            }
         }
 
 

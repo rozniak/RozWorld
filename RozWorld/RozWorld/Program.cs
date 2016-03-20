@@ -9,6 +9,8 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
+using Pencil.Gaming;
+
 using RozWorld.Graphics;
 using RozWorld.Graphics.UI;
 using RozWorld.Graphics.UI.Geometry;
@@ -33,8 +35,14 @@ namespace RozWorld
             Files.SetupGameDirectories();
             RozWorld.Settings.Load();
 
+            // Initialise GLFW
+            Glfw.Init();
+
             // Start the game, events will stem from this window
             RozWorld.MainWindow = new GameWindow();
+
+            // The game is done
+            Glfw.Terminate();
         }
     }
 }

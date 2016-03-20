@@ -19,7 +19,7 @@ namespace RozWorld.Graphics.UI.Strings
 {
     public class LanguageSystem
     {
-        private Dictionary<string, Language> AvailableLanguages = new Dictionary<string,Language>();
+        private Dictionary<string, Language> AvailableLanguages = new Dictionary<string, Language>();
 
         private string _SelectedLanguage;
         private string SelectedLanguage
@@ -27,7 +27,7 @@ namespace RozWorld.Graphics.UI.Strings
             get { return this._SelectedLanguage; }
             set
             {
-                if(!string.IsNullOrEmpty(this._SelectedLanguage))
+                if (!string.IsNullOrEmpty(this._SelectedLanguage))
                     AvailableLanguages[this._SelectedLanguage].Unload();
 
                 AvailableLanguages[value].Load();

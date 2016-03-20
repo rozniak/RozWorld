@@ -22,7 +22,7 @@ namespace RozWorld.Graphics.UI
     {
         public Vector2[] DrawPoints = new Vector2[4];
         public Vector2[] BlitPoints = new Vector2[4];
-        
+
         public readonly Texture TextureReference;
         public readonly string InstructionKey;
         public Vector4 TintColour;
@@ -194,7 +194,7 @@ namespace RozWorld.Graphics.UI
             }
         }
 
-        
+
         /// <summary>
         /// Creates blitting coordinates for a character in a specified font.
         /// </summary>
@@ -244,7 +244,7 @@ namespace RozWorld.Graphics.UI
                     {
                         return new Vector2[] { new Vector2(384, 0), new Vector2(396, 11) };
                     }
-                    
+
                     return null;
 
                 default:

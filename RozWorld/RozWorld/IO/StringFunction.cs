@@ -123,13 +123,13 @@ namespace RozWorld.IO
             if (formatStripMode == StringFormatting.Colours ||
                 formatStripMode == StringFormatting.Both)
             {
-                
+
             }
 
             if (formatStripMode == StringFormatting.LineBreaks ||
                 formatStripMode == StringFormatting.Both)
             {
-                
+
             }
 
             return string.Empty; // just for the build process atm

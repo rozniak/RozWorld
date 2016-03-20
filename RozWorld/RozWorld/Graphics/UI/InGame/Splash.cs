@@ -58,7 +58,7 @@ namespace RozWorld.Graphics.UI.InGame
 
                 ParentWindow.GameInterface.Controls.Add("FPSCounter", fpsCounter);
             }
-            
+
             // Splash screen image
             Image splashScreen = new Image(this.ParentWindow);
 

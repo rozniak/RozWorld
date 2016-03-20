@@ -30,7 +30,7 @@ namespace RozWorld.Graphics
         public static readonly Vector4 OpaqueWhite = new Vector4(1.0, 1.0, 1.0, 1.0);
         public static readonly Vector4 OpaqueBlack = new Vector4(0.0, 0.0, 0.0, 1.0);
         public static readonly Vector4 OpaqueGrey = new Vector4(0.5, 0.5, 0.5, 1.0);
-        
+
         // Translucent Tints (Good for sprites)
         public static readonly Vector4 TintRed = new Vector4(1.0, 0.0, 0.0, 0.6);
         public static readonly Vector4 TintGreen = new Vector4(0.0, 1.0, 0.0, 0.6);

@@ -14,7 +14,7 @@ namespace RozWorld.Graphics
     public static class Shaders
     {
         public const string VertexShader = @"
-#version 130
+#version 330 core
 
 in vec3 vertexPosition;
 in vec2 vertexUV;
@@ -29,7 +29,7 @@ void main(void)
 ";
 
         public const string FragmentShader = @"
-#version 130
+#version 330 core
 
 uniform sampler2D texture;
 
@@ -41,7 +41,7 @@ out vec4 fragment;
 void main(void)
 {
     fragment = texture2D(texture, uv);
-
+    
     float red = (tint.w * tint.x) + ((1 - tint.w) * fragment.x);
     float green = (tint.w * tint.y) + ((1 - tint.w) * fragment.y);
     float blue = (tint.w * tint.z) + ((1 - tint.w) * fragment.z);

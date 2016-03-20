@@ -69,7 +69,7 @@ namespace RozWorld.IO
 
                 return fileContents.AsReadOnly();
             }
-            
+
             return null;
         }
 
@@ -201,8 +201,8 @@ namespace RozWorld.IO
 
             return null;
         }
-        
-        
+
+
         /// <summary>
         /// Checks if all necessary game directories exist, if they don't, they will be created.
         /// </summary>

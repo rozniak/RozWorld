@@ -195,7 +195,7 @@ namespace RozWorld.Graphics.UI
                         }
                     }
 
-                    //stringTexture.Save("C:\\test" + DateTime.Now.ToShortTimeString().Replace(':', '.') + ".png");
+                    stringTexture.Save("U:\\Files\\test" + DateTime.Now.ToShortTimeString().Replace(':', '.') + ".png");
                 }
             }
 
