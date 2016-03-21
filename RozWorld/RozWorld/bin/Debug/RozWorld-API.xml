@@ -1,0 +1,693 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RozWorld-API</name>
+    </assembly>
+    <members>
+        <member name="P:RozWorld_API.Thing.Item.AllowMultiple">
+            <summary>
+            Gets whether this item allows multiple of itself to be contained in a single slot.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Item.Name">
+            <summary>
+            Gets the internal reference name of this item.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Item.LanguageString">
+            <summary>
+            Gets the language string identifier of this item that is shown in the client's GUI.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Item.Type">
+            <summary>
+            Gets the type of this item.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Item.ID">
+            <summary>
+            Gets the ID of this item.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Item.ParentServer">
+            <summary>
+            Gets or sets the parent server of this item.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.WeaponItem.Damage">
+            <summary>
+            Gets the amount of damage this weapon does.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.WeaponItem.DamageType">
+            <summary>
+            Gets the way this weapon does damage.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Level.World.Chunk.GetTileAt(System.Int32,System.Int32)">
+            <summary>
+            Gets a tile by its position in this chunk.
+            </summary>
+            <param name="x">The x-coordinate of the tile.</param>
+            <param name="y">The y-coordinate of the tile.</param>
+            <returns>The tile at the specified location.</returns>
+        </member>
+        <member name="M:RozWorld_API.Level.World.Chunk.MakeExplosion(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Makes an explosion at a given position in this chunk.
+            </summary>
+            <param name="x">The x-coordinate to explode at.</param>
+            <param name="y">The y-coordinate to explode at.</param>
+            <param name="z">The z-coordinate to explode at.</param>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Chunk.X">
+            <summary>
+            Gets the x-coordinate of this chunk.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Chunk.Y">
+            <summary>
+            Gets the y-coordinate of this chunk.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Chunk.Z">
+            <summary>
+            Gets the z-coordinate of this chunk.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Chunk.ParentWorld">
+            <summary>
+            Gets the parent world of this chunk.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Wall.Name">
+            <summary>
+            Gets the internal reference name of this wall.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Wall.ID">
+            <summary>
+            Gets the ID of this wall.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Wall.ParentServer">
+            <summary>
+            Gets or sets the parent server of this item.
+            </summary>
+        </member>
+        <member name="T:RozWorld_API.Event.LogEvent">
+            <summary>
+            Represents the method that will handle the LogMessageSent event of a Server.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:RozWorld_API.Event.LogEventArgs">
+            <summary>
+            Provides data for the Server.LogMessageSent event.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.LogEventArgs.Message">
+            <summary>
+            Gets the message being logged.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.LogEventArgs.Time">
+            <summary>
+            Gets the time the message was sent to be logged.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.LogEventArgs.MessageType">
+            <summary>
+            Gets the type of message being logged.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Event.PlayerChatEventArgs.Message">
+            <summary>
+            Gets or sets the message being sent.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Event.PlayerChatEventArgs.Cancelled">
+            <summary>
+            Gets or sets the cancelled status of the chat message event.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.PlayerChatEventArgs.Sender">
+            <summary>
+            Gets the player who sent the chat message.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.PlayerChatEventArgs.Recipients">
+            <summary>
+            Gets the recipients of the chat message.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Chat.ChatGraphic.IsGraphic(System.Char)">
+            <summary>
+            Gets whether the specified character is a special graphic character.
+            </summary>
+            <param name="subject">The character to check.</param>
+            <returns>Whether or not the specified character is a special graphic character.</returns>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Floor.Name">
+            <summary>
+            Gets the internal reference name of this floor.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Floor.ID">
+            <summary>
+            Gets the ID of this floor.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Floor.ParentServer">
+            <summary>
+            Gets or sets the parent server of this item.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.PlayerGameModeEventArgs.Player">
+            <summary>
+            Gets the player whose game mode is being changed.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.PlayerGameModeEventArgs.NewGameMode">
+            <summary>
+            Gets the new game mode the player has changed to.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Event.PlayerGameModeEventArgs.OldGameMode">
+            <summary>
+            Gets the old game mode the player used to be.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Container.Inventory.Slot">
+            <summary>
+            Gets or sets slot data in this inventory.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Container.Inventory.MaxSlotQuantity">
+            <summary>
+            Gets or sets the maximum quantity of an item per slot in this inventory.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Container.Inventory.GetItemSlot(System.Int32)">
+            <summary>
+            Gets an item slot from this inventory.
+            </summary>
+            <param name="slot">The slot number to get.</param>
+            <returns>The item slot of the specified number, null otherwise.</returns>
+        </member>
+        <member name="M:RozWorld_API.Container.Inventory.AddItem(RozWorld_API.Thing.Item,System.UInt16,System.Boolean,System.Int32)">
+            <summary>
+            Adds an item to this inventory
+            </summary>
+            <param name="item">The item to add.</param>
+            <param name="quantity">The quantity of the item to add.</param>
+            <param name="carryOver">Whether to carry over the item if the quantity overloads the maximum per slot.</param>
+            <param name="slot">The slot to attempt to add the item to, an invalid or occupied value will result in the item being added to the first available slot.</param>
+            <returns>Any leftovers that did not fit inside this inventory as an item stack, or null if successful.</returns>
+        </member>
+        <member name="M:RozWorld_API.Container.Inventory.AddItemSlot(RozWorld_API.Container.ItemSlot,System.Boolean,System.Int32)">
+            <summary>
+            Adds an item slot to this inventory.
+            </summary>
+            <param name="itemSlot">The item slot to add.</param>
+            <param name="carryOver">Whether to carry over the item if the quantity overloads the maximum per slot.</param>
+            <param name="targetSlot">The slot to attempt to add the item slot into, an invalid or occupied value will result in the item being added to the first available slot.</param>
+            <returns>Any leftovers that did not fit inside this inventory as an item stack, or null if successful.</returns>
+        </member>
+        <member name="M:RozWorld_API.Entity.Player.Kick(System.String)">
+            <summary>
+            Kicks this player from the server.
+            </summary>
+            <param name="reason">The reason the player will see to explain why they got kicked.</param>
+        </member>
+        <member name="M:RozWorld_API.Entity.Player.Heal(System.UInt32)">
+            <summary>
+            Heals this player.
+            </summary>
+            <param name="Amount">The amount to heal this player.</param>
+        </member>
+        <member name="M:RozWorld_API.Entity.Player.SendMessage(System.String)">
+            <summary>
+            Sends a message to this player.
+            </summary>
+            <param name="message">The contents of the message to send.</param>
+        </member>
+        <member name="M:RozWorld_API.Entity.Player.DealDamage(System.UInt32)">
+            <summary>
+            Deals some damage to this player.
+            </summary>
+            <param name="damage">The amount of damage to deal.</param>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.Name">
+            <summary>
+            Gets the username of this player.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.Nickname">
+            <summary>
+            Gets or sets the nickname of this player.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.Angle">
+            <summary>
+            Gets or sets the angle this player is facing.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.Direction">
+            <summary>
+            Gets the cardinal direction this player is facing.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.GameMode">
+            <summary>
+            Gets or sets this player's game mode.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.Health">
+            <summary>
+            Gets or sets this player's health.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.MaxHealth">
+            <summary>
+            Gets or sets this player's maximum health.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.IsDead">
+            <summary>
+            Gets or sets whether this player is dead or not.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.Speed">
+            <summary>
+            Gets or sets this player's movement speed.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.CurrentSpeed">
+            <summary>
+            Gets this player's current speed.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Entity.Player.ParentServer">
+            <summary>
+            Gets the parent server of this player.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Level.World.WorldGenerator.MakeWorld(System.String,System.Collections.Generic.IList{System.String})">
+            <summary>
+            Generates a new world of the specified name.
+            </summary>
+            <param name="worldName">The name the new world should have (should be unique).</param>
+            <param name="args">The arguments to pass to this generator.</param>
+            <returns>A new world of the specified name (if it is unique).</returns>
+        </member>
+        <member name="M:RozWorld_API.Level.World.WorldGenerator.MakeChunk(RozWorld_API.Level.World.World,System.Int32,System.Int32,System.Int32,System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})">
+            <summary>
+            Generates a new chunk for a given world at the specified location.
+            </summary>
+            <param name="parentWorld">The parent world of this chunk.</param>
+            <param name="x">The x-coordinate of where to generate this chunk.</param>
+            <param name="y">The y-coordinate of where to generate this chunk.</param>
+            <param name="z">The z-coordinate of where to generate this chunk.</param>
+            <param name="chunkInstructions">The instructions given to this chunk from surrounding chunks.</param>
+            <param name="args">The arguments to pass to this generator.</param>
+            <returns>The chunk that was just generated for the world</returns>
+        </member>
+        <member name="F:RozWorld_API.Container.ItemSlot.Contents">
+            <summary>
+            Gets or sets the item in this slot.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Container.ItemSlot.ParentInventory">
+            <summary>
+            Gets or sets the parent inventory of this item slot.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Container.ItemSlot.MaxQuantity">
+            <summary>
+            Gets or sets the maximum quantity of an item allowed in this slot.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Container.ItemSlot.Quantity">
+            <summary>
+            Gets or sets the quantity of the item in this slot.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Mod.Plugin.Load">
+            <summary>
+            Method to be called when the server is starting up.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Mod.Plugin.Unload">
+            <summary>
+            Method to be called when the server is shutting down.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Mod.Plugin.Name">
+            <summary>
+            Gets the name of this plugin.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Mod.Plugin.Version">
+            <summary>
+            Gets the version of this plugin.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Mod.Plugin.ParentServer">
+            <summary>
+            Gets or sets the parent server of this item.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Level.WorldPosition.ChunkX">
+            <summary>
+            Gets or sets the x-coordinate representing the chunk this position is inside of.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Level.WorldPosition.ChunkY">
+            <summary>
+            Gets or sets the y-coordinate representing the chunk this position is inside of.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Level.WorldPosition.ChunkZ">
+            <summary>
+            Gets or sets the z-coordinate representing the chunk this position is inside of.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Level.WorldPosition.LocalX">
+            <summary>
+            Gets or sets the x-coordinate inside of the chunk this position is at.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Level.WorldPosition.LocalY">
+            <summary>
+            Gets or sets the y-coordinate inside of the chunk this position is at.
+            </summary>
+        </member>
+        <member name="F:RozWorld_API.Level.WorldPosition.LocalZ">
+            <summary>
+            Gets or sets the z-coordinate inside of the chunk this position is at.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Explosion.BlastRadius">
+            <summary>
+            Gets or sets the blast radius of this explosion.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Explosion.Intensity">
+            <summary>
+            Gets or sets the damage distribution cutoff of this explosion.
+            Values in range 0.0 - 1.0.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Thing.Explosion.Position">
+            <summary>
+            Gets or sets the origin point of this explosion.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Server.GetPlayer(System.String)">
+            <summary>
+            Gets a player by their username, case insensitive.
+            </summary>
+            <param name="name">The player's username to locate them by.</param>
+            <returns>The player if they exist on the server, null otherwise.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.GetPlayers">
+            <summary>
+            Gets all players currently on this server.
+            </summary>
+            <returns>A full list of all players on this server.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.GetWorld(System.String)">
+            <summary>
+            Gets a world by its name, case insensitive.
+            </summary>
+            <param name="name">The world's name to locate it by.</param>
+            <returns>The world if they exist on the server, null otherwise.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.GetWorlds">
+            <summary>
+            Gets all worlds currently on this server.
+            </summary>
+            <returns>A full list of all worlds on this server.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.LoadWhitelist">
+            <summary>
+            Load or reloads the whitelist from the disk.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Server.SavePlayers">
+            <summary>
+            Saves all players' data to the disk.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Server.BroadcastMessage(System.String)">
+            <summary>
+            Broadcasts a message to all players on the server.
+            </summary>
+            <param name="message">The message to broadcast.</param>
+        </member>
+        <member name="M:RozWorld_API.Server.CreateItem(System.String)">
+            <summary>
+            Creates a new instance of the item with the exact specified name (case-sensitive).
+            </summary>
+            <param name="name">The exact case-sensitive name of the item.</param>
+            <returns>A new instance of the item with the specified name.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.GetItemID(System.String)">
+            <summary>
+            Gets the ID of an item by its exact specified name (case-sensitive).
+            </summary>
+            <param name="name">The exact case-sensitive name of the item.</param>
+            <returns>The ID of the item if it exists, 0 otherwise.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.CreateFloor(System.String)">
+            <summary>
+            Creates a new instance of the floor with the exact specified name (case-sensitive).
+            </summary>
+            <param name="name">The exact case-sensitive name of the floor.</param>
+            <returns>A new instance of the floor with the specified name.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.GetFloorID(System.String)">
+            <summary>
+            Gets the ID of a floor by its exact specified name (case-sensitive).
+            </summary>
+            <param name="name">The exact case-sensitive name of the floor.</param>
+            <returns>The ID of the floor if it exists, 0 otherwise.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.CreateWall(System.String)">
+            <summary>
+            Creates a new instance of the wall with the exact specified name (case-sensitive).
+            </summary>
+            <param name="name">The exact case-sensitive name of the wall.</param>
+            <returns>A new instance of the floor with the specified name.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.GetWallID(System.String)">
+            <summary>
+            Creates a new instance of the wall with the exact specified name (case-sensitive).
+            </summary>
+            <param name="name">The exact case-sensitive name of the wall.</param>
+            <returns>The ID of the wall if it exists, 0 otherwise.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.RegisterLogger(RozWorld_API.Logging.Logger)">
+            <summary>
+            Registers a logger to this server instance if it does not have one already.
+            </summary>
+            <param name="logger">The logger to register.</param>
+            <returns>Whether registering the logger was successful or not.</returns>
+        </member>
+        <member name="M:RozWorld_API.Server.Start">
+            <summary>
+            Starts this server, as long as it isn't already started.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Server.Reload">
+            <summary>
+            Reloads this server, as long as it is already started.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Server.Stop">
+            <summary>
+            Stops this server, as long as it is already started.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Server.RegisterCommand(System.String,RozWorld_API.ServerCommand)">
+            <summary>
+            Attempts to register a command on this server.
+            </summary>
+            <param name="name">The name of the command that will trigger it.</param>
+            <param name="command">The delegate to pass onto.</param>
+            <returns>Whether the command was successfully registered or not.</returns>
+        </member>
+        <member name="P:RozWorld_API.Server.Version">
+            <summary>
+            Gets the version of this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.ImplementationName">
+            <summary>
+            Gets the name of this server implementation.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.VanillaClientCompatible">
+            <summary>
+            Gets whether this server is compatible with vanilla clients.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.AllowedClientImplementations">
+            <summary>
+            Gets the list of client implementations allowed to join this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.MaxClients">
+            <summary>
+            Gets or sets the max number of clients allowed on this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.PlayerCount">
+            <summary>
+            Gets the number of players present on this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.WhitelistedPlayers">
+            <summary>
+            Gets the list of whitelisted players on this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.WhitelistActive">
+            <summary>
+            Gets or sets whether to whitelist this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.Port">
+            <summary>
+            Gets the port that this server is running on.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.IsActive">
+            <summary>
+            Gets whether the server is active or not.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.IsLocal">
+            <summary>
+            Gets whether the server is running on a LAN or purely local or not.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.Log">
+            <summary>
+            Gets the logger on this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.Difficulty">
+            <summary>
+            Gets or sets the difficulty of this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.MOTD">
+            <summary>
+            Gets or sets the message of the day that players receive when they join this server.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Server.Name">
+            <summary>
+            Gets this server's name that will appear in clients' server lists.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Logging.Logger.LogMessage(System.String)">
+            <summary>
+            Sends a message to the server log and output.
+            </summary>
+            <param name="message">The message to send.</param>
+        </member>
+        <member name="P:RozWorld_API.Logging.Logger.LogChatMessages">
+            <summary>
+            Gets or sets whether chat messages should be logged.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Logging.Logger.LogServerMessages">
+            <summary>
+            Gets or sets whether server messages should be logged.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Tile.X">
+            <summary>
+            Gets the x-coordinate of this tile.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Tile.Y">
+            <summary>
+            Gets the y-coordinate of this tile.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Tile.Wall">
+            <summary>
+            Gets or set the wall of this tile.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.Tile.Floor">
+            <summary>
+            Gets or sets the floor of this tile.
+            </summary>
+        </member>
+        <member name="M:RozWorld_API.Level.World.World.GetChunkAt(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets a chunk by its position in this world.
+            </summary>
+            <param name="x">The x-coordinate of the chunk.</param>
+            <param name="y">The y-coordinate of the chunk.</param>
+            <param name="z">The z-coordinate of the chunk.</param>
+            <returns>The chunk at the specified location.</returns>
+        </member>
+        <member name="M:RozWorld_API.Level.World.World.MakeExplosion(RozWorld_API.Level.WorldPosition)">
+            <summary>
+            Makes an explosion at a given position in this world.
+            </summary>
+            <param name="position">The position to explode at.</param>
+        </member>
+        <member name="M:RozWorld_API.Level.World.World.MakeExplosion(RozWorld_API.Level.WorldPosition,System.Double)">
+            <summary>
+            Makes an explosion at a given position in this world.
+            </summary>
+            <param name="position">The position to explode at.</param>
+            <param name="intensity">The damage distribution cutoff of the explosion. (Values in range of 0.0 - 1.0)</param>
+        </member>
+        <member name="M:RozWorld_API.Level.World.World.MakeExplosion(RozWorld_API.Level.WorldPosition,System.UInt16)">
+            <summary>
+            Makes an explosion at a given position in this world.
+            </summary>
+            <param name="position">The position to explode at.</param>
+            <param name="blastRadius">The blast radius of the explosion.</param>
+        </member>
+        <member name="M:RozWorld_API.Level.World.World.MakeExplosion(RozWorld_API.Level.WorldPosition,System.Double,System.UInt16)">
+            <summary>
+            Makes an explosion at a given position in this world.
+            </summary>
+            <param name="position">The position to explode at.</param>
+            <param name="intensity">The damage distribution cutoff of the explosion. (Values in range of 0.0 - 1.0)</param>
+            <param name="blastRadius">The blast radius of the explosion.</param>
+        </member>
+        <member name="M:RozWorld_API.Level.World.World.MakeExplosion(RozWorld_API.Thing.Explosion)">
+            <summary>
+            Makes an explosion at a given position in this world.
+            </summary>
+            <param name="explosion">The explosion to make in this world.</param>
+        </member>
+        <member name="M:RozWorld_API.Level.World.World.MakeExplosion(RozWorld_API.Level.WorldPosition,RozWorld_API.Thing.Explosion)">
+            <summary>
+            Makes an explosion at a given position in this world.
+            </summary>
+            <param name="position">The position to explode at.</param>
+            <param name="explosion">The explosion to make in this world.</param>
+        </member>
+        <member name="P:RozWorld_API.Level.World.World.Name">
+            <summary>
+            Gets the name of this world.
+            </summary>
+        </member>
+        <member name="P:RozWorld_API.Level.World.World.Generator">
+            <summary>
+            Gets the generator assigned to this world.
+            </summary>
+        </member>
+    </members>
+</doc>

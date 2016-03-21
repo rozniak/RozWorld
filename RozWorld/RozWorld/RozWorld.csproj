@@ -50,6 +50,9 @@
     <Reference Include="RawInput">
       <HintPath>Libs\RawInput.dll</HintPath>
     </Reference>
+    <Reference Include="RozWorld-API">
+      <HintPath>Libs\RozWorld-API.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

@@ -156,12 +156,6 @@ namespace RozWorld.Graphics
                 VectorColour.OpaqueWhite.z,
                 VectorColour.OpaqueWhite.w);
 
-
-            // THIS IS TEST CODE ONLY!
-            List<DrawInstruction> test;
-            //FontProvider.BuildString(FontType.HugeFont, "RIG sucks", out test, StringFormatting.Both);
-            // // // // // // // // //
-
             Glfw.SetTime(0); // Initial delta-time of 0 (or close to it)
 
             while (!Glfw.WindowShouldClose(GlfwPtr))

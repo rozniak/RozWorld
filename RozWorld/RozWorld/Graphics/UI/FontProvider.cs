@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using RozWorld_API.Chat;
 
 
 namespace RozWorld.Graphics.UI
@@ -58,6 +59,7 @@ namespace RozWorld.Graphics.UI
                 Size singleFontSize = Size.Empty;
 
                 bool formatCodeActive = false;
+                const char graphicChar = '!'; // This char represents a 'no tint' colour for graphic characters (like emojis)
 
                 List<char> colours = new List<char>();
                 colours.Add('0'); // Black
@@ -102,6 +104,13 @@ namespace RozWorld.Graphics.UI
                         continue;
                     }
 
+                    // If a special character (emoji or something) is encountered, put it in a special 'no tint' colour
+                    if (ChatGraphic.IsGraphic(character))
+                    {
+                        if (!colours.Contains(graphicChar))
+                            colours.Add(graphicChar);
+                    }
+
                     // If a space is encountered, add the spacing width of the font
                     if (character == ' ')
                     {
@@ -138,6 +147,8 @@ namespace RozWorld.Graphics.UI
                  * index inside of the colours list.
                  */
                 int colourHeightModifier = 0;
+                int tempColourHeightModifier = 0; // This value used to store the 'real' colour offset whilst handling graphics
+                bool graphicColourActive = false;
 
                 formatCodeActive = false;
 
@@ -172,6 +183,14 @@ namespace RozWorld.Graphics.UI
                             continue;
                         }
 
+                        // If a special character (emoji or something) is encountered, put it in a special 'no tint' colour
+                        if (ChatGraphic.IsGraphic(character))
+                        {
+                            tempColourHeightModifier = colourHeightModifier;
+                            colourHeightModifier = singleFontSize.Height * colours.IndexOf(graphicChar);
+                            graphicColourActive = true;
+                        }
+
                         // If a space is encountered, add the spacing width of the font
                         if (character == ' ')
                         {
@@ -193,9 +212,14 @@ namespace RozWorld.Graphics.UI
                                 charRect, GraphicsUnit.Pixel);
                             drawX += (charRect.Width + charInfo.Before + charInfo.After).CompareHighest(0);
                         }
+
+                        // If the current colour offset was due to the character being a graphic, restore the original colour
+                        if (graphicColourActive)
+                            colourHeightModifier = tempColourHeightModifier;
                     }
 
-                    stringTexture.Save("U:\\Files\\test" + DateTime.Now.ToShortTimeString().Replace(':', '.') + ".png");
+                    // Create the draw instructions now
+                    Texture fontTexture = new Texture((Bitmap)stringTexture.Clone()); // Generate the texture
                 }
             }
 
