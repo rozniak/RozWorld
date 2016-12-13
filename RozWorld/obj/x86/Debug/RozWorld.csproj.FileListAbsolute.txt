@@ -1,8 +1,0 @@
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\bin\Debug\Oddmatics.RozWorld.API.dll
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\bin\Debug\Oddmatics.RozWorld.API.pdb
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\bin\Debug\Oddmatics.RozWorld.API.xml
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\obj\x86\Debug\RozWorld.csprojResolveAssemblyReference.cache
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\bin\Debug\Oddmatics.RozWorld.Client.exe
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\bin\Debug\Oddmatics.RozWorld.Client.pdb
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\obj\x86\Debug\Oddmatics.RozWorld.Client.exe
-C:\Users\Rory\Documents\GitHub\RozWorld\RozWorld\obj\x86\Debug\Oddmatics.RozWorld.Client.pdb
