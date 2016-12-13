@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RozWorld", "RozWorld\RozWorld.csproj", "{5CFC64D5-B6BA-4657-8E79-B70568224FD5}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RozWorld", "RozWorld.csproj", "{9938884A-0ADB-4AEE-BACC-87D32B314BB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5CFC64D5-B6BA-4657-8E79-B70568224FD5}.Debug|x86.ActiveCfg = Debug|x86
-		{5CFC64D5-B6BA-4657-8E79-B70568224FD5}.Debug|x86.Build.0 = Debug|x86
-		{5CFC64D5-B6BA-4657-8E79-B70568224FD5}.Release|x86.ActiveCfg = Release|x86
-		{5CFC64D5-B6BA-4657-8E79-B70568224FD5}.Release|x86.Build.0 = Release|x86
+		{9938884A-0ADB-4AEE-BACC-87D32B314BB5}.Debug|x86.ActiveCfg = Debug|x86
+		{9938884A-0ADB-4AEE-BACC-87D32B314BB5}.Debug|x86.Build.0 = Debug|x86
+		{9938884A-0ADB-4AEE-BACC-87D32B314BB5}.Release|x86.ActiveCfg = Release|x86
+		{9938884A-0ADB-4AEE-BACC-87D32B314BB5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
