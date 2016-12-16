@@ -30,11 +30,17 @@ namespace Oddmatics.RozWorld.Client
         /// </summary>
         public static string DIRECTORY_RENDERERS = Directory.GetCurrentDirectory() + @"\renderers";
 
+        /// <summary>
+        /// The config file for client variables.
+        /// </summary>
+        public static string FILE_CONFIG = Directory.GetCurrentDirectory() + @"\client.cfg";
+
         #endregion
 
 
         public string ClientName { get { return "Vanilla RozWorld Client"; } }
         public string ClientVersion { get { return "0.01"; } }
+        public Dictionary<byte, Size> DisplayResolutions { get; private set; }
         public IInputHandler Input { get { throw new System.NotImplementedException(); } }
         public IInterfaceHandler Interface { get { throw new System.NotImplementedException(); } }
         private ILogger _Logger;
@@ -49,6 +55,64 @@ namespace Oddmatics.RozWorld.Client
         private List<Type> Renderers;
         private Renderer ActiveRenderer;
 
+
+        /// <summary>
+        /// Loads a client configuration from a file on disk.
+        /// </summary>
+        /// <param name="file">The configuration file to load from.</param>
+        private void LoadConfigs(IList<string> file)
+        {
+            var configs = FileSystem.ReadINIToDictionary(file);
+
+            foreach (var item in configs)
+            {
+                switch (item.Key.ToLower())
+                {
+                    case "display-resolution":
+                        string[] splitSettings = item.Value.Split(',');
+                        byte displayNumber;
+                        Size displayResolution;
+
+                        // Attempt to parse split value
+                        if (splitSettings.Length != 3)
+                        {
+                            Logger.Out("Invalid display-resolution setting encountered: Not enough values.",
+                                LogLevel.Error);
+                            break;
+                        }
+
+                        if (!byte.TryParse(splitSettings[0], out displayNumber) ||
+                            !int.TryParse(splitSettings[1], out displayResolution.Width) ||
+                            !int.TryParse(splitSettings[2], out displayResolution.Height))
+                        {
+                            Logger.Out("Invalid display-resolution setting encountered: Wrong type in values.",
+                                LogLevel.Error);
+                            break;
+                        }
+
+                        // Now do the actual setting
+                        if (!DisplayResolutions.ContainsKey(displayNumber))
+                            DisplayResolutions.Add(displayNumber, displayResolution);
+                        else
+                            DisplayResolutions[displayNumber] = displayResolution;
+
+                        break;
+
+                    default:
+                        Logger.Out("Unknown setting: \"" + item.Key + "\".", LogLevel.Error);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes the default client configuration file to the disk.
+        /// </summary>
+        /// <param name="targetFile">The target filename to write to.</param>
+        private void MakeDefaultConfigs(string targetFile)
+        {
+            FileSystem.PutTextFile(targetFile, new string[] { Properties.Resources.DefaultConfigs });
+        }
 
         /// <summary>
         /// Runs this client instance.
@@ -70,7 +134,17 @@ namespace Oddmatics.RozWorld.Client
 
             FileSystem.MakeDirectory(DIRECTORY_RENDERERS);
 
-            // TODO: LOAD CONFIGURATION FILE HERE!!!
+            // Load configs
+            Logger.Out("Setting configs...", LogLevel.Info);
+
+            if (!File.Exists(FILE_CONFIG))
+                MakeDefaultConfigs(FILE_CONFIG);
+
+            DisplayResolutions = new Dictionary<byte, Size>();
+
+            // Load defaults first then load the file on disk
+            LoadConfigs(Properties.Resources.DefaultConfigs.Split('\n'));
+            LoadConfigs(FileSystem.GetTextFile(FILE_CONFIG));
 
             // Load renderers
             Logger.Out("Loading renderers...", LogLevel.Info);
@@ -86,14 +160,14 @@ namespace Oddmatics.RozWorld.Client
 
                     foreach (var detectedObject in detectedObjects)
                     {
-                        if (detectedObject.IsAssignableFrom(typeof(Renderer)))
+                        if (detectedObject.BaseType == typeof(Renderer))
                             Renderers.Add(detectedObject);
                     }
                 }
                 catch (ReflectionTypeLoadException reflectionEx)
                 {
                     Logger.Out("An error occurred trying to enumerate the types inside of the library \"" +
-                        Path.GetFileName(file) + "\", renderers from this library cannot be loaded. It may" +
+                        Path.GetFileName(file) + "\", renderers from this library cannot be loaded. It may " +
                         "have been built with a different version of the RozWorld API.", LogLevel.Error);
                 }
                 catch (Exception ex)
@@ -111,11 +185,14 @@ namespace Oddmatics.RozWorld.Client
                 return false;
             }
 
-            ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[0]); // This will be replaced - dw for now
-
+            ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[0]);
             ActiveRenderer.Initialise();
+            //////////////////////////////////////////////////////////////////////////////
 
-            // Run game here!
+            // Load the rest and then start/run the game
+            ActiveRenderer.Start();
+
+            while (true) { } // for now
 
             return true;
         }
