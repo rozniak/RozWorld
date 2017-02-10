@@ -51,9 +51,10 @@ namespace Oddmatics.RozWorld.Client
         public string RozWorldVersion { get { return "0.01"; } }
 
 
+        private Renderer ActiveRenderer;
         private bool HasStarted;
         private List<Type> Renderers;
-        private Renderer ActiveRenderer;
+        private bool ShouldClose;
 
 
         /// <summary>
@@ -120,6 +121,9 @@ namespace Oddmatics.RozWorld.Client
         public bool Run()
         {
             // A logger must be set and this should be set as the current client in RwCore
+            if (RwCore.InstanceType != RwInstanceType.ClientOnly && RwCore.InstanceType != RwInstanceType.Both)
+                throw new InvalidOperationException("RwClient.Start: This RozWorld instance is not a client.");
+
             if (RwCore.Client != this)
                 throw new InvalidOperationException("RwClient.Start: RwCore.Client must reference this client instance before calling Start().");
 
@@ -190,9 +194,12 @@ namespace Oddmatics.RozWorld.Client
             //////////////////////////////////////////////////////////////////////////////
 
             // Load the rest and then start/run the game
+            ShouldClose = false;
             ActiveRenderer.Start();
 
-            while (true) { } // for now
+
+            // Wait until the game should close or is manually
+            while (!ShouldClose) { };
 
             return true;
         }
