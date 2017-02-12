@@ -52,8 +52,9 @@ namespace Oddmatics.RozWorld.Client
 
 
         private Renderer ActiveRenderer;
+        private string ChosenRenderer;
         private bool HasStarted;
-        private List<Type> Renderers;
+        private Dictionary<string, Type> Renderers;
         private bool ShouldClose;
 
 
@@ -96,6 +97,12 @@ namespace Oddmatics.RozWorld.Client
                             DisplayResolutions.Add(displayNumber, displayResolution);
                         else
                             DisplayResolutions[displayNumber] = displayResolution;
+
+                        break;
+
+                    case "renderer":
+                        // TODO: Possibly add more verif here in future
+                        ChosenRenderer = item.Value;
 
                         break;
 
@@ -153,7 +160,8 @@ namespace Oddmatics.RozWorld.Client
             // Load renderers
             Logger.Out("Loading renderers...", LogLevel.Info);
 
-            Renderers = new List<Type>();
+            Renderers = new Dictionary<string, Type>();
+            string lastRenderer = string.Empty;
 
             foreach (string file in Directory.GetFiles(DIRECTORY_RENDERERS))
             {
@@ -165,7 +173,10 @@ namespace Oddmatics.RozWorld.Client
                     foreach (var detectedObject in detectedObjects)
                     {
                         if (detectedObject.BaseType == typeof(Renderer))
-                            Renderers.Add(detectedObject);
+                        {
+                            Renderers.Add(detectedObject.FullName, detectedObject);
+                            lastRenderer = detectedObject.FullName;
+                        }
                     }
                 }
                 catch (ReflectionTypeLoadException reflectionEx)
@@ -182,16 +193,20 @@ namespace Oddmatics.RozWorld.Client
                 }
             }
 
-            // TODO: Replace this bit so that renderer choice will be loaded from configs
             if (Renderers.Count == 0)
             {
                 Logger.Out("No renderers were loaded! Cannot continue.", LogLevel.Fatal);
                 return false;
             }
 
-            ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[0]);
+
+            // Use renderer from configs
+            if (Renderers.ContainsKey(ChosenRenderer))
+                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[ChosenRenderer]);
+            else
+                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[lastRenderer]);
+
             ActiveRenderer.Initialise();
-            //////////////////////////////////////////////////////////////////////////////
 
             // Load the rest and then start/run the game
             ShouldClose = false;
