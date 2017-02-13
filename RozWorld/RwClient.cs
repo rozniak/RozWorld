@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Timers;
 
 namespace Oddmatics.RozWorld.Client
 {
@@ -40,6 +41,7 @@ namespace Oddmatics.RozWorld.Client
 
         public string ClientName { get { return "Vanilla RozWorld Client"; } }
         public string ClientVersion { get { return "0.01"; } }
+        public string ClientWindowTitle { get { return "RozWorld"; } }
         public Dictionary<byte, Size> DisplayResolutions { get; private set; }
         public IInputHandler Input { get { throw new System.NotImplementedException(); } }
         public IInterfaceHandler Interface { get { throw new System.NotImplementedException(); } }
@@ -53,6 +55,7 @@ namespace Oddmatics.RozWorld.Client
 
         private Renderer ActiveRenderer;
         private string ChosenRenderer;
+        private Timer ClientUpdateTimer;
         private bool HasStarted;
         private Dictionary<string, Type> Renderers;
         private bool ShouldClose;
@@ -206,17 +209,44 @@ namespace Oddmatics.RozWorld.Client
             else
                 ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[lastRenderer]);
 
+            // TODO: Handle a crash here!
             ActiveRenderer.Initialise();
 
             // Load the rest and then start/run the game
             ShouldClose = false;
+
+            ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
             ActiveRenderer.Start();
+
+            ClientUpdateTimer = new Timer(1000 / 150); // 150FPS tickrate
+            ClientUpdateTimer.Elapsed += new ElapsedEventHandler(ClientUpdateTimer_Elapsed);
+            ClientUpdateTimer.Enabled = true;
+            ClientUpdateTimer.Start();
 
 
             // Wait until the game should close or is manually
             while (!ShouldClose) { };
 
             return true;
+        }
+
+
+        /// <summary>
+        /// [Event] Active renderer closed.
+        /// </summary>
+        private void ActiveRenderer_Closed(object sender, EventArgs e)
+        {
+            // TODO: Handle closing safely! (eg. send disconnect packets/close world nicely if on local)
+            ClientUpdateTimer.Stop();
+            ShouldClose = true;
+        }
+
+        /// <summary>
+        /// [Event] Client update timer elapsed.
+        /// </summary>
+        private void ClientUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // TODO: Handle engine events here
         }
     }
 }
