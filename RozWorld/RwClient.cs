@@ -165,6 +165,7 @@ namespace Oddmatics.RozWorld.Client
 
             Renderers = new Dictionary<string, Type>();
             string lastRenderer = string.Empty;
+            var availableRenderers = new List<string>(); // For use when we try to launch
 
             foreach (string file in Directory.GetFiles(DIRECTORY_RENDERERS))
             {
@@ -177,6 +178,7 @@ namespace Oddmatics.RozWorld.Client
                     {
                         if (detectedObject.BaseType == typeof(Renderer))
                         {
+                            availableRenderers.Add(detectedObject.FullName);
                             Renderers.Add(detectedObject.FullName, detectedObject);
                             lastRenderer = detectedObject.FullName;
                         }
@@ -203,31 +205,49 @@ namespace Oddmatics.RozWorld.Client
             }
 
 
+            // Attempt to launch the renderer
+            bool successfulLaunch = false;
+
             // Use renderer from configs
             if (Renderers.ContainsKey(ChosenRenderer))
                 ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[ChosenRenderer]);
             else
                 ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[lastRenderer]);
 
-            // TODO: Handle a crash here!
-            ActiveRenderer.Initialise();
+            while (!successfulLaunch && availableRenderers.Count > 0)
+            {
+                if (!ActiveRenderer.Initialise()) // If renderer fails to start
+                {
+                    availableRenderers.Remove(ActiveRenderer.GetType().FullName);
 
-            // Load the rest and then start/run the game
-            ShouldClose = false;
+                    if (availableRenderers.Count > 0)
+                        ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[availableRenderers[0]]);
+                }
+                else
+                    successfulLaunch = true;
+            }
 
-            ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
-            ActiveRenderer.Start();
+            if (successfulLaunch)
+            {
+                // Load the rest and then start/run the game
+                ShouldClose = false;
 
-            ClientUpdateTimer = new Timer(1000 / 150); // 150FPS tickrate
-            ClientUpdateTimer.Elapsed += new ElapsedEventHandler(ClientUpdateTimer_Elapsed);
-            ClientUpdateTimer.Enabled = true;
-            ClientUpdateTimer.Start();
+                ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
+                ActiveRenderer.Start();
+
+                ClientUpdateTimer = new Timer(1000 / 150); // 150FPS tickrate
+                ClientUpdateTimer.Elapsed += new ElapsedEventHandler(ClientUpdateTimer_Elapsed);
+                ClientUpdateTimer.Enabled = true;
+                ClientUpdateTimer.Start();
 
 
-            // Wait until the game should close or is manually
-            while (!ShouldClose) { };
+                // Wait until the game should close or is manually
+                while (!ShouldClose) { };
 
-            return true;
+                return true;
+            }
+
+            return false; // Failed to launch renderer
         }
 
 
