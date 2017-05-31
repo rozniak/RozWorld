@@ -24,21 +24,6 @@ namespace Oddmatics.RozWorld.Client
 {
     public class RwClient : IRwClient
     {
-        #region Path Constants
-
-        /// <summary>
-        /// The renderers directory.
-        /// </summary>
-        public static string DIRECTORY_RENDERERS = Directory.GetCurrentDirectory() + @"\renderers";
-
-        /// <summary>
-        /// The config file for client variables.
-        /// </summary>
-        public static string FILE_CONFIG = Directory.GetCurrentDirectory() + @"\client.cfg";
-
-        #endregion
-
-
         public string ClientName { get { return "Vanilla RozWorld Client"; } }
         public string ClientVersion { get { return "0.01"; } }
         public string ClientWindowTitle { get { return "RozWorld"; } }
@@ -146,19 +131,19 @@ namespace Oddmatics.RozWorld.Client
             Logger.Out("RozWorld client starting...", LogLevel.Info);
             Logger.Out("Initialising directories...", LogLevel.Info);
 
-            FileSystem.MakeDirectory(DIRECTORY_RENDERERS);
+            FileSystem.MakeDirectory(RwClientParameters.RendererPath);
 
             // Load configs
             Logger.Out("Setting configs...", LogLevel.Info);
 
-            if (!File.Exists(FILE_CONFIG))
-                MakeDefaultConfigs(FILE_CONFIG);
+            if (!File.Exists(RwClientParameters.ConfigurationPath))
+                MakeDefaultConfigs(RwClientParameters.ConfigurationPath);
 
             DisplayResolutions = new Dictionary<byte, Size>();
 
             // Load defaults first then load the file on disk
             LoadConfigs(Properties.Resources.DefaultConfigs.Split('\n'));
-            LoadConfigs(FileSystem.GetTextFile(FILE_CONFIG));
+            LoadConfigs(FileSystem.GetTextFile(RwClientParameters.ConfigurationPath));
 
             // Load renderers
             Logger.Out("Loading renderers...", LogLevel.Info);
@@ -167,7 +152,7 @@ namespace Oddmatics.RozWorld.Client
             string lastRenderer = string.Empty;
             var availableRenderers = new List<string>(); // For use when we try to launch
 
-            foreach (string file in Directory.GetFiles(DIRECTORY_RENDERERS))
+            foreach (string file in Directory.GetFiles(RwClientParameters.RendererPath))
             {
                 try
                 {

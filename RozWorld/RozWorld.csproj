@@ -60,6 +60,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RwClient.cs" />
+    <Compile Include="RwClientParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DefaultConfigs.txt" />
