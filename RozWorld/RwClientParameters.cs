@@ -27,7 +27,5 @@ namespace Oddmatics.RozWorld.Client
         /// The 'renderers' directory path.
         /// </summary>
         public static readonly string RendererPath = Directory.GetCurrentDirectory() + @"\renderers";
-
-        
     }
 }

@@ -22,27 +22,84 @@ using System.Timers;
 
 namespace Oddmatics.RozWorld.Client
 {
+    /// <summary>
+    /// Represents the RozWorld client.
+    /// </summary>
     public class RwClient : IRwClient
     {
+        /// <summary>
+        /// Gets the nice name of the client.
+        /// </summary>
         public string ClientName { get { return "Vanilla RozWorld Client"; } }
+
+        /// <summary>
+        /// Gets the version string of the client.
+        /// </summary>
         public string ClientVersion { get { return "0.01"; } }
+
+        /// <summary>
+        /// Gets the window title used within the client.
+        /// </summary>
         public string ClientWindowTitle { get { return "RozWorld"; } }
+
+        /// <summary>
+        /// Gets the display resolution of each individual display.
+        /// </summary>
         public Dictionary<byte, Size> DisplayResolutions { get; private set; }
-        public IInputHandler Input { get { throw new System.NotImplementedException(); } }
-        public IInterfaceHandler Interface { get { throw new System.NotImplementedException(); } }
-        private ILogger _Logger;
+
+        /// <summary>
+        /// Gets the input handler of the client..
+        /// </summary>
+        public IInputHandler Input { get { throw new NotImplementedException(); } }
+
+        /// <summary>
+        /// Gets the interface handler of the client.
+        /// </summary>
+        public IInterfaceHandler Interface { get { throw new NotImplementedException(); } }
+
+        /// <summary>
+        /// Gets the logger of the client.
+        /// </summary>
         public ILogger Logger
         {
             get { return _Logger; } set { if (_Logger == null) _Logger = value; }
         }
+        private ILogger _Logger;
+
+        /// <summary>
+        /// Gets the version of RozWorld that this client targets.
+        /// </summary>
         public string RozWorldVersion { get { return "0.01"; } }
 
 
+        /// <summary>
+        /// The active Renderer object.
+        /// </summary>
         private Renderer ActiveRenderer;
+
+        /// <summary>
+        /// The full name of the chosen renderer.
+        /// </summary>
         private string ChosenRenderer;
+
+        /// <summary>
+        /// The client tickrate timer.
+        /// </summary>
         private Timer ClientUpdateTimer;
+        
+        /// <summary>
+        /// The value that represents whether the client has been started.
+        /// </summary>
         private bool HasStarted;
+
+        /// <summary>
+        /// The renderers detected and available to the client.
+        /// </summary>
         private Dictionary<string, Type> Renderers;
+
+        /// <summary>
+        /// The value that represents whether the client should close.
+        /// </summary>
         private bool ShouldClose;
 
 
