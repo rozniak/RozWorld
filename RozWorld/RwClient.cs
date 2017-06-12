@@ -9,7 +9,9 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
+using Newtonsoft.Json;
 using Oddmatics.RozWorld.API.Client;
+using Oddmatics.RozWorld.API.Client.Graphics;
 using Oddmatics.RozWorld.API.Client.Input;
 using Oddmatics.RozWorld.API.Client.Interface;
 using Oddmatics.RozWorld.API.Generic;
@@ -30,39 +32,62 @@ namespace Oddmatics.RozWorld.Client
         /// <summary>
         /// Gets the nice name of the client.
         /// </summary>
-        public string ClientName { get { return "Vanilla RozWorld Client"; } }
+        public string ClientName
+        {
+            get { return "Vanilla RozWorld Client"; }
+        }
 
         /// <summary>
         /// Gets the version string of the client.
         /// </summary>
-        public string ClientVersion { get { return "0.01"; } }
+        public string ClientVersion
+        {
+            get { return "0.01"; }
+        }
 
         /// <summary>
         /// Gets the window title used within the client.
         /// </summary>
-        public string ClientWindowTitle { get { return "RozWorld"; } }
+        public string ClientWindowTitle
+        {
+            get { return "RozWorld"; }
+        }
 
         /// <summary>
-        /// Gets the display resolution of each individual display.
+        /// Gets the display resolutions of screens that have been configured.
         /// </summary>
-        public Dictionary<byte, Size> DisplayResolutions { get; private set; }
+        public Dictionary<byte, Size> DisplayResolutions
+        {
+            get { return Configuration.DisplayResolutions;  }
+        }
 
         /// <summary>
         /// Gets the input handler of the client..
         /// </summary>
-        public IInputHandler Input { get { throw new NotImplementedException(); } }
+        public IInputHandler Input
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Gets the interface handler of the client.
         /// </summary>
-        public IInterfaceHandler Interface { get { throw new NotImplementedException(); } }
+        public IInterfaceHandler Interface
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Gets the logger of the client.
         /// </summary>
         public ILogger Logger
         {
-            get { return _Logger; } set { if (_Logger == null) _Logger = value; }
+            get { return _Logger; }
+            set
+            {
+                if (_Logger == null)
+                    _Logger = value;
+            }
         }
         private ILogger _Logger;
 
@@ -78,93 +103,39 @@ namespace Oddmatics.RozWorld.Client
         private Renderer ActiveRenderer;
 
         /// <summary>
-        /// The full name of the chosen renderer.
-        /// </summary>
-        private string ChosenRenderer;
-
-        /// <summary>
         /// The client tickrate timer.
         /// </summary>
-        private Timer ClientUpdateTimer;
+        private Timer ClientUpdateTimer { get; set; }
+
+        /// <summary>
+        /// The client configuration.
+        /// </summary>
+        private RwClientConfiguration Configuration { get; set; }
         
         /// <summary>
         /// The value that represents whether the client has been started.
         /// </summary>
-        private bool HasStarted;
+        private bool HasStarted { get; set; }
 
         /// <summary>
         /// The renderers detected and available to the client.
         /// </summary>
-        private Dictionary<string, Type> Renderers;
+        private Dictionary<string, Type> Renderers { get; set; }
 
         /// <summary>
         /// The value that represents whether the client should close.
         /// </summary>
-        private bool ShouldClose;
+        private bool ShouldClose { get; set; }
 
 
         /// <summary>
-        /// Loads a client configuration from a file on disk.
+        /// Calls upon this client to load in the required assets as listed in the specified require file.
         /// </summary>
-        /// <param name="file">The configuration file to load from.</param>
-        private void LoadConfigs(IList<string> file)
+        /// <param name="requireFile">The require file.</param>
+        /// <returns>Success if all assets were loaded correctly.</returns>
+        public RwResult LoadAssets(string requireFile)
         {
-            var configs = FileSystem.ReadINIToDictionary(file);
-
-            foreach (var item in configs)
-            {
-                switch (item.Key.ToLower())
-                {
-                    case "display-resolution":
-                        string[] splitSettings = item.Value.Split(',');
-                        byte displayNumber;
-                        Size displayResolution;
-
-                        // Attempt to parse split value
-                        if (splitSettings.Length != 3)
-                        {
-                            Logger.Out("Invalid display-resolution setting encountered: Not enough values.",
-                                LogLevel.Error);
-                            break;
-                        }
-
-                        if (!byte.TryParse(splitSettings[0], out displayNumber) ||
-                            !int.TryParse(splitSettings[1], out displayResolution.Width) ||
-                            !int.TryParse(splitSettings[2], out displayResolution.Height))
-                        {
-                            Logger.Out("Invalid display-resolution setting encountered: Wrong type in values.",
-                                LogLevel.Error);
-                            break;
-                        }
-
-                        // Now do the actual setting
-                        if (!DisplayResolutions.ContainsKey(displayNumber))
-                            DisplayResolutions.Add(displayNumber, displayResolution);
-                        else
-                            DisplayResolutions[displayNumber] = displayResolution;
-
-                        break;
-
-                    case "renderer":
-                        // TODO: Possibly add more verif here in future
-                        ChosenRenderer = item.Value;
-
-                        break;
-
-                    default:
-                        Logger.Out("Unknown setting: \"" + item.Key + "\".", LogLevel.Error);
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Writes the default client configuration file to the disk.
-        /// </summary>
-        /// <param name="targetFile">The target filename to write to.</param>
-        private void MakeDefaultConfigs(string targetFile)
-        {
-            FileSystem.PutTextFile(targetFile, new string[] { Properties.Resources.DefaultConfigs });
+            return RwResult.NotImplemented;
         }
 
         /// <summary>
@@ -172,7 +143,6 @@ namespace Oddmatics.RozWorld.Client
         /// </summary>
         public bool Run()
         {
-            // A logger must be set and this should be set as the current client in RwCore
             if (RwCore.InstanceType != RwInstanceType.ClientOnly && RwCore.InstanceType != RwInstanceType.Both)
                 throw new InvalidOperationException("RwClient.Start: This RozWorld instance is not a client.");
 
@@ -185,6 +155,8 @@ namespace Oddmatics.RozWorld.Client
             if (HasStarted)
                 throw new InvalidOperationException("RwClient.Start: Client is already started.");
 
+            HasStarted = true;
+
             Logger.Out("RozWorld client starting...", LogLevel.Info);
             Logger.Out("Initialising directories...", LogLevel.Info);
 
@@ -194,13 +166,31 @@ namespace Oddmatics.RozWorld.Client
             Logger.Out("Setting configs...", LogLevel.Info);
 
             if (!File.Exists(RwClientParameters.ConfigurationPath))
-                MakeDefaultConfigs(RwClientParameters.ConfigurationPath);
-
-            DisplayResolutions = new Dictionary<byte, Size>();
+            {
+                File.WriteAllText(
+                    RwClientParameters.ConfigurationPath,
+                    Properties.Resources.DefaultConfigs
+                    );
+            }
 
             // Load defaults first then load the file on disk
-            LoadConfigs(Properties.Resources.DefaultConfigs.Split('\n'));
-            LoadConfigs(FileSystem.GetTextFile(RwClientParameters.ConfigurationPath));
+            Configuration = new RwClientConfiguration();
+
+            if (File.Exists(RwClientParameters.ConfigurationPath))
+            {
+                try
+                {
+                    JsonConvert.PopulateObject(
+                        File.ReadAllText(RwClientParameters.ConfigurationPath),
+                        Configuration
+                        );
+                }
+                catch (JsonReaderException jsonEx)
+                {
+                    Logger.Out("Bad configuration JSON, defaults will be used instead.", LogLevel.Warning);
+                    Logger.Out("JsonReaderException: " + jsonEx.Message, LogLevel.Error);
+                }
+            }
 
             // Load renderers
             Logger.Out("Loading renderers...", LogLevel.Info);
@@ -251,10 +241,10 @@ namespace Oddmatics.RozWorld.Client
             bool successfulLaunch = false;
 
             // Use renderer from configs
-            if (Renderers.ContainsKey(ChosenRenderer))
-                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[ChosenRenderer]);
+            if (Renderers.ContainsKey(Configuration.ChosenRenderer))
+                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[Configuration.ChosenRenderer]);
             else
-                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[lastRenderer]);
+                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[Configuration.ChosenRenderer]);
 
             while (!successfulLaunch && availableRenderers.Count > 0)
             {
@@ -282,12 +272,19 @@ namespace Oddmatics.RozWorld.Client
                 ClientUpdateTimer.Enabled = true;
                 ClientUpdateTimer.Start();
 
-
                 // Wait until the game should close or is manually
                 while (!ShouldClose) { };
 
+                // Write configs to disk
+                File.WriteAllText(
+                    RwClientParameters.ConfigurationPath,
+                    JsonConvert.SerializeObject(Configuration)
+                    );
+
                 return true;
             }
+
+            HasStarted = false;
 
             return false; // Failed to launch renderer
         }

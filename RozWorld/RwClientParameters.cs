@@ -21,7 +21,7 @@ namespace Oddmatics.RozWorld.Client
         /// <summary>
         /// The configuration file path.
         /// </summary>
-        public static readonly string ConfigurationPath = Directory.GetCurrentDirectory() + @"\client.cfg";
+        public static readonly string ConfigurationPath = Directory.GetCurrentDirectory() + @"\rwclient-config.json";
 
         /// <summary>
         /// The 'renderers' directory path.

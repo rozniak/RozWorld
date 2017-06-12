@@ -37,6 +37,9 @@
     <ApplicationIcon>RozWorld-Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>D:\Backup Documents\Libraries\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Oddmatics.RozWorld.API">
       <HintPath>..\..\RozWorld-API\RozWorld-API\bin\Debug\Oddmatics.RozWorld.API.dll</HintPath>
     </Reference>
@@ -61,15 +64,17 @@
     </Compile>
     <Compile Include="RwClient.cs" />
     <Compile Include="RwClientParameters.cs" />
+    <Compile Include="RwClientConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\DefaultConfigs.txt" />
+    <None Include="Resources\DefaultConfigs.json" />
     <Content Include="RozWorld-Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

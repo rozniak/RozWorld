@@ -1,0 +1,9 @@
+{
+  "DisplayResolutions": {
+    "0": {
+      "Height": 768,
+      "Width": 1366
+    }
+  },
+  "ChosenRenderer": "Oddmatics.RozWorld.FrontEnd.GDI.GdiRenderer"
+}
