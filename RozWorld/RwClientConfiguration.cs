@@ -25,7 +25,7 @@ namespace Oddmatics.RozWorld.Client
         /// Gets or sets the display resolutions for each game window
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<byte, Size> DisplayResolutions { get; set; }
+        public Dictionary<byte, RwSize> DisplayResolutions { get; set; }
 
         /// <summary>
         /// Gets or sets the full name of the chosen renderer class.
@@ -39,8 +39,8 @@ namespace Oddmatics.RozWorld.Client
         /// </summary>
         public RwClientConfiguration()
         {
-            DisplayResolutions = new Dictionary<byte, Size>();
-            DisplayResolutions.Add(0, new Size(1366, 768)); // Default size of first window
+            DisplayResolutions = new Dictionary<byte, RwSize>();
+            DisplayResolutions.Add(0, new RwSize(1366, 768)); // Default size of first window
 
             ChosenRenderer = String.Empty;
         }

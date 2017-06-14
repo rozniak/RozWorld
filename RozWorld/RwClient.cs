@@ -56,7 +56,7 @@ namespace Oddmatics.RozWorld.Client
         /// <summary>
         /// Gets the display resolutions of screens that have been configured.
         /// </summary>
-        public Dictionary<byte, Size> DisplayResolutions
+        public Dictionary<byte, RwSize> DisplayResolutions
         {
             get { return Configuration.DisplayResolutions;  }
         }
