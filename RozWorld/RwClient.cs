@@ -98,6 +98,11 @@ namespace Oddmatics.RozWorld.Client
 
 
         /// <summary>
+        /// The value that indicates whether this client is currently accepting asset load requests.
+        /// </summary>
+        private bool AcceptingAssetLoadRequests { get; set; }
+
+        /// <summary>
         /// The active Renderer object.
         /// </summary>
         private Renderer ActiveRenderer;
@@ -129,13 +134,38 @@ namespace Oddmatics.RozWorld.Client
 
 
         /// <summary>
+        /// Occurs when the client has reached a stage where it is ready to load assets.
+        /// </summary>
+        public event EventHandler ReadyForAssets;
+
+
+        /// <summary>
         /// Calls upon this client to load in the required assets as listed in the specified require file.
         /// </summary>
         /// <param name="requireFile">The require file.</param>
         /// <returns>Success if all assets were loaded correctly.</returns>
         public RwResult LoadAssets(string requireFile)
         {
-            return RwResult.NotImplemented;
+            if (!AcceptingAssetLoadRequests)
+                return RwResult.NotReady;
+
+            var resources = JsonConvert.DeserializeObject<RwResource[]>(requireFile);
+
+            foreach (RwResource resource in resources)
+            {
+                switch (resource.Classification)
+                {
+                    case RwResource.CLASSIFICATION_AUDIO:
+                        // TODO: Code this later on when audio is implemented
+                        return RwResult.NotImplemented;
+
+                    case RwResource.CLASSIFICATION_GRAPHIC:
+                        ActiveRenderer.LoadTexture(resource.Path, resource.Identifier);
+                        break;
+                }
+            }
+
+            return RwResult.Success;
         }
 
         /// <summary>
@@ -261,6 +291,10 @@ namespace Oddmatics.RozWorld.Client
 
             if (successfulLaunch)
             {
+                // Fire ready to load assets event so that plugins know they can load their initial assets
+                AcceptingAssetLoadRequests = true;
+                ReadyForAssets?.Invoke(this, EventArgs.Empty);
+                
                 // Load the rest and then start/run the game
                 ShouldClose = false;
 
