@@ -274,7 +274,11 @@ namespace Oddmatics.RozWorld.Client
             if (Renderers.ContainsKey(Configuration.ChosenRenderer))
                 ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[Configuration.ChosenRenderer]);
             else
-                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[Configuration.ChosenRenderer]);
+            {
+                Logger.Out("Unknown renderer '" + Configuration.ChosenRenderer + "', unable to start RozWorld.",
+                    LogLevel.Fatal);
+                return false;
+            }
 
             while (!successfulLaunch && availableRenderers.Count > 0)
             {

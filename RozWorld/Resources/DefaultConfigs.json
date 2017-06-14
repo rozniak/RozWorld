@@ -5,5 +5,5 @@
       "Width": 1366
     }
   },
-  "ChosenRenderer": "Oddmatics.RozWorld.FrontEnd.GDI.GdiRenderer"
+  "ChosenRenderer": "Oddmatics.RozWorld.FrontEnd.Gdi.GdiRenderer"
 }
