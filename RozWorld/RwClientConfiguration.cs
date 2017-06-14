@@ -1,7 +1,7 @@
 ﻿/**
  * Oddmatics.RozWorld.Client.RwClientConfiguration -- RozWorld Client Configuration
  *
- * This source-code is part of the client program for the RozWorld project by rozza of Oddmatics:
+ * This source-code is part of the client program for the RozWorld project by Rory Fewell (rozniak) of Oddmatics:
  * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>

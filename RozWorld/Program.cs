@@ -1,7 +1,7 @@
 ﻿/**
  * Oddmatics.RozWorld.Client.Program -- RozWorld Desktop Version Entry-Point
  *
- * This source-code is part of the client program for the RozWorld project by rozza of Oddmatics:
+ * This source-code is part of the client program for the RozWorld project by Rory Fewell (rozniak) of Oddmatics:
  * <<http://www.oddmatics.uk>>
  * <<http://roz.world>>
  * <<http://github.com/rozniak/RozWorld>>
@@ -22,6 +22,7 @@ namespace Oddmatics.RozWorld.Client
 
             client.Logger = new GameLogger();
             RwCore.InstanceType = RwInstanceType.ClientOnly; // Need to figure a safe way of changing from only to both
+            RwCore.WorkingDirectory = Environment.CurrentDirectory;
             RwCore.Client = client;
 
             if (client.Run())
