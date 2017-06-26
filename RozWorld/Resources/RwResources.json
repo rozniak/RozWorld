@@ -1,0 +1,12 @@
+[
+	{
+		"Classification": "GRAPHIC",
+		"Identifier": "rwcore-splash",
+		"Path": "rwcore\\oddmatics-splash.png"
+	},
+	{
+		"Classification": "GRAPHIC",
+		"Identifier": "rwcore-atlas-terrain",
+		"Path": "rwcore\\texatlas.png"
+	}
+]

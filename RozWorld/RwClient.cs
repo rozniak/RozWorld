@@ -15,6 +15,7 @@ using Oddmatics.RozWorld.API.Client.Graphics;
 using Oddmatics.RozWorld.API.Client.Input;
 using Oddmatics.RozWorld.API.Client.Interface;
 using Oddmatics.RozWorld.API.Generic;
+using Oddmatics.RozWorld.Client.Game;
 using Oddmatics.Util.IO;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,18 @@ namespace Oddmatics.RozWorld.Client
         /// <summary>
         /// Gets the version of RozWorld that this client targets.
         /// </summary>
-        public string RozWorldVersion { get { return "0.01"; } }
+        public string RozWorldVersion
+        {
+            get { return "0.01"; }
+        }
+
+        /// <summary>
+        /// Gets the root directory that relative texture paths stem from.
+        /// </summary>
+        public string TexturesRoot
+        {
+            get { return Environment.CurrentDirectory + @"\textures\" + Configuration.TexturePack + @"\"; }
+        }
 
 
         /// <summary>
@@ -108,14 +120,14 @@ namespace Oddmatics.RozWorld.Client
         private Renderer ActiveRenderer;
 
         /// <summary>
-        /// The client tickrate timer.
-        /// </summary>
-        private Timer ClientUpdateTimer { get; set; }
-
-        /// <summary>
         /// The client configuration.
         /// </summary>
         private RwClientConfiguration Configuration { get; set; }
+
+        /// <summary>
+        /// The RozWorld game instance.
+        /// </summary>
+        private RwGame Game { get; set; }
         
         /// <summary>
         /// The value that represents whether the client has been started.
@@ -295,8 +307,12 @@ namespace Oddmatics.RozWorld.Client
 
             if (successfulLaunch)
             {
+                // Initialize game instance
+                Game = new RwGame();
+
                 // Fire ready to load assets event so that plugins know they can load their initial assets
                 AcceptingAssetLoadRequests = true;
+                LoadAssets(Properties.Resources.RwResources); // Load RW assets first - TODO: Move this to RwGame and use ReadyForAssets hook maybe?
                 ReadyForAssets?.Invoke(this, EventArgs.Empty);
                 
                 // Load the rest and then start/run the game
@@ -305,10 +321,7 @@ namespace Oddmatics.RozWorld.Client
                 ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
                 ActiveRenderer.Start();
 
-                ClientUpdateTimer = new Timer(1000 / 150); // 150FPS tickrate
-                ClientUpdateTimer.Elapsed += new ElapsedEventHandler(ClientUpdateTimer_Elapsed);
-                ClientUpdateTimer.Enabled = true;
-                ClientUpdateTimer.Start();
+                
 
                 // Wait until the game should close or is manually
                 while (!ShouldClose) { };
@@ -333,17 +346,9 @@ namespace Oddmatics.RozWorld.Client
         /// </summary>
         private void ActiveRenderer_Closed(object sender, EventArgs e)
         {
-            // TODO: Handle closing safely! (eg. send disconnect packets/close world nicely if on local)
-            ClientUpdateTimer.Stop();
+            // TODO: Check if instance is running first
+            Game.Stop();
             ShouldClose = true;
-        }
-
-        /// <summary>
-        /// [Event] Client update timer elapsed.
-        /// </summary>
-        private void ClientUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            // TODO: Handle engine events here
         }
     }
 }

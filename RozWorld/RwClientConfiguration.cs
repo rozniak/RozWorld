@@ -22,16 +22,22 @@ namespace Oddmatics.RozWorld.Client
     internal class RwClientConfiguration
     {
         /// <summary>
+        /// Gets or sets the full name of the chosen renderer class.
+        /// </summary>
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string ChosenRenderer { get; set; }
+
+        /// <summary>
         /// Gets or sets the display resolutions for each game window
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<byte, RwSize> DisplayResolutions { get; set; }
 
         /// <summary>
-        /// Gets or sets the full name of the chosen renderer class.
+        /// Gets or sets the texture pack being used.
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string ChosenRenderer { get; set; }
+        public string TexturePack { get; set; }
 
 
         /// <summary>
@@ -43,6 +49,7 @@ namespace Oddmatics.RozWorld.Client
             DisplayResolutions.Add(0, new RwSize(1366, 768)); // Default size of first window
 
             ChosenRenderer = String.Empty;
+            TexturePack = "default";
         }
     }
 }
