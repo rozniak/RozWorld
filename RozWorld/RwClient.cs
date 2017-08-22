@@ -285,10 +285,7 @@ namespace Oddmatics.RozWorld.Client
             }
 
             if (Renderers.Count == 0)
-            {
                 Logger.Out("No renderers were loaded! Cannot continue.", LogLevel.Fatal);
-                throw new InvalidOperationException("RwClient.LoadRenderers: No renderers were loaded, cannot continue in this state.");
-            }
         }
 
         /// <summary>
