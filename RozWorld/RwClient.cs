@@ -21,7 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Timers;
 
 namespace Oddmatics.RozWorld.Client
 {
@@ -107,12 +106,7 @@ namespace Oddmatics.RozWorld.Client
         {
             get { return Environment.CurrentDirectory + @"\textures\" + Configuration.TexturePack + @"\"; }
         }
-
-
-        /// <summary>
-        /// The value that indicates whether this client is currently accepting asset load requests.
-        /// </summary>
-        private bool AcceptingAssetLoadRequests { get; set; }
+        
 
         /// <summary>
         /// The active Renderer object.
@@ -143,42 +137,7 @@ namespace Oddmatics.RozWorld.Client
         /// The value that represents whether the client should close.
         /// </summary>
         private bool ShouldClose { get; set; }
-
-
-        /// <summary>
-        /// Occurs when the client has reached a stage where it is ready to load assets.
-        /// </summary>
-        public event EventHandler ReadyForAssets;
-
-
-        /// <summary>
-        /// Calls upon this client to load in the required assets as listed in the specified require file.
-        /// </summary>
-        /// <param name="requireFile">The require file.</param>
-        /// <returns>Success if all assets were loaded correctly.</returns>
-        public RwResult LoadAssets(string requireFile)
-        {
-            if (!AcceptingAssetLoadRequests)
-                return RwResult.NotReady;
-
-            var resources = JsonConvert.DeserializeObject<RwResource[]>(requireFile);
-
-            foreach (RwResource resource in resources)
-            {
-                switch (resource.Classification)
-                {
-                    case RwResource.CLASSIFICATION_AUDIO:
-                        // TODO: Code this later on when audio is implemented
-                        return RwResult.NotImplemented;
-
-                    case RwResource.CLASSIFICATION_GRAPHIC:
-                        ActiveRenderer.LoadTexture(resource.Path, resource.Identifier);
-                        break;
-                }
-            }
-
-            return RwResult.Success;
-        }
+        
 
         /// <summary>
         /// Runs this client instance.
@@ -200,10 +159,57 @@ namespace Oddmatics.RozWorld.Client
             HasStarted = true;
 
             Logger.Out("RozWorld client starting...", LogLevel.Info);
+
+            InitializeDirectories();
+            LoadConfigs();
+            LoadRenderers();
+            
+
+            if (SelectRenderer(Configuration.ChosenRenderer))
+            {
+                // Initialize game instance
+                Game = new RwGame();
+                
+                
+                // Load the rest and then start/run the game
+                ShouldClose = false;
+
+                ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
+                ActiveRenderer.Start();
+
+                // Wait until the game should close or is manually
+                while (!ShouldClose) { };
+
+                // Write configs to disk
+                File.WriteAllText(
+                    RwClientParameters.ConfigurationPath,
+                    JsonConvert.SerializeObject(Configuration)
+                    );
+
+                return true;
+            }
+
+            HasStarted = false;
+
+            return false; // Failed to launch renderer
+        }
+
+
+        /// <summary>
+        /// Ensures that any required directories are created.
+        /// </summary>
+        private void InitializeDirectories()
+        {
             Logger.Out("Initialising directories...", LogLevel.Info);
 
             FileSystem.MakeDirectory(RwClientParameters.RendererPath);
+        }
 
+        /// <summary>
+        /// Loads the configurations from the file on disk.
+        /// </summary>
+        private void LoadConfigs()
+        {
             // Load configs
             Logger.Out("Setting configs...", LogLevel.Info);
 
@@ -233,13 +239,21 @@ namespace Oddmatics.RozWorld.Client
                     Logger.Out("JsonReaderException: " + jsonEx.Message, LogLevel.Error);
                 }
             }
+        }
+
+        /// <summary>
+        /// Loads available renderers from libraries on disk.
+        /// </summary>
+        private void LoadRenderers()
+        {
+            // Do not allow renderers to be reloaded!
+            if (Renderers != null)
+                throw new InvalidOperationException("RwClient.LoadRenderers: Cannot load renderers after they have already been loaded.");
 
             // Load renderers
             Logger.Out("Loading renderers...", LogLevel.Info);
 
             Renderers = new Dictionary<string, Type>();
-            string lastRenderer = string.Empty;
-            var availableRenderers = new List<string>(); // For use when we try to launch
 
             foreach (string file in Directory.GetFiles(RwClientParameters.RendererPath))
             {
@@ -252,9 +266,7 @@ namespace Oddmatics.RozWorld.Client
                     {
                         if (detectedObject.BaseType == typeof(Renderer))
                         {
-                            availableRenderers.Add(detectedObject.FullName);
                             Renderers.Add(detectedObject.FullName, detectedObject);
-                            lastRenderer = detectedObject.FullName;
                         }
                     }
                 }
@@ -275,69 +287,46 @@ namespace Oddmatics.RozWorld.Client
             if (Renderers.Count == 0)
             {
                 Logger.Out("No renderers were loaded! Cannot continue.", LogLevel.Fatal);
-                return false;
+                throw new InvalidOperationException("RwClient.LoadRenderers: No renderers were loaded, cannot continue in this state.");
             }
+        }
 
-
-            // Attempt to launch the renderer
-            bool successfulLaunch = false;
-
-            // Use renderer from configs
-            if (Renderers.ContainsKey(Configuration.ChosenRenderer))
-                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[Configuration.ChosenRenderer]);
-            else
+        /// <summary>
+        /// Attempts to select the specified renderer.
+        /// </summary>
+        /// <param name="rendererAssemblyName">The assembly name of the renderer to load.</param>
+        /// <returns>True if a renderer was successfully loaded.</returns>
+        private bool SelectRenderer(string rendererAssemblyName)
+        {
+            // Configuration.ChosenRenderer
+            if (ActiveRenderer != null)
             {
-                Logger.Out("Unknown renderer '" + Configuration.ChosenRenderer + "', unable to start RozWorld.",
-                    LogLevel.Fatal);
-                return false;
+                ActiveRenderer.Closed -= ActiveRenderer_Closed;
+                ActiveRenderer.Stop();
             }
 
-            while (!successfulLaunch && availableRenderers.Count > 0)
+            var availableRenderers = new List<Type>(Renderers.Values);
+
+            // Find the renderer object first
+            if (Renderers.ContainsKey(rendererAssemblyName))
+                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[rendererAssemblyName]);
+            else
+                Logger.Out("Unknown renderer '" + Configuration.ChosenRenderer + "'.", LogLevel.Error);
+
+            while (availableRenderers.Count > 0)
             {
                 if (!ActiveRenderer.Initialise()) // If renderer fails to start
                 {
-                    availableRenderers.Remove(ActiveRenderer.GetType().FullName);
+                    availableRenderers.Remove(ActiveRenderer.GetType());
 
                     if (availableRenderers.Count > 0)
-                        ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[availableRenderers[0]]);
+                        ActiveRenderer = (Renderer)Activator.CreateInstance(availableRenderers[0]);
                 }
                 else
-                    successfulLaunch = true;
+                    return true;
             }
 
-            if (successfulLaunch)
-            {
-                // Initialize game instance
-                Game = new RwGame();
-
-                // Fire ready to load assets event so that plugins know they can load their initial assets
-                AcceptingAssetLoadRequests = true;
-                LoadAssets(Properties.Resources.RwResources); // Load RW assets first - TODO: Move this to RwGame and use ReadyForAssets hook maybe?
-                ReadyForAssets?.Invoke(this, EventArgs.Empty);
-                
-                // Load the rest and then start/run the game
-                ShouldClose = false;
-
-                ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
-                ActiveRenderer.Start();
-
-                
-
-                // Wait until the game should close or is manually
-                while (!ShouldClose) { };
-
-                // Write configs to disk
-                File.WriteAllText(
-                    RwClientParameters.ConfigurationPath,
-                    JsonConvert.SerializeObject(Configuration)
-                    );
-
-                return true;
-            }
-
-            HasStarted = false;
-
-            return false; // Failed to launch renderer
+            return false;
         }
 
 
