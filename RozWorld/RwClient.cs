@@ -170,12 +170,8 @@ namespace Oddmatics.RozWorld.Client
                 // Initialize game instance
                 Game = new RwGame();
                 
-                
                 // Load the rest and then start/run the game
                 ShouldClose = false;
-
-                ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
-                ActiveRenderer.Start();
 
                 // Wait until the game should close or is manually
                 while (!ShouldClose) { };
@@ -257,6 +253,10 @@ namespace Oddmatics.RozWorld.Client
 
             foreach (string file in Directory.GetFiles(RwClientParameters.RendererPath))
             {
+                // Skip non .dll files
+                if (Path.GetExtension(file) != ".dll")
+                    continue;
+
                 try
                 {
                     Assembly assembly = Assembly.LoadFrom(file);
@@ -265,9 +265,7 @@ namespace Oddmatics.RozWorld.Client
                     foreach (var detectedObject in detectedObjects)
                     {
                         if (detectedObject.BaseType == typeof(Renderer))
-                        {
                             Renderers.Add(detectedObject.FullName, detectedObject);
-                        }
                     }
                 }
                 catch (ReflectionTypeLoadException reflectionEx)
@@ -320,7 +318,11 @@ namespace Oddmatics.RozWorld.Client
                         ActiveRenderer = (Renderer)Activator.CreateInstance(availableRenderers[0]);
                 }
                 else
+                {
+                    ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
+                    ActiveRenderer.Start();
                     return true;
+                }
             }
 
             return false;
