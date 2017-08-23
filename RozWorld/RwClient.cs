@@ -19,6 +19,7 @@ using Oddmatics.RozWorld.Client.Game;
 using Oddmatics.Util.IO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -173,8 +174,20 @@ namespace Oddmatics.RozWorld.Client
                 // Load the rest and then start/run the game
                 ShouldClose = false;
 
-                // Wait until the game should close or is manually
-                while (!ShouldClose) { };
+                // Initiate stopwatch to track elapsed game time
+                var gameTime = new Stopwatch();
+                TimeSpan elapsedTime;
+
+                // Wait until the game should close
+                while (!ShouldClose)
+                {
+                    elapsedTime = gameTime.Elapsed;
+                    gameTime.Restart();
+
+                    // TODO: Get user input here
+                    ActiveRenderer.RenderFrame();
+                    Game.InvokeUpdate(elapsedTime);
+                }
 
                 // Write configs to disk
                 File.WriteAllText(

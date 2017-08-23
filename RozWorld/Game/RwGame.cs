@@ -9,19 +9,21 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-using System.Timers;
+using Oddmatics.RozWorld.API.Generic;
+using Oddmatics.RozWorld.API.Generic.Event;
+using System;
 
 namespace Oddmatics.RozWorld.Client.Game
 {
     /// <summary>
     /// Represents the locally running RozWorld game instance.
     /// </summary>
-    internal class RwGame
+    internal class RwGame : IRwGame
     {
         /// <summary>
-        /// The internal game tickrate.
+        /// Occurs when the logic update portion of the main game loop is reached.
         /// </summary>
-        private Timer TickRate { get; set; }
+        public event GameUpdateEventHandler Updated;
 
 
         /// <summary>
@@ -29,31 +31,27 @@ namespace Oddmatics.RozWorld.Client.Game
         /// </summary>
         public RwGame()
         {
-            TickRate = new Timer(1000 / 150); // 150FPS tickrate
-            TickRate.Elapsed += TickRate_Elapsed;
-            TickRate.Enabled = true;
-            TickRate.Start();
             // TODO: Initialize here
         }
 
+
+        /// <summary>
+        /// Invokes a logic update.
+        /// </summary>
+        /// <param name="deltaTime">The time elapsed since the last update</param>
+        public void InvokeUpdate(TimeSpan deltaTime)
+        {
+            // TODO: Anything else that needs updating here - user input etc.
+
+            Updated?.Invoke(this, new GameUpdateEventArgs(deltaTime));
+        }
 
         /// <summary>
         /// Stops the running game instance.
         /// </summary>
         public void Stop()
         {
-            TickRate.Stop();
-            
             // TODO: Handle other game close events here
-        }
-
-
-        /// <summary>
-        /// [Event] Client tickrate timer elapsed.
-        /// </summary>
-        private void TickRate_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            // TODO: Handle engine events here
         }
     }
 }

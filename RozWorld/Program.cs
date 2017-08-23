@@ -31,6 +31,7 @@ namespace Oddmatics.RozWorld.Client
                 client.Logger.Out("Game failed to run successfully! Review the log for any errors.",
                     LogLevel.Info);
 
+            Console.WriteLine("[Press any key to finish]");
             Console.ReadKey(true); // Temporary
         }
     }

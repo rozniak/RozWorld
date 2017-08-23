@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>RozWorld-Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:\Backup Documents\Libraries\Newtonsoft.Json.dll</HintPath>
