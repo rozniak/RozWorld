@@ -9,8 +9,7 @@
  * Sharing, editing and general licence term information can be found inside of the "LICENCE.MD" file that should be located in the root of this project's directory structure.
  */
 
-using Oddmatics.RozWorld.API.Generic;
-using System.IO;
+using System;
 
 namespace Oddmatics.RozWorld.Client
 {
@@ -22,11 +21,11 @@ namespace Oddmatics.RozWorld.Client
         /// <summary>
         /// The configuration file path.
         /// </summary>
-        public static readonly string ConfigurationPath = RwCore.WorkingDirectory + @"\rwclient-config.json";
+        public static readonly string ConfigurationPath = Environment.CurrentDirectory + @"\rwclient-config.json";
 
         /// <summary>
         /// The 'renderers' directory path.
         /// </summary>
-        public static readonly string RendererPath = RwCore.WorkingDirectory + @"\renderers";
+        public static readonly string RendererPath = Environment.CurrentDirectory + @"\renderers";
     }
 }

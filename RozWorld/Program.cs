@@ -21,9 +21,6 @@ namespace Oddmatics.RozWorld.Client
             var client = new RwClient();
 
             client.Logger = new GameLogger();
-            RwCore.InstanceType = RwInstanceType.ClientOnly; // Need to figure a safe way of changing from only to both
-            RwCore.WorkingDirectory = Environment.CurrentDirectory;
-            RwCore.Client = client;
 
             if (client.Run())
                 client.Logger.Out("Game ran successfully.", LogLevel.Info);

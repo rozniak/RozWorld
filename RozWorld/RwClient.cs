@@ -11,16 +11,14 @@
 
 using Newtonsoft.Json;
 using Oddmatics.RozWorld.API.Client;
-using Oddmatics.RozWorld.API.Client.Graphics;
-using Oddmatics.RozWorld.API.Client.Input;
-using Oddmatics.RozWorld.API.Client.Interface;
+using Oddmatics.RozWorld.API.Client.Window;
 using Oddmatics.RozWorld.API.Generic;
-using Oddmatics.RozWorld.Client.Game;
 using Oddmatics.Util.IO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Oddmatics.RozWorld.Client
@@ -33,26 +31,17 @@ namespace Oddmatics.RozWorld.Client
         /// <summary>
         /// Gets the nice name of the client.
         /// </summary>
-        public string ClientName
-        {
-            get { return "Vanilla RozWorld Client"; }
-        }
+        public string ClientName { get { return "Vanilla RozWorld Client"; } }
 
         /// <summary>
         /// Gets the version string of the client.
         /// </summary>
-        public string ClientVersion
-        {
-            get { return "0.01"; }
-        }
+        public string ClientVersion { get { return "0.01"; } }
 
         /// <summary>
         /// Gets the window title used within the client.
         /// </summary>
-        public string ClientWindowTitle
-        {
-            get { return "RozWorld"; }
-        }
+        public string ClientWindowTitle { get { return "RozWorld"; } }
 
         /// <summary>
         /// Gets the display resolutions of screens that have been configured.
@@ -60,22 +49,6 @@ namespace Oddmatics.RozWorld.Client
         public Dictionary<byte, RwSize> DisplayResolutions
         {
             get { return Configuration.DisplayResolutions;  }
-        }
-
-        /// <summary>
-        /// Gets the input handler of the client..
-        /// </summary>
-        public IInputHandler Input
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        /// <summary>
-        /// Gets the interface handler of the client.
-        /// </summary>
-        public IInterfaceHandler Interface
-        {
-            get { throw new NotImplementedException(); }
         }
 
         /// <summary>
@@ -95,34 +68,18 @@ namespace Oddmatics.RozWorld.Client
         /// <summary>
         /// Gets the version of RozWorld that this client targets.
         /// </summary>
-        public string RozWorldVersion
-        {
-            get { return "0.01"; }
-        }
-
-        /// <summary>
-        /// Gets the root directory that relative texture paths stem from.
-        /// </summary>
-        public string TexturesRoot
-        {
-            get { return Environment.CurrentDirectory + @"\textures\" + Configuration.TexturePack + @"\"; }
-        }
+        public string RozWorldVersion { get { return "0.01"; } }
         
 
         /// <summary>
-        /// The active Renderer object.
+        /// The active window manager.
         /// </summary>
-        private Renderer ActiveRenderer;
+        private IWindowManager ActiveWindowManager;
 
         /// <summary>
         /// The client configuration.
         /// </summary>
         private RwClientConfiguration Configuration { get; set; }
-
-        /// <summary>
-        /// The RozWorld game instance.
-        /// </summary>
-        private RwGame Game { get; set; }
         
         /// <summary>
         /// The value that represents whether the client has been started.
@@ -130,9 +87,9 @@ namespace Oddmatics.RozWorld.Client
         private bool HasStarted { get; set; }
 
         /// <summary>
-        /// The renderers detected and available to the client.
+        /// The window managers that have been loaded.
         /// </summary>
-        private Dictionary<string, Type> Renderers { get; set; }
+        private Dictionary<string, Type> LoadedWindowManagers { get; set; }
 
         /// <summary>
         /// The value that represents whether the client should close.
@@ -145,12 +102,6 @@ namespace Oddmatics.RozWorld.Client
         /// </summary>
         public bool Run()
         {
-            if (RwCore.InstanceType != RwInstanceType.ClientOnly && RwCore.InstanceType != RwInstanceType.Both)
-                throw new InvalidOperationException("RwClient.Start: This RozWorld instance is not a client.");
-
-            if (RwCore.Client != this)
-                throw new InvalidOperationException("RwClient.Start: RwCore.Client must reference this client instance before calling Start().");
-
             if (Logger == null)
                 throw new InvalidOperationException("RwClient.Start: An ILogger instance must be attached before calling Start().");
 
@@ -160,17 +111,14 @@ namespace Oddmatics.RozWorld.Client
             HasStarted = true;
 
             Logger.Out("RozWorld client starting...", LogLevel.Info);
-
+            
             InitializeDirectories();
             LoadConfigs();
-            LoadRenderers();
+            LoadWindowManagers();
             
 
-            if (SelectRenderer(Configuration.ChosenRenderer))
+            if (SelectWindowManager(Configuration.ChosenRenderer))
             {
-                // Initialize game instance
-                Game = new RwGame();
-                
                 // Load the rest and then start/run the game
                 ShouldClose = false;
 
@@ -178,15 +126,23 @@ namespace Oddmatics.RozWorld.Client
                 var gameTime = new Stopwatch();
                 TimeSpan elapsedTime;
 
+                //
+                // TODO: Spawn client game state here?
+                //
+
                 // Wait until the game should close
                 while (!ShouldClose)
                 {
                     elapsedTime = gameTime.Elapsed;
                     gameTime.Restart();
+                    
+                    InputUpdate inputs = ActiveWindowManager.GetInputEvents();
 
-                    // TODO: Get user input here
-                    ActiveRenderer.RenderFrame();
-                    Game.InvokeUpdate(elapsedTime);
+                    //
+                    // Handle client game here
+                    //
+
+                    ActiveWindowManager.RenderFrame();
                 }
 
                 // Write configs to disk
@@ -251,18 +207,18 @@ namespace Oddmatics.RozWorld.Client
         }
 
         /// <summary>
-        /// Loads available renderers from libraries on disk.
+        /// Loads available window managers from libraries on disk.
         /// </summary>
-        private void LoadRenderers()
+        private void LoadWindowManagers()
         {
             // Do not allow renderers to be reloaded!
-            if (Renderers != null)
-                throw new InvalidOperationException("RwClient.LoadRenderers: Cannot load renderers after they have already been loaded.");
+            if (LoadedWindowManagers != null)
+                throw new InvalidOperationException("RwClient.LoadWindowManagers: Cannot load renderers after they have already been loaded.");
 
             // Load renderers
             Logger.Out("Loading renderers...", LogLevel.Info);
 
-            Renderers = new Dictionary<string, Type>();
+            LoadedWindowManagers = new Dictionary<string, Type>();
 
             foreach (string file in Directory.GetFiles(RwClientParameters.RendererPath))
             {
@@ -277,8 +233,8 @@ namespace Oddmatics.RozWorld.Client
 
                     foreach (var detectedObject in detectedObjects)
                     {
-                        if (detectedObject.BaseType == typeof(Renderer))
-                            Renderers.Add(detectedObject.FullName, detectedObject);
+                        if (detectedObject.GetInterfaces().Contains(typeof (IWindowManager)))
+                            LoadedWindowManagers.Add(detectedObject.FullName, detectedObject);
                     }
                 }
                 catch (ReflectionTypeLoadException reflectionEx)
@@ -295,45 +251,45 @@ namespace Oddmatics.RozWorld.Client
                 }
             }
 
-            if (Renderers.Count == 0)
+            if (LoadedWindowManagers.Count == 0)
                 Logger.Out("No renderers were loaded! Cannot continue.", LogLevel.Fatal);
         }
 
         /// <summary>
-        /// Attempts to select the specified renderer.
+        /// Attempts to select the specified window manager.
         /// </summary>
-        /// <param name="rendererAssemblyName">The assembly name of the renderer to load.</param>
-        /// <returns>True if a renderer was successfully loaded.</returns>
-        private bool SelectRenderer(string rendererAssemblyName)
+        /// <param name="windowMgrAssemblyName">The assembly name of the window manager to load.</param>
+        /// <returns>True if a window manager was successfully loaded.</returns>
+        private bool SelectWindowManager(string windowMgrAssemblyName)
         {
             // Configuration.ChosenRenderer
-            if (ActiveRenderer != null)
+            if (ActiveWindowManager != null)
             {
-                ActiveRenderer.Closed -= ActiveRenderer_Closed;
-                ActiveRenderer.Stop();
+                ActiveWindowManager.Closed -= ActiveRenderer_Closed;
+                ActiveWindowManager.Stop();
             }
 
-            var availableRenderers = new List<Type>(Renderers.Values);
+            var availableRenderers = new List<Type>(LoadedWindowManagers.Values);
 
             // Find the renderer object first
-            if (Renderers.ContainsKey(rendererAssemblyName))
-                ActiveRenderer = (Renderer)Activator.CreateInstance(Renderers[rendererAssemblyName]);
+            if (LoadedWindowManagers.ContainsKey(windowMgrAssemblyName))
+                ActiveWindowManager = (IWindowManager)Activator.CreateInstance(LoadedWindowManagers[windowMgrAssemblyName]);
             else
                 Logger.Out("Unknown renderer '" + Configuration.ChosenRenderer + "'.", LogLevel.Error);
 
             while (availableRenderers.Count > 0)
             {
-                if (!ActiveRenderer.Initialise()) // If renderer fails to start
+                if (ActiveWindowManager == null || !ActiveWindowManager.Start(this)) // If renderer fails to start
                 {
-                    availableRenderers.Remove(ActiveRenderer.GetType());
+                    if (ActiveWindowManager != null)
+                        availableRenderers.Remove(ActiveWindowManager.GetType());
 
                     if (availableRenderers.Count > 0)
-                        ActiveRenderer = (Renderer)Activator.CreateInstance(availableRenderers[0]);
+                        ActiveWindowManager = (IWindowManager)Activator.CreateInstance(availableRenderers[0]);
                 }
                 else
                 {
-                    ActiveRenderer.Closed += new EventHandler(ActiveRenderer_Closed);
-                    ActiveRenderer.Start();
+                    ActiveWindowManager.Closed += new EventHandler(ActiveRenderer_Closed);
                     return true;
                 }
             }
@@ -348,7 +304,6 @@ namespace Oddmatics.RozWorld.Client
         private void ActiveRenderer_Closed(object sender, EventArgs e)
         {
             // TODO: Check if instance is running first
-            Game.Stop();
             ShouldClose = true;
         }
     }
