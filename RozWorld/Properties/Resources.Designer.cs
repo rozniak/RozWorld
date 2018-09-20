@@ -19,7 +19,7 @@ namespace Oddmatics.RozWorld.Client.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -78,7 +78,18 @@ namespace Oddmatics.RozWorld.Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;Classification&quot;: &quot;GRAPHIC&quot;,
+        ///		&quot;Identifier&quot;: &quot;rwcore-splash&quot;,
+        ///		&quot;Path&quot;: &quot;rwcore\\oddmatics-splash.png&quot;
+        ///	},
+        ///	{
+        ///		&quot;Classification&quot;: &quot;GRAPHIC&quot;,
+        ///		&quot;Identifier&quot;: &quot;rwcore-atlas-terrain&quot;,
+        ///		&quot;Path&quot;: &quot;rwcore\\texatlas.png&quot;
+        ///	}
+        ///].
         /// </summary>
         internal static string RwResources {
             get {

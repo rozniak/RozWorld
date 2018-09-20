@@ -11,7 +11,8 @@
     <RootNamespace>Oddmatics.RozWorld.Client</RootNamespace>
     <AssemblyName>Oddmatics.RozWorld.Client</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -47,7 +48,7 @@
       <HintPath>..\..\RozWorld-API\RozWorld-API\bin\Debug\Oddmatics.RozWorld.API.dll</HintPath>
     </Reference>
     <Reference Include="Oddmatics.Util">
-      <HintPath>..\..\Oddmatics-IO\Oddmatics-IO\bin\Release\Oddmatics.Util.dll</HintPath>
+      <HintPath>..\..\Oddmatics-IO\Oddmatics-IO\bin\Debug\Oddmatics.Util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,6 +71,7 @@
     <Compile Include="RwClientConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\DefaultConfigs.json" />
     <None Include="Resources\RwResources.json" />

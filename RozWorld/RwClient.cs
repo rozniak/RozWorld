@@ -212,42 +212,132 @@ namespace Oddmatics.RozWorld.Client
         private void LoadWindowManagers()
         {
             // Do not allow renderers to be reloaded!
+            //
             if (LoadedWindowManagers != null)
                 throw new InvalidOperationException("RwClient.LoadWindowManagers: Cannot load renderers after they have already been loaded.");
 
             // Load renderers
+            //
             Logger.Out("Loading renderers...", LogLevel.Info);
 
             LoadedWindowManagers = new Dictionary<string, Type>();
 
-            foreach (string file in Directory.GetFiles(RwClientParameters.RendererPath))
+            // First we should look for subfolders in the renderer path...
+            //
+            const string rendererIdFileName = "renderer-id.json";
+
+            foreach (string folder in Directory.GetDirectories(RwClientParameters.RendererPath))
             {
-                // Skip non .dll files
-                if (Path.GetExtension(file) != ".dll")
+                string libraryPath = Path.Combine(RwClientParameters.RendererPath, folder);
+                string rendererIdPath = Path.Combine(libraryPath, rendererIdFileName);
+                RendererInfo rendererInfo;
+
+                // ...then try to parse the "renderer-id.json" file in them if there is one
+                //
+                if (!File.Exists(rendererIdPath))
+                {
+                    Logger.Out(
+                        String.Format(
+                            "I found {0} in the renderers folder was found, but it didn't contain a " +
+                            "renderer-id.json file in it, so I don't know if it's a renderer or not. You " +
+                            "should inspect this.",
+                            folder
+                            ),
+                        LogLevel.Error
+                        );
+
                     continue;
+                }
 
                 try
                 {
-                    Assembly assembly = Assembly.LoadFrom(file);
-                    Type[] detectedObjects = assembly.GetTypes();
+                    rendererInfo = JsonConvert.DeserializeObject<RendererInfo>(File.ReadAllText(rendererIdPath));
+                }
+                catch (JsonException jsonEx)
+                {
+                    Logger.Out(
+                        String.Format(
+                            "Invalid JSON when reading renderer info from {0}.",
+                            folder
+                            ),
+                        LogLevel.Error
+                        );
+                    continue;
+                }
 
-                    foreach (var detectedObject in detectedObjects)
+                // Check if the target DLL has been specified (could be blank in the JSON, we don't know)
+                //
+                if (String.IsNullOrWhiteSpace(rendererInfo.TargetDll))
+                {
+                    Logger.Out(
+                        String.Format(
+                            "I can't load the renderer in {0} because there isn't a target DLL specified " +
+                            "in its associated JSON file.",
+                            folder
+                            ),
+                        LogLevel.Error
+                        );
+
+                    continue;
+                }
+
+                // Since it's not blank, let's have a go at loading it
+                //
+                string targetDllPath = Path.Combine(libraryPath, rendererInfo.TargetDll);
+
+                if (!File.Exists(targetDllPath))
+                {
+                    Logger.Out(
+                        String.Format(
+                            "I can't load the renderer in {0}, it should be {1} but it either doesn't " +
+                            "exist or the account I'm running under doesn't have access to it.",
+                            folder,
+                            targetDllPath
+                            ),
+                        LogLevel.Error
+                        );
+
+                    continue;
+                }
+
+                try
+                {
+                    Assembly assembly = Assembly.LoadFrom(targetDllPath);
+                    Type[] assemblyTypes = assembly.GetTypes();
+
+                    foreach (Type assemblyType in assemblyTypes)
                     {
-                        if (detectedObject.GetInterfaces().Contains(typeof (IWindowManager)))
-                            LoadedWindowManagers.Add(detectedObject.FullName, detectedObject);
+                        if (assemblyType.GetInterfaces().Contains(typeof(IWindowManager)))
+                            LoadedWindowManagers.Add(assemblyType.FullName, assemblyType);
                     }
                 }
                 catch (ReflectionTypeLoadException reflectionEx)
                 {
-                    Logger.Out("An error occurred trying to enumerate the types inside of the library \"" +
-                        Path.GetFileName(file) + "\", renderers from this library cannot be loaded. It may " +
-                        "have been built with a different version of the RozWorld API.", LogLevel.Error);
+                    Logger.Out(
+                        String.Format(
+                            "Failed to enumerate types inside of the library {0} (that resides in folder {1}), " +
+                            "so no renderers shall be loaded from it.\n\nException: {2}\n\nStack: {3}",
+                            targetDllPath,
+                            folder,
+                            reflectionEx.Message,
+                            reflectionEx.StackTrace
+                            ),
+                        LogLevel.Error
+                        );
                 }
                 catch (Exception ex)
                 {
-                    Logger.Out("An error occurred trying to load library \"" + Path.GetFileName(file) +
-                        "\", renderers from this library cannot be loaded. The exception that occurred " +
-                        "reported the following:\n" + ex.Message + "\nStack:\n" + ex.StackTrace, LogLevel.Error);
+                    Logger.Out(
+                        String.Format(
+                            "Some kind of exception was thrown whilst I was trying to load {0} from {1}.\n\n" +
+                            "Exception: {2}\n\nStack: {3}",
+                            targetDllPath,
+                            folder,
+                            ex.Message,
+                            ex.StackTrace
+                            ),
+                        LogLevel.Error
+                        );
                 }
             }
 
